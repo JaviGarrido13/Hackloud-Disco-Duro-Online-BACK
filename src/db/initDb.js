@@ -18,7 +18,7 @@ export const initDb = async () => {
         console.log('Tablas borradas ✅ 📑');
 
         //crear tablas en la base de datos
-        console.log('Creaando tablas de nuevo 📑');
+        console.log('Creando tablas de nuevo 📑');
         //crear tabla usuarios
         await pool.query(`
             CREATE TABLE users (
