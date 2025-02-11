@@ -12,35 +12,35 @@ export const server = express();
 
 /* MIDDLEWARES */
 // Muestra por consola información de la petición
-app.use(morgan('dev'));
+server.use(morgan('dev'));
 
 // Permitir la conexión entre frontend y backend
-app.use(cors());
+server.use(cors());
 
 // Parsear el body de la petición
-app.use(express.json());
+server.use(express.json());
 
 // Permitir la subida de archivos
-app.use(fileUpload());
+server.use(fileUpload());
 
 // Directorio de ficheros estáticos.
-app.use('/uploads', express.static(UPLOADS_DIR));
+server.use('/uploads', express.static(UPLOADS_DIR));
 
 /*ROUTERS*/
 // server.use(router);
 
 /*ERRORES*/
 //Ruta no encontrada
-app.use((req, res, next) => {
-    const resorce = req.path;
-    const error = new Error(`No se encontró el recurso ${resorce}`);
+server.use((req, res, next) => {
+    const resource = req.path;
+    const error = new Error(`No se encontró el recurso ${resource}`);
     error.status = 404;
     error.code = 'NOT_FOUND';
     next(error);
 });
 
 //Gestor de errores
-app.use((error, req, res, next) => {
+server.use((error, req, res, next) => {
     console.error(error);
     res.status(error.httpStatus || 500).send({
         httpStatus: error.httpStatus || 500,
