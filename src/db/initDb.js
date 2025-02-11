@@ -75,10 +75,16 @@ export const initDb = async () => {
             FOREIGN KEY (fileId) REFERENCES files(id) ON DELETE CASCADE
             );
         `);
-
+        //crear tabla de valoraciones
         await pool.query(`
-            CREATE TABLE votes (
+            CREATE TABLE assessments (
             id CHAR(36) PRIMARY KEY NOT NULL,
+            userId CHAR(36) NOT NULL,
+            vote TINYINT UNSIGNED NOT NULL,
+            comment TEXT NOT NULL,
+            createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            updatedAt TIMESTAMP DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+            FOREIGN KEY (userId) REFERENCES users(id) ON DELETE CASCADE
             `);
 
         console.log('Tablas creadas✅ 📑');
