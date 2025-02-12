@@ -1,5 +1,6 @@
 //Importamos los models
 import { SelectUserByRegCode } from '../../models/users/SelectUserByRegCode.js';
+import { updateActiveUserModel } from '../../models/users/updateActiveUserModel.js';
 
 // Importamos el errors
 import generateErrorUtils from '../../utils/helpersUtils.js';
