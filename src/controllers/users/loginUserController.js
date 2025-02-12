@@ -1,18 +1,18 @@
+// Importamos Services
+import loginUserSchema from '../../schemas/users/loginUserSchema.js';
 import { loginUserService } from '../../services/users/loginUserService.js';
-import generateErrorUtils from '../../utils/helpersUtils.js';
 
+// Import el errors
+import validateSchemaUtil from '../../utils/validateSchemaUtil.js';
+
+// función controladora que se encarga de loggear un user
 export const loginUserController = async (req, res, next) => {
     try {
         // Recuperamos datos del body
         const { email, password } = req.body;
-        // Lanzamos error si no tenemos email o contraseña
-        if (!email || !password) {
-            throw generateErrorUtils(
-                400,
-                'DATA_MISSING',
-                'El email y la contraseña son obligatorios'
-            );
-        }
+
+        // Validamos los datos
+        await validateSchemaUtil(loginUserSchema, req.body);
 
         // LLama al service de login que devuelve el token
         const token = await loginUserService(email, password);

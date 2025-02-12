@@ -24,7 +24,7 @@ export const initDb = async () => {
         //Borrar las tablas si existen
         console.log('Borrando tablas existentes 🗑 📑');
         await pool.query(
-            'DROP TABLE IF EXISTS  sharedFiles, assessments, files, folders, users;'
+            'DROP TABLE IF EXISTS  assessments, files, folders, users;'
         );
         console.log('Tablas borradas ✅ 📑');
 
