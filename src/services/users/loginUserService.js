@@ -1,14 +1,28 @@
+// Importamos las dependencias
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
+// Importamos el model
 import { selectUserByEmailModel } from '../../models/users/selectUserByEmailModel.js';
+
+// Import el errors
 import generateErrorUtils from '../../utils/helpersUtils.js';
 
+// Importamos variables de entorno
 import { SECRET } from '../../../env.js';
 
+// Service que se encarga de logger un usuario
 export const loginUserService = async (email, password) => {
     // Busca el usuario por email
     const user = await selectUserByEmailModel(email);
+    // Si no existe el usuario, lanzamos un error
+    if (!user) {
+        throw generateErrorUtils(
+            404,
+            'LOGIN_FAILED',
+            'El email no esta registrado'
+        );
+    }
 
     // Comprueba si la contraseña es correcta
     let isValidPassword = false;

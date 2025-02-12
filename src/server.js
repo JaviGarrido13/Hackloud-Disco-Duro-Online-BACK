@@ -8,6 +8,7 @@ import { router } from './routes/indexRouter.js';
 
 // Importamos variable de entorno
 import { UPLOADS_DIR } from '../env.js';
+import generateErrorUtils from './utils/helpersUtils.js';
 
 // Creamos el servidor
 export const server = express();
@@ -34,10 +35,7 @@ server.use(router);
 /*ERRORES*/
 //Ruta no encontrada
 server.use((req, res, next) => {
-    const resource = req.path;
-    const error = new Error(`No se encontró el recurso ${resource}`);
-    error.status = 404;
-    error.code = 'NOT_FOUND';
+    generateErrorUtils('404', 'NOT_FOUND', 'Recurso no encontrado');
     next(error);
 });
 
