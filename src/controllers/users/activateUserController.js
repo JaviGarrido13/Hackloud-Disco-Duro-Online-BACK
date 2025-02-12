@@ -1,4 +1,5 @@
-// Importamos el model
+// Importamos el service
+import { activateUserServices } from '../../services/users/activateUserService.js';
 
 // Importamos el errores
 import generateErrorUtils from '../../utils/helpersUtils.js';
