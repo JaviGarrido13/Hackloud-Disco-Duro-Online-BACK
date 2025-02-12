@@ -1,8 +1,11 @@
+// Importamos las dependencias
+import bcrypt from 'bcrypt';
+
 // Importamos funcion que devuelve la conexión con la base de datos
 import { getPool } from './getpool.js';
 
 // Importamos variables de entorno
-import { MYSQL_DATABASE } from '../../env.js';
+import { ADMIN_EMAIL, ADMIN_PASSWORD, MYSQL_DATABASE } from '../../env.js';
 
 // Importamos el errores
 import generateErrorUtils from '../utils/helpersUtils.js';
@@ -60,13 +63,11 @@ export const initDb = async () => {
         await pool.query(`
             CREATE TABLE files (
                 id CHAR(36) PRIMARY KEY NOT NULL,
-                name VARCHAR(100) NOT NULL,
+                name VARCHAR(255) NOT NULL,
                 size BIGINT NOT NULL,
-                type VARCHAR(50) NOT NULL,
                 userId CHAR(36) NOT NULL,
                 folderId CHAR(40) NULL,
-                createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                updatedAt TIMESTAMP DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+                uploadedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                 FOREIGN KEY (userId) REFERENCES users(id) ON DELETE CASCADE,
                 FOREIGN KEY (folderId) REFERENCES folders(id) ON DELETE SET NULL
                 );
@@ -83,26 +84,32 @@ export const initDb = async () => {
                 FOREIGN KEY (userId) REFERENCES users(id) ON DELETE CASCADE
                 );
             `);
-        //crear tabla de archivos compartidos
-        await pool.query(`
-            CREATE TABLE sharedFiles (
-                id CHAR(36) PRIMARY KEY NOT NULL,
-                userId CHAR(36) NOT NULL,
-                fileId CHAR(36) NOT NULL,
-                createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                updatedAt TIMESTAMP DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
-                FOREIGN KEY (userId) REFERENCES users(id) ON DELETE CASCADE,
-                FOREIGN KEY (fileId) REFERENCES files(id) ON DELETE CASCADE
-                );
-            `);
 
         console.log('Tablas creadas✅ 📑');
+        // Crear usuario admin
+        console.log('Creando usuario Admin...');
+        const id = crypto.randomUUID();
+        const hashedPassword = await bcrypt.hash(ADMIN_PASSWORD, 10);
+        await pool.query(
+            `INSERT INTO users (id, username, firstName, lastName, email, password, active, role) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+            [
+                id,
+                'admin',
+                'Super',
+                'Admin',
+                ADMIN_EMAIL,
+                hashedPassword,
+                1,
+                'admin',
+            ]
+        );
         // Cerrar la conexión
         await pool.end();
         // Terminamos el proceso
         console.log('Todo salió bien');
         process.exit(0);
     } catch (error) {
+        console.error('Error al crear la base de datos:', error);
         throw generateErrorUtils(
             500,
             'DB_INIT_ERROR',
