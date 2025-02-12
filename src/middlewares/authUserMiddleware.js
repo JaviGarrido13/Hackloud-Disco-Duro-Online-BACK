@@ -25,6 +25,11 @@ export const authUserMiddleware = (req, res, next) => {
 
         // Recupera el payload del token
         const payload = verifyTokenPayloadUtils(token, SECRET);
+
+        // Guarda el payload en req.user
+        req.user = payload;
+
+        // Continua el siguiente controlador
         next();
     } catch (error) {
         next(error);
