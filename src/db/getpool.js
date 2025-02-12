@@ -10,7 +10,7 @@ import {
 
 let pool = null;
 
-export const getpool = async () => {
+export const getPool = async () => {
     try {
         // //pool temporal sin depender de DDBB
         const poolTemp = mysql.createPool({

@@ -4,6 +4,8 @@ import fileUpload from 'express-fileupload';
 import cors from 'cors';
 import morgan from 'morgan';
 
+import { router } from './routes/indexRouter.js';
+
 // Importamos variable de entorno
 import { UPLOADS_DIR } from '../env.js';
 
@@ -27,7 +29,7 @@ server.use(fileUpload());
 server.use('/uploads', express.static(UPLOADS_DIR));
 
 /*ROUTERS*/
-// server.use(router);
+server.use(router);
 
 /*ERRORES*/
 //Ruta no encontrada
