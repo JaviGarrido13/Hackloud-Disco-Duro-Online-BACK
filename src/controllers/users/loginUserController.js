@@ -1,4 +1,5 @@
 import { loginUserService } from '../../services/users/loginUserService.js';
+import generateErrorUtils from '../../utils/helpersUtils.js';
 
 export const loginUserController = async (req, res, next) => {
     try {

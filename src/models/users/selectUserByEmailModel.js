@@ -1,5 +1,5 @@
-import { getPool } from '../../db/getPool.js';
-import { generateErrorUtils } from '../../utils/helpersUtils.js';
+// Importamos funcion que devuelve la conexión con la base de datos
+import { getPool } from '../../db/getpool.js';
 
 export const selectUserByEmailModel = async (email) => {
     const pool = await getPool();

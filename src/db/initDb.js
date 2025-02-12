@@ -1,9 +1,17 @@
+// Importamos funcion que devuelve la conexión con la base de datos
+import { getPool } from './getpool.js';
+
+// Importamos variables de entorno
 import { MYSQL_DATABASE } from '../../env.js';
 
+// Importamos el errores
+import generateErrorUtils from '../utils/helpersUtils.js';
+
 export const initDb = async () => {
+    let pool;
     try {
         // Obtener el pool de conexiones
-        const pool = await getPool();
+        pool = await getPool();
 
         // Poner la DDBB en uso
         console.log('Poniendo en uso la base de datos 📑');
@@ -60,7 +68,7 @@ export const initDb = async () => {
                 createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                 updatedAt TIMESTAMP DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
                 FOREIGN KEY (userId) REFERENCES users(id) ON DELETE CASCADE,
-                FOREIGN KEY (folderId) REFERENCES folders(id) ON DELETE CASCADE
+                FOREIGN KEY (folderId) REFERENCES folders(id) ON DELETE SET NULL
                 );
             `);
         //crear tabla de valoraciones
@@ -89,8 +97,17 @@ export const initDb = async () => {
             `);
 
         console.log('Tablas creadas✅ 📑');
+        // Cerrar la conexión
+        await pool.end();
+        // Terminamos el proceso
+        console.log('Todo salió bien');
+        process.exit(0);
     } catch (error) {
-        console.error('Error al inicializar la base de datos');
+        throw generateErrorUtils(
+            500,
+            'DB_INIT_ERROR',
+            `Error al inicializar la base de datos : ${error.message}`
+        );
     }
 };
 
