@@ -1,7 +1,7 @@
 import generateErrorUtils from './helpersUtils.js';
 import jwt from 'jsonwebtoken';
 
-export const checkExtractTokenUtils = () => {
+export const checkExtractTokenUtils = (authorization) => {
     //Comprobar si el token contiene Bearer
     if (!authorization.startsWith('Bearer')) {
         throw generateErrorUtils(

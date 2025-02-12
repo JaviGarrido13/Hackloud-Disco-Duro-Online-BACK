@@ -1,11 +1,16 @@
+// Importamos el errores
 import generateErrorUtils from '../utils/helpersUtils.js';
+
+// Importamos utils
 import {
     checkExtractTokenUtils,
     verifyTokenPayloadUtils,
 } from '../utils/tokenUtils.js';
 
+// Importamos variable de entorno
 import { SECRET } from '../../env.js';
 
+// Middleware que se encarga de verificar el token
 export const authUserMiddleware = (req, res, next) => {
     try {
         // Coge el token de los headers
@@ -25,6 +30,10 @@ export const authUserMiddleware = (req, res, next) => {
 
         // Recupera el payload del token
         const payload = verifyTokenPayloadUtils(token, SECRET);
+
+        // Guardar el payload en req.user
+        req.user = payload;
+
         next();
     } catch (error) {
         next(error);
