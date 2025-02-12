@@ -1,4 +1,5 @@
 // Importamos función que devuelve la conexión con las base de datos
+import { getPool } from '../../db/getpool.js';
 
 // Model para activar un user
 export const updateActiveUserModel = async (registrationCode) => {

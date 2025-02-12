@@ -35,7 +35,9 @@ server.use(router);
 /*ERRORES*/
 //Ruta no encontrada
 server.use((req, res, next) => {
-    generateErrorUtils('404', 'NOT_FOUND', 'Recurso no encontrado');
+    let resource = req.path;
+    const error = new Error('Nothing Here.');
+    generateErrorUtils('404', 'NOT_FOUND', error);
     next(error);
 });
 
