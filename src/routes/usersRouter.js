@@ -9,11 +9,8 @@ import { authUserMiddleware } from '../middlewares/authUserMiddleware.js';
 import { checkRole } from '../middlewares/checkRole.js';
 import { getAllUsersController } from '../controllers/users/getAllUsersController.js';
 import { editPasswordUserController } from '../controllers/users/editPasswordUserController.js';
-<<<<<<< HEAD
 import { getOwnUserController } from '../controllers/users/getOwnUserController.js';
-=======
 import { statusUserController } from '../controllers/users/statusUserController.js';
->>>>>>> Rutas-Admin
 
 export const usersRouter = express.Router();
 
