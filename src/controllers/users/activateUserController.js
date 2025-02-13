@@ -24,7 +24,6 @@ export const activateUsersController = async (req, res, next) => {
         res.status(200).send({
             status: 'ok',
             message: 'Usuario activado correctamente',
-            data: user,
         });
     } catch (error) {
         next(error);

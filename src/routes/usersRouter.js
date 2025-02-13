@@ -10,6 +10,7 @@ import { checkRole } from '../middlewares/checkRole.js';
 import { getAllUsersController } from '../controllers/users/getAllUsersController.js';
 
 import { editPasswordUserController } from '../controllers/users/editPasswordUserController.js';
+import { getOwnUserController } from '../controllers/users/getOwnUserController.js';
 
 export const usersRouter = express.Router();
 
@@ -39,3 +40,6 @@ usersRouter.put(
     authUserMiddleware,
     editPasswordUserController
 );
+
+// Ruta para obtener la info de usuario
+usersRouter.get('/users/own', authUserMiddleware, getOwnUserController);
