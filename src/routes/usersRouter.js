@@ -8,9 +8,12 @@ import { activateUsersController } from '../controllers/users/activateUserContro
 import { authUserMiddleware } from '../middlewares/authUserMiddleware.js';
 import { checkRole } from '../middlewares/checkRole.js';
 import { getAllUsersController } from '../controllers/users/getAllUsersController.js';
-
 import { editPasswordUserController } from '../controllers/users/editPasswordUserController.js';
+<<<<<<< HEAD
 import { getOwnUserController } from '../controllers/users/getOwnUserController.js';
+=======
+import { statusUserController } from '../controllers/users/statusUserController.js';
+>>>>>>> Rutas-Admin
 
 export const usersRouter = express.Router();
 
@@ -43,3 +46,11 @@ usersRouter.put(
 
 // Ruta para obtener la info de usuario
 usersRouter.get('/users/own', authUserMiddleware, getOwnUserController);
+
+// Ruta admin habilitar/deshabilitar usuarios
+usersRouter.put(
+    '/users/status/:id',
+    authUserMiddleware,
+    checkRole('admin'),
+    statusUserController
+);
