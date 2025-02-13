@@ -3,9 +3,6 @@ import express from 'express';
 import { createNewFolderModel } from '../models/folders/createNewFolderModel.js';
 
 
-import express from "express";
-import { createNewFolderModel } from "../models/folderModel.js"; // Asegúrate de la ruta correcta
-
 export const storageRouter = express.Router();
 
 // Ruta para crear una nueva carpeta
