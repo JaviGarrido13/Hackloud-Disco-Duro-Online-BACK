@@ -4,11 +4,11 @@ import fileUpload from 'express-fileupload';
 import cors from 'cors';
 import morgan from 'morgan';
 
+// Importamos las rutas
 import { router } from './routes/indexRouter.js';
 
 // Importamos variable de entorno
 import { UPLOADS_DIR } from '../env.js';
-import generateErrorUtils from './utils/helpersUtils.js';
 
 // Creamos el servidor
 export const server = express();
@@ -36,8 +36,7 @@ server.use(router);
 //Ruta no encontrada
 server.use((req, res, next) => {
     let resource = req.path;
-    const error = new Error('Nothing Here.');
-    generateErrorUtils('404', 'NOT_FOUND', error);
+    const error = new Error(`No se encontró la ruta: ${resource}`);
     next(error);
 });
 
