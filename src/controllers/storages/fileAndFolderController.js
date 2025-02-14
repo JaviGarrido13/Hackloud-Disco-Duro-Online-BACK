@@ -1,5 +1,6 @@
 //Importamos el servicio
-import { listFilesAndFoldersService } from '../../services/storages/fileAndFolderService';
+
+import { listFilesAndFoldersService } from '../../services/storages/fileAndFolderService.js';
 
 //Funcion controladora que se encarga de listar archivos y carpetas
 export const listFilesAndFoldersControllers = async (req, res, next) => {

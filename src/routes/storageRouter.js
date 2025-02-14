@@ -1,11 +1,28 @@
 //Importamos dependencias
 import express from 'express';
+import { upload } from '../utils/multerConfig.js';
 
 //Importamos el controller
 
-import { authUserMiddleware } from '../middlewares/authUserMiddleware';
-import { listFilesAndFoldersControllers } from '../controllers/storages/fileAndFolderController';
+import { uploadFileController } from '../controllers/storages/uploadFileController.js';
+import { authUserMiddleware } from '../middlewares/authUserMiddleware.js';
+import { listFilesAndFoldersControllers } from '../controllers/storages/fileAndFolderController.js';
 
 export const storageRouter = express.Router();
 //Ruta para listar archivos y carpetas
-router.get('/storage/list', authUserMiddleware, listFilesAndFoldersControllers);
+storageRouter.get(
+    '/storage/list',
+    authUserMiddleware,
+    listFilesAndFoldersControllers
+);
+
+// Ruta para subir archivos
+storageRouter.post(
+    '/upload/files',
+    authUserMiddleware,
+    upload.single('file'),
+    uploadFileController
+);
+
+// Ruta para eliminar archivos
+storageRouter.delete('/delete');
