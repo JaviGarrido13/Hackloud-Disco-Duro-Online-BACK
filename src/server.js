@@ -1,6 +1,5 @@
 // Importamos dependencias
 import express from 'express';
-import fileUpload from 'express-fileupload';
 import cors from 'cors';
 import morgan from 'morgan';
 
@@ -24,7 +23,7 @@ server.use(cors());
 server.use(express.json());
 
 // Permitir la subida de archivos
-server.use(fileUpload());
+server.use(express.urlencoded({ extended: true }));
 
 // Directorio de ficheros estáticos.
 server.use('/uploads', express.static(UPLOADS_DIR));

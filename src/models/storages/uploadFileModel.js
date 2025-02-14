@@ -5,7 +5,7 @@ export const uploadFileModel = async ({
     filename,
     size,
     userId,
-    folderName,
+    folderId,
 }) => {
     const pool = await getPool();
 
@@ -13,7 +13,5 @@ export const uploadFileModel = async ({
         'INSERT INTO files (id, name, size, userId, folderId) VALUES (?,?,?,?,?)',
         [fileId, filename, size, userId, folderId]
     );
-    return result.affectedRows > 0
-        ? { id: result.insertId, filename, size, userId }
-        : NULL;
+    return result;
 };

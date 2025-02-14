@@ -1,3 +1,6 @@
+import { uploadFilesService } from '../../services/storages/uploadFilesService.js';
+import generateErrorUtils from '../../utils/helpersUtils.js';
+
 export const uploadFileController = async (req, res, next) => {
     try {
         // Verifica si los archivos están presentes en la solicitud
@@ -10,7 +13,7 @@ export const uploadFileController = async (req, res, next) => {
         }
         const { originalname, filename, size } = req.file;
         const userId = req.user.id;
-        const folderName = req.body || NULL;
+        const folderName = req.body.folderName || null;
         const savedFile = await uploadFilesService({
             userId,
             folderName,
