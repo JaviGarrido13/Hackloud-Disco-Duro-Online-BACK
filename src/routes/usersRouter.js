@@ -11,7 +11,7 @@ import { getAllUsersController } from '../controllers/users/getAllUsersControlle
 import { editPasswordUserController } from '../controllers/users/editPasswordUserController.js';
 import { getOwnUserController } from '../controllers/users/getOwnUserController.js';
 import { statusUserController } from '../controllers/users/statusUserController.js';
-
+import { deleteUserController } from '../controllers/users/deleteUserController.js';
 export const usersRouter = express.Router();
 
 // Ruta para login de usuarios
@@ -50,4 +50,12 @@ usersRouter.put(
     authUserMiddleware,
     checkRole('admin'),
     statusUserController
+);
+
+//Ruta para eliminar usuarios
+usersRouter.delete(
+    '/user/:id',
+    authUserMiddleware,
+    checkRole('admin'),
+    deleteUserController
 );
