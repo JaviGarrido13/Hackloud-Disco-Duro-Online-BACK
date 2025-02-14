@@ -2,7 +2,7 @@
 import fs from 'fs';
 
 //Importamos el errors
-import generateErrorUtils from '../../utils/helpersUtils';
+import generateErrorUtils from '../../utils/helpersUtils.js';
 
 //Services que se encarga de listar los archivos y carpetas.
 export const listFilesAndFoldersService = async () => {
