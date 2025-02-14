@@ -1,3 +1,4 @@
+// Función que devuelve la conexión a la base de datos
 import { getPool } from '../../db/getpool.js';
 
 // Model que actualiza el nombre de un archivo
