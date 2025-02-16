@@ -1,12 +1,14 @@
 //Importamos la conexión a la base de datos
-import { pool } from '../../db';
+import { getPool } from '../../db/getpool.js';
+
 //Importamos el error
 import generateErrorUtils from '../../utils/helpersUtils.js';
 
 export const getAllAssessmentsController = async (req, res) => {
     try {
-        //Reañizamos una consulta a la base de datos para obtener las valoraciones y ordenamos
-        const [row] = await pool.query(
+        const pool = await getPool();
+        //Realizamos una consulta a la base de datos para obtener las valoraciones y ordenamos
+        const [rows] = await pool.query(
             'SELECT * FROM assessments ORDER BY createdAt DESC'
         );
         //Si no hay valoraciones, lanzamos un error
@@ -19,7 +21,7 @@ export const getAllAssessmentsController = async (req, res) => {
                 )
             );
         }
-        req.json(row);
+        req.json(rows);
     } catch (error) {
         next(error);
     }

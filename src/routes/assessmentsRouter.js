@@ -2,13 +2,15 @@
 import express from 'express';
 
 //Importamos el controller
-import { getAllAssessmentsController } from '../controllers/';
+
 import { authUserMiddleware } from '../middlewares/authUserMiddleware.js';
+import { getAllAssessmentsController } from '../controllers/assesments/getAllAssessmentsController.js';
 
 export const assessmentsRouter = express.Router();
 //Ruta para listar valoraciones
-assesmentsRouter.get(
+assessmentsRouter.get(
     '/assesments',
     authUserMiddleware,
+    checkRole('admin'),
     getAllAssessmentsController
 );
