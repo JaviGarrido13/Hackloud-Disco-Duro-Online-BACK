@@ -29,11 +29,10 @@ export const saveFileUtil = async (
             userId: fileData.userId,
             createdAt: new Date().toISOString(),
         };
-
-        // Devolver la ruta donde se guardó el archivo
+        console.log('Metadatos del archivo:', fileMetadata);
+        // Devolver fileMetaData
         return fileMetadata;
     } catch (error) {
-        console.error('Error al guardar archivo:', error);
         throw generateErrorUtils(
             409,
             'CONFLICT',
