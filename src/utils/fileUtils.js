@@ -1,24 +1,37 @@
 import fs from 'fs/promises';
 import path from 'path';
 
-import { generateErrorUtils } from './helpersUtils.js';
-import { createPathUtil } from './foldersUtils.js';
+import generateErrorUtils from './helpersUtils.js';
 
 export const saveFileUtil = async (
     userId,
-    folderName = NULL,
+    folderName = null,
     fileName,
     fileData
 ) => {
     try {
-        const userPath = folderName
-            ? path.join(`${process.cwd()}/uploads/${userId}/${folderName}`)
-            : path.join(`${process.cwd()}/uploads/${userId}`);
+        // Construir la ruta del usuario usando path.join
+        const userPath = path.join(
+            process.cwd(),
+            'uploads',
+            userId,
+            folderName || ''
+        );
+
+        // Asegurar que el directorio existe
         await fs.mkdir(userPath, { recursive: true });
-        const filePath = path.join(userPath, fileName);
-        await fs.writeFile(filePath, fileData);
-        console.log(`Archivo ${fileName} guardado en ${filePath}`);
-        return filePath;
+
+        // Guardar los metadatos del archivo
+        const fileMetadata = {
+            name: fileData.name,
+            path: fileData.path,
+            size: fileData.size,
+            userId: fileData.userId,
+            createdAt: new Date().toISOString(),
+        };
+        console.log('Metadatos del archivo:', fileMetadata);
+        // Devolver fileMetaData
+        return fileMetadata;
     } catch (error) {
         throw generateErrorUtils(
             409,
@@ -28,7 +41,7 @@ export const saveFileUtil = async (
     }
 };
 
-export const deleteFileUtil = async (userId, fileName, folderName = NULL) => {
+export const deleteFileUtil = async (userId, fileName, folderName = null) => {
     try {
         const filePath = folderName
             ? path.join(

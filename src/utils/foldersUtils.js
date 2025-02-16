@@ -1,40 +1,39 @@
 import path from 'path';
-import fs from 'fs';
+import { promises as fs } from 'fs';
 import generateErrorUtils from './helpersUtils.js';
 
 export const createUserPath = async (userId) => {
+    const rootPath = path.join(process.cwd(), 'uploads', userId);
     try {
-        // Crea Ruta raiz
-        const rootPath = path.join(`${process.cwd()}/uploads/${userId}`);
         await fs.access(rootPath);
     } catch (error) {
-        // Crea carpeta Raiz
+        // Crea carpeta Raiz si no existe
         await fs.mkdir(rootPath, { recursive: true });
-        console.log(`📂 Ruta raiz creada`);
+        console.log(`📂 Ruta raiz creada: ${rootPath}`);
     }
+    return rootPath;
 };
 
 export const createPathUtil = async (userId, nameFolder) => {
+    const folderPath = path.join(process.cwd(), 'uploads', userId, nameFolder);
     try {
-        // Crea la Ruta de la carpeta
-        const folderPath = path.join(
-            `${process.cwd()}/uploads/${userId}/${nameFolder}`
-        );
         await fs.access(folderPath);
     } catch (error) {
-        // Si no existe el directorio, entra en el error del catch y lo crea
+        // Si no existe el directorio, lo creamos
         await fs.mkdir(folderPath, { recursive: true });
         console.log(`📂 Directorio ${folderPath} creado correctamente`);
     }
+    return folderPath;
 };
 
 export const deleteFolderUtil = async (userId, nameFolder) => {
     try {
-        // Crea la Ruta de la carpeta
         const folderPath = path.join(
-            `${process.cwd()}/uploads/${userId}/${nameFolder}`
+            process.cwd(),
+            'uploads',
+            userId,
+            nameFolder
         );
-        // Borramos la carpeta
         await fs.rm(folderPath, { recursive: true, force: true });
     } catch (error) {
         if (error.code === 'ENOENT') {

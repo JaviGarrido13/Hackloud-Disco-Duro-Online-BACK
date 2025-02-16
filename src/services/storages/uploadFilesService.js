@@ -1,20 +1,46 @@
+// Importamos dependencias
+import crypto from 'crypto';
+import path from 'path';
+
+// Importamos el model
 import { uploadFileModel } from '../../models/storages/uploadFileModel.js';
+
+// Importamos el util
 import { saveFileUtil } from '../../utils/fileUtils.js';
 
-export const uploadFilesService = async (file) => {
-    const { userId, folderName, originalname, filename, size } = file;
+// Service que se encarga de guardar el archivo
+export const uploadFilesService = async (userId, file, folderName) => {
+    // Destructuring de file
+    const { originalname, filename, size } = file;
 
-    const filePath = folderName
-        ? `uploads/${folderName}/${filename}`
-        : `uploads/${filename}`;
-    const fileData = { name: originalname, path: filePath, size, userId };
+    // Path del archivo
+    const filePath = path.join(
+        'uploads',
+        userId,
+        folderName ? folderName : '',
+        filename
+    );
+
+    // creamos el objeto fileData
+    const fileData = {
+        name: originalname,
+        path: filePath,
+        size,
+        userId,
+    };
+
+    // Llamamos al util que guarda el archivo
     const savedFile = await saveFileUtil(
         userId,
-        (folderName = NULL),
+        folderName,
         filename,
         fileData
     );
+
+    // Generamos id unica
     const fileId = crypto.randomUUID();
+
+    // Llamamos al model para subir el archivo a la base de datos
     const uploadedFile = await uploadFileModel({
         fileId,
         filename,
@@ -22,5 +48,6 @@ export const uploadFilesService = async (file) => {
         userId,
         folderName,
     });
+
     return uploadedFile;
 };
