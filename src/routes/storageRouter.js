@@ -11,7 +11,7 @@ import { listFilesAndFoldersControllers } from '../controllers/storages/fileAndF
 export const storageRouter = express.Router();
 //Ruta para listar archivos y carpetas
 storageRouter.get(
-    '/storage/list',
+    '/files-folders',
     authUserMiddleware,
     listFilesAndFoldersControllers
 );

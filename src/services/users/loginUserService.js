@@ -26,17 +26,9 @@ export const loginUserService = async (email, password) => {
 
     // Comprueba si la contraseña es correcta
     let isValidPassword = false;
-    if (user) {
-        isValidPassword = await bcrypt.compare(password, user.password);
-    }
-
-    // Lanza un error si no hay usuario o la contraseña no es correcta
-    if (!user || !isValidPassword) {
-        throw generateErrorUtils(
-            401,
-            'LOGIN_FAILED',
-            'El Email o contraseña es incorrecto'
-        );
+    isValidPassword = await bcrypt.compare(password, user.password);
+    if (!isValidPassword) {
+        throw generateErrorUtils(401, 'LOGIN_FAILED', 'Contraseña incorrecta');
     }
 
     // Lanza un error si el usuario no está activado

@@ -14,7 +14,7 @@ export const statusUserController = async (req, res, next) => {
         // Validar que se recibe active
         if (active === undefined || active === '') {
             throw generateErrorUtils(
-                '400',
+                400,
                 'INVALID_REQUEST',
                 'El campo "active" es requerido'
             );
