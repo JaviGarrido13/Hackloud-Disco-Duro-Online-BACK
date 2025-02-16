@@ -1,5 +1,6 @@
 // Importamos las dependencias
 import bcrypt from 'bcrypt';
+import crypto from 'crypto';
 
 // Importamos funcion que devuelve la conexión con la base de datos
 import { getPool } from './getpool.js';

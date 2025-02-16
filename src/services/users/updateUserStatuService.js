@@ -11,7 +11,7 @@ export const updateUserStatuService = async (id, active) => {
     const user = await selectUserByIdModel(id);
     if (!user) {
         throw generateErrorUtils(
-            '404',
+            404,
             'USER_NOT_FOUND',
             'Usuario no encontrado'
         );
