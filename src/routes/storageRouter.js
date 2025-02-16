@@ -20,7 +20,7 @@ storageRouter.get(
 
 // Ruta para subir archivos
 storageRouter.post(
-    '/upload/files',
+    '/uploads/files',
     authUserMiddleware,
     upload.single('file'),
     uploadFileController

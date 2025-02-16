@@ -5,6 +5,7 @@ import express from 'express';
 
 import { authUserMiddleware } from '../middlewares/authUserMiddleware.js';
 import { getAllAssessmentsController } from '../controllers/assesments/getAllAssessmentsController.js';
+import { checkRole } from '../middlewares/checkRole.js';
 
 export const assessmentsRouter = express.Router();
 //Ruta para listar valoraciones

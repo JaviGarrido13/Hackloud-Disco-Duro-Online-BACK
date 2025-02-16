@@ -2,7 +2,7 @@
 import {
     updateFileModel,
     updateFolderModel,
-} from '../../models/storage/updateFileOrFolderModel.js';
+} from '../../models/storages/updateFileOrFolderModel.js';
 
 // Importamos el errors
 import generateErrorUtils from '../../utils/helpersUtils.js';
