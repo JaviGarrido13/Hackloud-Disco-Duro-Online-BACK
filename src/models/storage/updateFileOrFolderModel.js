@@ -5,7 +5,7 @@ import { getPool } from '../../db/getpool.js';
 export const updateFileModel = async (id, newName) => {
     const pool = await getPool();
     const [result] = await pool.query(
-        'UPDATE files SET name = ? WHERE id = ?',
+        'UPDATE files SET name = ? WHERE id = ? RETURNING id,name',
         [newName, id]
     );
     return result.affectedRows > 0 ? { id, name: newName } : null;
@@ -15,7 +15,7 @@ export const updateFileModel = async (id, newName) => {
 export const updateFolderModel = async (id, newName) => {
     const pool = await getPool();
     const [result] = await pool.query(
-        'UPDATE folders SET name = ? WHERE id = ?',
+        'UPDATE folders SET name = ? WHERE id = ? RETURNING id,name',
         [newName, id]
     );
     return result.affectedRows > 0 ? { id, name: newName } : null;

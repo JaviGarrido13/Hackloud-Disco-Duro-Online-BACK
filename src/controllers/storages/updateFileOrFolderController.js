@@ -1,37 +1,38 @@
-// Importamos el errors
+// Importamos los services
+import { renameSchema } from '../../schemas/storage/renameSchema.js';
 import {
     updateFileNameService,
     updateFolderNameService,
 } from '../../services/storages/updateFileOrFolderService.js';
+
+// Importamos el errors
 import generateErrorUtils from '../../utils/helpersUtils.js';
+import validateSchemaUtil from '../../utils/validateSchemaUtil.js';
 
 //Función controladora que se encarga de actualicar un producto
 export const updateFileOrFolderController = async (req, res, next) => {
     try {
-        // Obetenemos el id por params
+        // Obetenemos el id del item por params
         const { id } = req.params;
         // Obetenemos el nuevo nombre y el tipo de archivo del body
         const { name, type } = req.body;
-        // Validamos si recibimos los datos
-        if (!name || !type) {
-            throw generateErrorUtils(
-                400,
-                'INVALID_REQUEST',
-                'Name y type son requeridos'
-            );
-        }
+        // Validamos los datos recibidos
+        await validateSchemaUtil(renameSchema, req.body);
         // Llamamos a la función que actualiza el archivo o carpeta
         let updatedItem;
-        if (type === 'file') {
-            updatedItem = await updateFileNameService(id, name);
-        } else if (type === 'folder') {
-            updatedItem = await updateFolderNameService(id, name);
-        } else {
-            throw generateErrorUtils(
-                400,
-                'INVALID_REQUEST',
-                'Type debes ser "file" o "folder".'
-            );
+        switch (type) {
+            case 'file':
+                updatedItem = await updateFileNameService(id, name);
+                break;
+            case 'folder':
+                updatedItem = await updateFolderNameService(id, name);
+                break;
+            default:
+                throw generateErrorUtils(
+                    400,
+                    'INVALID_REQUEST',
+                    'Type debe ser "file" o "folder".'
+                );
         }
 
         res.status(200).send({
