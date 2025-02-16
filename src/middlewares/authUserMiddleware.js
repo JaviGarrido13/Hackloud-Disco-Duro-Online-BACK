@@ -33,7 +33,6 @@ export const authUserMiddleware = (req, res, next) => {
 
         // Guarda el payload en req.user
         req.user = payload;
-        console.log('Pasa por aqui');
         // Continua el siguiente controlador
         next();
     } catch (error) {
