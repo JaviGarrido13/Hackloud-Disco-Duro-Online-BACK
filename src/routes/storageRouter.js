@@ -41,3 +41,37 @@ storageRouter.post("/folders")
 
 //Ruta para listar archivos y carpetas
 router.get('/storage/list', authUserMiddleware, listFilesAndFoldersControllers);
+import { upload } from '../utils/multerConfig.js';
+
+//Importamos el controller
+
+import { uploadFileController } from '../controllers/storages/uploadFileController.js';
+import { authUserMiddleware } from '../middlewares/authUserMiddleware.js';
+import { listFilesAndFoldersControllers } from '../controllers/storages/fileAndFolderController.js';
+import { updateFileOrFolderController } from '../controllers/storages/updateFileOrFolderController.js';
+
+export const storageRouter2 = express.Router();
+
+//Ruta para listar archivos y carpetas
+storageRouter2.get(
+    '/files-folders',
+    authUserMiddleware,
+    listFilesAndFoldersControllers
+);
+
+// Ruta para subir archivos
+storageRouter2.post(
+    '/upload/files',
+    authUserMiddleware,
+    upload.single('file'),
+    uploadFileController
+);
+
+// Ruta para eliminar archivos
+storageRouter2.delete('/delete');
+// Ruta para actualizar un archivo o carpeta
+storageRouter2.put(
+    '/storage/rename/:id',
+    authUserMiddleware,
+    updateFileOrFolderController
+);

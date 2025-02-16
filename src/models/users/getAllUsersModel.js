@@ -10,7 +10,7 @@ export const getAllUsersModel = async () => {
 
     // 2. Realizar la consulta para obtener todos los usuarios
     const [users] = await pool.query(
-        'SELECT id, username, firstName, lastName, email, avatar, role, createdAt, updatedAt FROM users'
+        'SELECT id, username, firstName, lastName, email, avatar, active, role, createdAt, updatedAt FROM users'
     );
     if (!users.length) {
         throw generateErrorUtils(
