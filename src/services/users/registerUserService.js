@@ -1,5 +1,6 @@
 // Importamos las dependencias
 import bcrypt from 'bcrypt';
+import crypto from 'crypto';
 import randomstring from 'randomstring';
 
 // Importamos los models
@@ -9,9 +10,9 @@ import { insertUserModel } from '../../models/users/insertUserModel.js';
 
 // Importamos el errores
 import generateErrorUtils from '../../utils/helpersUtils.js';
+import sendMailUtils from '../../utils/sendMailUtils.js';
 
 // Importamos util
-import sendMailUtil from '../../utils/sendMail.js';
 
 // Service que se encarga de registrar al usuario
 export const registerUserService = async (username, email, password) => {
@@ -60,7 +61,7 @@ export const registerUserService = async (username, email, password) => {
 	\nGracias por registrarte en nuestra aplicación. Para activar tu cuenta, haz click en el siguiente enlace:
 	\n<a href="http://localhost:3000/activate/${registrationCode}">Activa tu cuenta</a>
 	`;
-    await sendMailUtil(email, emailSubjet, emailText);
+    await sendMailUtils(email, emailSubjet, emailText);
 
     return { id, username, email };
 };

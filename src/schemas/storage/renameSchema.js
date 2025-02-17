@@ -7,5 +7,8 @@ export const renameSchema = joi.object({
         .string()
         .valid('file', 'folder')
         .required()
-        .messages(joiErrorMessages),
+        .messages({
+            'any.only': 'El campo "type" solo puede ser "file" o "folder".',
+            'any.required': 'El campo "type" es obligatorio.',
+        }),
 });

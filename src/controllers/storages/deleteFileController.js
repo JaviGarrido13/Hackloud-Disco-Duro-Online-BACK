@@ -1,11 +1,20 @@
+// Importamos el service
 import { deleteFileService } from '../../services/storages/deleteFileService.js';
 
+// Importamos el model
+import { selectFileByIdModel } from '../../models/storages/selectFileByIdModel.js';
+
+// Importamos el errors
 import generateErrorUtils from '../../utils/helpersUtils.js';
 
+// Función controladora que se encarga de eliminar un archivo
 export const deleteFileController = async (req, res, next) => {
     try {
+        // Obtenemos el id del archivo de los params
         const { fileId } = req.params;
-        const { userId } = req.user.id;
+        // Obtenemos el id del user
+        const userId = req.user.id;
+        // Recogemos folderName si se especifica en el body
         const { folderName } = req.body;
         // Busca el archivo en la DDBB
         const file = await selectFileByIdModel(fileId);
@@ -16,12 +25,16 @@ export const deleteFileController = async (req, res, next) => {
                 'No se ha encontrado el archivo'
             );
         }
+        const fileName = file[0].name;
 
         // Llamamos al Service
-        await deleteFileService(fileId, userId, folderName);
+        await deleteFileService(fileId, fileName, userId, folderName);
 
-        res.status(200).send('Archivo eliminado correctamente.');
+        res.status(200).send({
+            status: 'ok',
+            message: 'Archivo eliminado con éxito',
+        });
     } catch (error) {
-        res.status(500).send('Error al eliminar el archivo.');
+        next(error);
     }
 };

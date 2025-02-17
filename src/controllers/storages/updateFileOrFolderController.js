@@ -36,7 +36,9 @@ export const updateFileOrFolderController = async (req, res, next) => {
         }
 
         res.status(200).send({
-            message: `El ${type} fue renombrado correctamente.`,
+            message: `El ${
+                type === 'file' ? 'archivo' : 'carpeta'
+            } fue renombrado correctamente.`,
             data: updatedItem,
         });
     } catch (error) {

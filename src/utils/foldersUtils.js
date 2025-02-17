@@ -50,3 +50,36 @@ export const deleteFolderUtil = async (userId, nameFolder) => {
         );
     }
 };
+
+export const renameFolderUtil = async (
+    userId,
+    oldNameFolder,
+    newNameFolder
+) => {
+    try {
+        const rootPath = path.join(process.cwd(), 'uploads', userId);
+        const oldFolder = path.join(rootPath, oldNameFolder);
+        const newFolder = path.join(rootPath, newNameFolder);
+        // Verificar que el directorio existe
+        try {
+            await fs.access(oldFolder);
+        } catch (error) {
+            throw generateErrorUtils(
+                404,
+                'FOLDER_NOT_FOUND',
+                'La carpeta no existe'
+            );
+        }
+        await fs.rename(oldFolder, newFolder);
+        console.log(
+            `📂 Carpeta ${oldNameFolder} renombrada correctamente a ${newNameFolder}`
+        );
+        return { oldNameFolder, newNameFolder };
+    } catch (error) {
+        throw generateErrorUtils(
+            500,
+            'FOLDER_RENAME_FAILED',
+            `No se pudo renombrar la carpeta, error: ${error.message}`
+        );
+    }
+};

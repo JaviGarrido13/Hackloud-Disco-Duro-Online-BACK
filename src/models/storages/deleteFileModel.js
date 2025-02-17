@@ -9,11 +9,11 @@ export const deleteFileModel = async (fileId) => {
     const pool = await getPool();
 
     // Query a la DDBB
-    const [result] = await pool.query('DELETE FROM files WHERE id VALUE (?)', [
+    const [result] = await pool.query('DELETE FROM files WHERE id = ?', [
         fileId,
     ]);
     if (result.affectedRows > 0) {
-        console.log(`El archivo ${fileName} ha sido eliminado`);
+        console.log(`El archivo con id: ${fileId} ha sido eliminado`);
     } else {
         throw generateErrorUtils(
             500,

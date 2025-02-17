@@ -1,15 +1,15 @@
 //Importamos dependencias
 import express from 'express';
-import { upload } from '../utils/multerConfig.js';
 
 //Importamos el controller
 
+import { upload } from '../utils/multerConfigUtils.js';
 import { uploadFileController } from '../controllers/storages/uploadFileController.js';
 import { authUserMiddleware } from '../middlewares/authUserMiddleware.js';
 import { listFilesAndFoldersControllers } from '../controllers/storages/fileAndFolderController.js';
 import { updateFileOrFolderController } from '../controllers/storages/updateFileOrFolderController.js';
 import { deleteFileController } from '../controllers/storages/deleteFileController.js';
-import { checkAuthMiddleware } from '../middlewares/checkAuthMiddleware.js';
+import { canDoItMiddleware } from '../middlewares/canDoItMiddleware.js';
 
 export const storageRouter = express.Router();
 
@@ -30,9 +30,9 @@ storageRouter.post(
 
 // Ruta para eliminar archivos
 storageRouter.delete(
-    '/delete/files/:fileId',
+    '/uploads/files/:fileId',
     authUserMiddleware,
-    checkAuthMiddleware,
+    canDoItMiddleware,
     deleteFileController
 );
 
