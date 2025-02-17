@@ -11,6 +11,7 @@ import { getAllUsersController } from '../controllers/users/getAllUsersControlle
 import { editPasswordUserController } from '../controllers/users/editPasswordUserController.js';
 import { getOwnUserController } from '../controllers/users/getOwnUserController.js';
 import { statusUserController } from '../controllers/users/statusUserController.js';
+import { editUserController } from '../controllers/users/editUserController.js';
 
 export const usersRouter = express.Router();
 
@@ -51,3 +52,6 @@ usersRouter.put(
     checkRole('admin'),
     statusUserController
 );
+
+// Ruta para editar y actualizar la info de usuario
+usersRouter.put('/users/own', authUserMiddleware, editUserController);
