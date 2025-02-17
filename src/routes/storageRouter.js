@@ -46,7 +46,7 @@ storageRouter.put(
 
 // Ruta para crear carpetas
 storageRouter.post(
-    '/create/folder',
+    '/storage/folder',
     authUserMiddleware,
     createFolderController
 );

@@ -1,7 +1,6 @@
-import { getPool } from "../../db/getpool.js"
+import { getPool } from '../../db/getpool.js';
 
-export const createNewFolderModel = async (foldersId, foldersName, foldersUserId) => {
-
+export const createNewFolderModel = async (foldersId, folderName, userId) => {
     const pool = await getPool();
 
     const [result] = await pool.query(
@@ -9,7 +8,7 @@ export const createNewFolderModel = async (foldersId, foldersName, foldersUserId
         INSERT INTO folders (id, name, userId)
         VALUES (?, ?, ?)
         `,
-        [foldersId, foldersName, foldersUserId]
+        [foldersId, folderName, userId]
     );
 
     return result;
