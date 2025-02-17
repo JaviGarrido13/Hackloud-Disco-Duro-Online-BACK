@@ -8,6 +8,8 @@ import { uploadFileController } from '../controllers/storages/uploadFileControll
 import { authUserMiddleware } from '../middlewares/authUserMiddleware.js';
 import { listFilesAndFoldersControllers } from '../controllers/storages/fileAndFolderController.js';
 import { updateFileOrFolderController } from '../controllers/storages/updateFileOrFolderController.js';
+import { deleteFileController } from '../controllers/storages/deleteFileController.js';
+import { checkAuthMiddleware } from '../middlewares/checkAuthMiddleware.js';
 
 export const storageRouter = express.Router();
 
@@ -27,7 +29,13 @@ storageRouter.post(
 );
 
 // Ruta para eliminar archivos
-storageRouter.delete('/delete');
+storageRouter.delete(
+    '/delete/files/:fileId',
+    authUserMiddleware,
+    checkAuthMiddleware,
+    deleteFileController
+);
+
 // Ruta para actualizar un archivo o carpeta
 storageRouter.put(
     '/storage/rename/:id',

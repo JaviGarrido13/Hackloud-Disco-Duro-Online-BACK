@@ -26,7 +26,7 @@ export const uploadFileModel = async ({
     } else {
         throw generateErrorUtils(
             500,
-            'INSERT_FAILD',
+            'INSERT_FAILED',
             'No se pudo subir el archivo'
         );
     }
