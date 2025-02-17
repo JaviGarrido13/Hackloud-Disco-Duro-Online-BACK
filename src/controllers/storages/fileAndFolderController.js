@@ -1,6 +1,4 @@
 //Importamos el servicio
-
-import { count } from 'console';
 import { listFilesAndFoldersService } from '../../services/storages/fileAndFolderService.js';
 
 //Funcion controladora que se encarga de listar archivos y carpetas

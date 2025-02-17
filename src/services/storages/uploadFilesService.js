@@ -21,7 +21,7 @@ export const uploadFilesService = async (userId, file, folderName) => {
         filename
     );
 
-    // creamos el objeto fileData
+    // Creamos el objeto fileData
     const fileData = {
         name: originalname,
         path: filePath,

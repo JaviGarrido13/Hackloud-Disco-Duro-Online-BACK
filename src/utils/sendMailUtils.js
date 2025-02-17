@@ -13,7 +13,7 @@ const apiInstance = new brevo.TransactionalEmailsApi();
 apiInstance.setApiKey(brevo.TransactionalEmailsApiApiKeys.apiKey, SMTP_API_KEY);
 
 // Función que envía un mail a un usuario.
-const sendMailUtil = async (to, subject, text) => {
+const sendMailUtils = async (to, subject, text) => {
     try {
         const sendSmtpEmail = new brevo.SendSmtpEmail();
         sendSmtpEmail.subject = subject;
@@ -30,4 +30,4 @@ const sendMailUtil = async (to, subject, text) => {
     }
 };
 
-export default sendMailUtil;
+export default sendMailUtils;
