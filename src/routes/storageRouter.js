@@ -7,6 +7,7 @@ import { upload } from '../utils/multerConfig.js';
 import { uploadFileController } from '../controllers/storages/uploadFileController.js';
 import { authUserMiddleware } from '../middlewares/authUserMiddleware.js';
 import { listFilesAndFoldersControllers } from '../controllers/storages/fileAndFolderController.js';
+import { createFolderController } from '../controllers/storages/createFolderController.js';
 
 export const storageRouter = express.Router();
 //Ruta para listar archivos y carpetas
@@ -26,3 +27,10 @@ storageRouter.post(
 
 // Ruta para eliminar archivos
 storageRouter.delete('/delete');
+
+// Ruta para crear carpetas
+storageRouter.post(
+    '/create/folder',
+    authUserMiddleware,
+    createFolderController
+);
