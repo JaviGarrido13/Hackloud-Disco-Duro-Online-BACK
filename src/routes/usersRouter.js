@@ -12,6 +12,8 @@ import { editPasswordUserController } from '../controllers/users/editPasswordUse
 import { getOwnUserController } from '../controllers/users/getOwnUserController.js';
 import { statusUserController } from '../controllers/users/statusUserController.js';
 import { editUserController } from '../controllers/users/editUserController.js';
+import { editPasswordByRecoveryController } from '../controllers/users/editPasswordByRecoveryController.js';
+import { sendRecoveryPassController } from '../controllers/users/sendRecoveryPassController.js';
 
 export const usersRouter = express.Router();
 
@@ -55,3 +57,9 @@ usersRouter.put(
 
 // Ruta para editar y actualizar la info de usuario
 usersRouter.put('/users/own', authUserMiddleware, editUserController);
+
+// Ruta para recuperar la contraseña de un usuario
+usersRouter.post('/users/password/recover', sendRecoveryPassController);
+
+// Ruta para cambiar la contraseña de un usuario recuperada
+usersRouter.put('/users/password/recover', editPasswordByRecoveryController);
