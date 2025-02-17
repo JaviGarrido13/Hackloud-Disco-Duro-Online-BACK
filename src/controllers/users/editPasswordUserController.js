@@ -1,10 +1,14 @@
+import editPasswordSchema from '../../schemas/users/editPasswordSchema.js';
 import { editPasswordUserService } from '../../services/users/editPasswordUserService.js';
 import generateErrorUtils from '../../utils/helpersUtils.js';
+import validateSchemaUtil from '../../utils/validateSchemaUtil.js';
 
 export const editPasswordUserController = async (req, res, next) => {
     try {
         //  Obtiene id del usuario desde req.user
         const { id } = req.user;
+
+        await validateSchemaUtil(editPasswordSchema, req.body);
 
         // Obtiene la info del req.body, si no hay info devuelve un error.
         const { oldPassword, newPassword, confirmNewPassword } = req.body;

@@ -42,7 +42,7 @@ export const initDb = async () => {
                 password CHAR(60) NOT NULL,
                 avatar CHAR(40) DEFAULT NULL,
                 active BOOLEAN DEFAULT false,
-                role ENUM('admin', 'normal') DEFAULT 'normal' NOT NULL,
+                role ENUM('admin', 'user') DEFAULT 'user' NOT NULL,
                 registrationCode CHAR(15) DEFAULT NULL,
                 recoveryPassCode CHAR(15) DEFAULT NULL,
                 createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
