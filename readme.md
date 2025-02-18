@@ -4,7 +4,7 @@ Hackloud es una app de almacenamiento de archivos en una nube que permite a múl
 
 ## 🛠️ Tecnologías Utílizadas
 
--   **Backend**: Node.js (Express), dotenv, mysql2, cors, joi, bcrypt, randomstring, jsonwebtoken, multer.
+-   **Backend**: Node.js (Express), dotenv, mysql2, cors, joi, bcrypt, randomstring, jsonwebtoken, multer(para subida de archivos).
 -   **Frontend**: React.js, Tailwind CSS.
 -   **Almacenamiento**: multer-cloud-storage (?)
 
@@ -46,8 +46,8 @@ npm start
 
 Estas son las personas que han contribuido en el proyecto y donde puedes localizarlas para cualquier tipo de consulta o ayuda:
 
-Mohammed Chikri Laghzaoui mohammedchikrilag@icloud.com
-Francisco Javier Garrido Valderas fjgarridovalderas@hotmail.com
+Mohammed Chikri Laghzaoui ---- mohammedchikrilag@icloud.com
+Francisco Javier Garrido Valderas ---- fjgarridovalderas@hotmail.com
 Alexmary Rangel Jimenez  
 Bridinia Agüero  
 Sebastián Osuna Hidalgo
