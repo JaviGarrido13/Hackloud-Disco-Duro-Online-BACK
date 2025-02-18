@@ -12,6 +12,7 @@ import { deleteFileController } from '../controllers/storages/deleteFileControll
 import { canDoItMiddleware } from '../middlewares/canDoItMiddleware.js';
 import { createFolderController } from '../controllers/storages/createFolderController.js';
 import { searchFilesController } from '../controllers/storages/searchFilesController.js';
+import { deleteFolderController } from '../controllers/storages/deleteFolderController.js';
 
 export const storageRouter = express.Router();
 
