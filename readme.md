@@ -52,4 +52,4 @@ Mohammed Chikri Laghzaoui ---- mohammedchikrilag@icloud.com
 Francisco Javier Garrido Valderas ---- fjgarridovalderas@hotmail.com
 Alexmary Rangel Jimenez ---- alexmaryrangel@gmail.com
 Bridinia Agüero Madera ---- bridiniaaguero@gmail.com
-Sebastián Osuna Hidalgo ----
+Sebastián Osuna Hidalgo ---- sebasosunah@gmail.com
