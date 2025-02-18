@@ -1,5 +1,3 @@
-import path from 'path';
-import fs from 'fs';
 import { selectUserByIdModel } from '../../models/users/selectUserByIdModel.js';
 import { updateAvatarModel } from '../../models/users/updateAvatarModel.js';
 import generateErrorUtils from '../../utils/helpersUtils.js';
