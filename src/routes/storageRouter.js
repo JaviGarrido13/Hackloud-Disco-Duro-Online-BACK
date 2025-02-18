@@ -33,7 +33,7 @@ storageRouter.post(
 
 // Ruta para eliminar archivos
 storageRouter.delete(
-    '/uploads/files/:fileId',
+    '/uploads/files/:id',
     authUserMiddleware,
     canDoItMiddleware,
     deleteFileController
