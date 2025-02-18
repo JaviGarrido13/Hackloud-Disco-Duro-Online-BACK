@@ -11,6 +11,7 @@ import { updateFileOrFolderController } from '../controllers/storages/updateFile
 import { deleteFileController } from '../controllers/storages/deleteFileController.js';
 import { canDoItMiddleware } from '../middlewares/canDoItMiddleware.js';
 import { createFolderController } from '../controllers/storages/createFolderController.js';
+import { searchFilesController } from '../controllers/storages/searchFilesController.js';
 
 export const storageRouter = express.Router();
 
@@ -50,3 +51,6 @@ storageRouter.post(
     authUserMiddleware,
     createFolderController
 );
+
+// Ruta para busqueda, filtros y ordenación
+storageRouter.get('/storage/search', authUserMiddleware, searchFilesController);
