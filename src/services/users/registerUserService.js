@@ -63,5 +63,5 @@ export const registerUserService = async (username, email, password) => {
 	`;
     await sendMailUtils(email, emailSubjet, emailText);
 
-    return { id, username, email };
+    return { id, username, email, registrationCode };
 };
