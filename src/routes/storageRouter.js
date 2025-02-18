@@ -52,5 +52,13 @@ storageRouter.post(
     createFolderController
 );
 
+// Ruta para eliminar carpeta
+storageRouter.delete(
+    '/storage/folder/:id',
+    authUserMiddleware,
+    canDoItMiddleware,
+    deleteFolderController
+);
+
 // Ruta para busqueda, filtros y ordenación
 storageRouter.get('/storage/search', authUserMiddleware, searchFilesController);
