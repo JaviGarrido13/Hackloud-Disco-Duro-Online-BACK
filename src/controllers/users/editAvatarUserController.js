@@ -5,26 +5,19 @@ import validateSchemaUtil from '../../utils/validateSchemaUtil.js';
 
 export const editAvatarUserController = async (req, res, next) => {
     try {
-        // Obtener los datos del usuario desde req.user
-        const { id } = req.user;
-
-        console.log('Avatar recibido: ', req.file);
-
-        const { avatar } = req.file;
-
-        //Verificar si se ha subido un archivo
         if (!req.file) {
             throw generateErrorUtils(
                 400,
-                'NOT_AVATAR',
-                'No se ha subido ninguna imagen'
+                'AVATAR_MISSING',
+                'Debes enviar un avatar'
             );
         }
 
-        await validateSchemaUtil(editAvatarSchema, { avatar: req.file }); // req.file es el formato que se usa cuando se usa upload.single('avatar) en multer
+        const userId = req.user.id;
+        const avatarFileName = req.file.filename;
 
-        //llamar al service para guardar la imagen
-        const userUpdated = await editAvatarService(id, req.file);
+        // Llamamos al service para actualizar el avatar
+        const updatedUser = await editAvatarService(userId, avatarFileName);
 
         res.status(201).send({
             status: 'ok',
