@@ -11,10 +11,7 @@ import { updateFileOrFolderController } from '../controllers/storages/updateFile
 import { deleteFileController } from '../controllers/storages/deleteFileController.js';
 import { canDoItMiddleware } from '../middlewares/canDoItMiddleware.js';
 import { createFolderController } from '../controllers/storages/createFolderController.js';
-<<<<<<< HEAD
 import { searchFilesController } from '../controllers/storages/searchFilesController.js';
-=======
->>>>>>> filtros
 import { deleteFolderController } from '../controllers/storages/deleteFolderController.js';
 
 export const storageRouter = express.Router();
