@@ -17,7 +17,7 @@ export const canDoItMiddleware = async (req, res, next) => {
             throw generateErrorUtils(404, 'NOT_FOUND', 'El archivo no existe');
         }
 
-        if (userId !== file[0].userId) {
+        if (userId !== file.userId) {
             throw generateErrorUtils(
                 403,
                 'INSUFFICIENT_PERMISSIONS',

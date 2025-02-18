@@ -44,24 +44,26 @@ export const saveFileUtil = async (
 export const deleteFileUtil = async (userId, fileName, folderName = null) => {
     try {
         const filePath = folderName
-            ? path.join(
-                  `${process.cwd()}/uploads/${userId}/${folderName}/${fileName}`
-              )
-            : path.join(`${process.cwd()}/uploads/${userId}/${fileName}`);
-        await fs.unlink(filePath);
-        console.log(`${fileName} borrado correctamente`);
-    } catch (error) {
-        if (error.code === 'ENOENT') {
+            ? path.join(process.cwd(), 'uploads', userId, folderName, fileName)
+            : path.join(process.cwd(), 'uploads', userId, fileName);
+
+        try {
+            await fs.access(filePath);
+        } catch (error) {
             throw generateErrorUtils(
                 404,
                 'FILE_NOT_FOUND',
-                'Archivo no encontrado'
+                `Archivo no encontrado en ${filePath}`
             );
         }
+
+        await fs.unlink(filePath);
+        console.log(`${fileName} eliminado correctamente de ${filePath}`);
+    } catch (error) {
         throw generateErrorUtils(
-            409,
-            'CONFLICT',
-            'Error al eliminar el archivo'
+            500,
+            'DELETE_FAILED',
+            `Error al eliminar el archivo: ${error.message}`
         );
     }
 };
@@ -73,17 +75,16 @@ export const renameFileUtil = async (
     newName
 ) => {
     try {
-        const userPath = path.join(
-            process.cwd(),
-            'uploads',
-            userId,
-            folderName || ''
-        );
+        const userPath = folderName
+            ? path.join(process.cwd(), 'uploads', userId, folderName)
+            : path.join(process.cwd(), 'uploads', userId);
+
         const oldFilePath = path.join(userPath, oldName);
-        // Extraer la ext del archivo
+
+        // Extraer la extensión del archivo original
         const ext = path.extname(oldName);
 
-        // Si el nuevo nombre no incluye la ext mantenemos la previa
+        // Si el nuevo nombre no incluye extensión, mantener la original
         const newFileName = path.extname(newName)
             ? newName
             : `${newName}${ext}`;
@@ -96,14 +97,14 @@ export const renameFileUtil = async (
             throw generateErrorUtils(
                 404,
                 'FILE_NOT_FOUND',
-                'El archivo no existe'
+                `El archivo no existe en la ruta ${oldFilePath}`
             );
         }
+
         // Renombrar el archivo
         await fs.rename(oldFilePath, newFilePath);
-        console.log(
-            `El archivo ${oldName} renombrado correctamente a ${newName}`
-        );
+        console.log(`📂 Archivo renombrado: ${oldName} ➝ ${newFileName}`);
+
         return { oldName, newFileName };
     } catch (error) {
         throw generateErrorUtils(

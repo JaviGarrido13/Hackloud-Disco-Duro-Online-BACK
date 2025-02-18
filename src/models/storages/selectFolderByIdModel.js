@@ -7,6 +7,8 @@ import generateErrorUtils from '../../utils/helpersUtils.js';
 // Model que devuelve un items por su id
 export const selectFolderByIdModel = async (id) => {
     const pool = await getPool();
-    const result = await pool.query(`SELECT * FROM folders WHERE id = ?`, [id]);
-    return result.length > 0 ? result[0] : null;
+    const [result] = await pool.query(`SELECT * FROM folders WHERE id = ?`, [
+        id,
+    ]);
+    return result[0];
 };

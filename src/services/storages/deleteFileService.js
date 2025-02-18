@@ -9,12 +9,12 @@ export const deleteFileService = async (
     fileId,
     fileName,
     userId,
-    folderName = null
+    folderName
 ) => {
+    // Llamamos al modelo para eliminar el archivo
+    const deleteModel = await deleteFileModel(fileId);
     // Llamamos al util que se encarga de borrar el archivo del sistema de archivos
     await deleteFileUtil(userId, fileName, folderName);
-    // Llamamos al modelo que se encarga de borrar el archivo de la base de datos
-    const deleteModel = await deleteFileModel(fileId);
 
     return deleteModel;
 };

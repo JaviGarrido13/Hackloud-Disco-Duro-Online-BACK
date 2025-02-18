@@ -13,7 +13,7 @@ export const deleteFileModel = async (fileId) => {
         fileId,
     ]);
     if (result.affectedRows > 0) {
-        console.log(`El archivo con id: ${fileId} ha sido eliminado`);
+        return { message: 'Archivo eliminado correctamente' };
     } else {
         throw generateErrorUtils(
             500,

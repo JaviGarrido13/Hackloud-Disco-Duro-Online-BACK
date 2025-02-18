@@ -20,14 +20,27 @@ export const updateFileNameService = async (id, newName) => {
     if (!file) {
         throw generateErrorUtils(404, 'FILE_NOT_FOUND', 'El archivo no existe');
     }
-    const oldName = file[0].name;
-    const userId = file[0].userId;
-    const folderId = file[0].folderId || '';
+    const oldName = file.name;
+    const userId = file.userId;
+    const folderId = file.folderId || '';
+
+    let folderName = null;
+    if (folderId) {
+        const folder = await selectFolderByIdModel(folderId);
+        if (!folder) {
+            throw generateErrorUtils(
+                404,
+                'FOLDER_NOT_FOUND',
+                'La carpeta no existe no existe'
+            );
+        }
+        folderName = folder.name;
+    }
 
     // Renombrar en el sistema de archivos
     const renamedFile = await renameFileUtil(
         userId,
-        folderId,
+        folderName,
         oldName,
         newName
     );
@@ -58,10 +71,8 @@ export const updateFolderNameService = async (id, newName) => {
             'La carpeta no existe.'
         );
     }
-    console.log('Fodler', folder);
-
-    const oldName = folder[0].name;
-    const userId = folder[0].userId;
+    const oldName = folder.name;
+    const userId = folder.userId;
     // Renombrar en el sistema de archivos
     const renamedFolder = await renameFolderUtil(userId, oldName, newName);
     const { newNameFolder } = renamedFolder;

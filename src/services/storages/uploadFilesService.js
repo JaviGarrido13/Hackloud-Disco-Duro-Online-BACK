@@ -7,6 +7,9 @@ import { uploadFileModel } from '../../models/storages/uploadFileModel.js';
 
 // Importamos el util
 import { saveFileUtil } from '../../utils/fileUtils.js';
+import { selectFolderByIdModel } from '../../models/storages/selectFolderByIdModel.js';
+import { selectFolderByName } from '../../models/storages/selectFolderByName.js';
+import { createFolderService } from './createFolderService.js';
 
 // Service que se encarga de guardar el archivo
 export const uploadFilesService = async (userId, file, folderName) => {
@@ -29,13 +32,21 @@ export const uploadFilesService = async (userId, file, folderName) => {
         userId,
     };
 
+    // Si llega con folderName, buscamos en la ddbb
+    let folderId;
+    if (folderName) {
+        const folder = await selectFolderByName(folderName);
+        if (folder) {
+            folderId = folder.id;
+        } else {
+            // Si no existe el folder, creamos uno
+            const newFolder = await createFolderService(folderName, userId);
+            folderId = newFolder;
+        }
+    }
+
     // Llamamos al util que guarda el archivo
-    const savedFile = await saveFileUtil(
-        userId,
-        folderName,
-        filename,
-        fileData
-    );
+    await saveFileUtil(userId, folderName, filename, fileData);
 
     // Generamos id unica
     const fileId = crypto.randomUUID();
@@ -46,7 +57,7 @@ export const uploadFilesService = async (userId, file, folderName) => {
         filename,
         size,
         userId,
-        folderName,
+        folderId,
     });
 
     return uploadedFile;

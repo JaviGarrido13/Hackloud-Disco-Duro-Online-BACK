@@ -6,6 +6,7 @@ import { selectFileByIdModel } from '../../models/storages/selectFileByIdModel.j
 
 // Importamos el errors
 import generateErrorUtils from '../../utils/helpersUtils.js';
+import { selectFolderByIdModel } from '../../models/storages/selectFolderByIdModel.js';
 
 // Función controladora que se encarga de eliminar un archivo
 export const deleteFileController = async (req, res, next) => {
@@ -14,19 +15,17 @@ export const deleteFileController = async (req, res, next) => {
         const { fileId } = req.params;
         // Obtenemos el id del user
         const userId = req.user.id;
-        // Recogemos folderName si se especifica en el body
-        const { folderName } = req.body;
         // Busca el archivo en la DDBB
         const file = await selectFileByIdModel(fileId);
-        if (!file) {
-            throw generateErrorUtils(
-                404,
-                'FILE_NOT_FOUND',
-                'No se ha encontrado el archivo'
-            );
+        // Si el archivo esta en una carpeta recuperamos el nombre
+        let folderName = null;
+        if (file.folderId) {
+            // Si el archivo pertenece a un folder, obtenemos el nombre
+            const folder = await selectFolderByIdModel(file.folderId);
+            folderName = folder.name;
         }
-        const fileName = file[0].name;
 
+        const fileName = file.name;
         // Llamamos al Service
         await deleteFileService(fileId, fileName, userId, folderName);
 
