@@ -1,7 +1,9 @@
 import path from 'path';
 import fs from 'fs';
 import { selectUserByIdModel } from '../../models/users/selectUserByIdModel.js';
+import { updateAvatarModel } from '../../models/users/updateAvatarModel.js';
 import generateErrorUtils from '../../utils/helpersUtils.js';
+import { deleteAvatarUtil } from '../../utils/avatarUtils.js';
 
 export const editAvatarService = async (userId, avatarFileName) => {
     // Obtenemos el usuario actual
@@ -16,16 +18,8 @@ export const editAvatarService = async (userId, avatarFileName) => {
 
     // Si el usuario ya tiene avatar, eliminar el anterior
     if (user.avatar) {
-        const oldAvatarPath = path.join(
-            process.cwd(),
-            'uploads',
-            userId,
-            'avatars',
-            user.avatar
-        );
-        if (fs.existsSync(oldAvatarPath)) {
-            fs.unlink(oldAvatarPath);
-        }
+        await deleteAvatarUtil(userId, user.avatar);
     }
+
     return await updateAvatarModel(userId, avatarFileName);
 };

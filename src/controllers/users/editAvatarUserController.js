@@ -1,7 +1,5 @@
-import { editAvatarSchema } from '../../schemas/users/editAvatarSchema.js';
-import { editAvatarService } from '../../services/users/editAvatarService.js';
 import generateErrorUtils from '../../utils/helpersUtils.js';
-import validateSchemaUtil from '../../utils/validateSchemaUtil.js';
+import { editAvatarService } from '../../services/users/editAvatarService.js';
 
 export const editAvatarUserController = async (req, res, next) => {
     try {
@@ -22,7 +20,7 @@ export const editAvatarUserController = async (req, res, next) => {
         res.status(201).send({
             status: 'ok',
             message: 'Avatar actualizado correctamente',
-            data: { userUpdated },
+            data: updatedUser,
         });
     } catch (error) {
         next(error);

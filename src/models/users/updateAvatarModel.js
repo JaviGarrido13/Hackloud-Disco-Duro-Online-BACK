@@ -1,6 +1,7 @@
 import { getPool } from '../../db/getpool.js';
+import generateErrorUtils from '../../utils/helpersUtils.js';
 
-export const updateAvatarUserModel = async (id, avatarFilePath) => {
+export const updateAvatarModel = async (id, avatarFilePath) => {
     // Obtener el pool de conexiones
     const pool = await getPool();
 
@@ -10,5 +11,7 @@ export const updateAvatarUserModel = async (id, avatarFilePath) => {
         [avatarFilePath, id]
     );
 
-    return result;
+    return result.affectedRows > 0
+        ? { message: 'Avatar actualizado' }
+        : { message: 'Error al actualizar el avatar' };
 };

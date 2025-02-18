@@ -4,6 +4,7 @@ import fs from 'fs';
 import sharp from 'sharp';
 import { createPathUtil, createUserPath } from './foldersUtils.js';
 import generateErrorUtils from './helpersUtils.js';
+import { saveAvatarUtil } from './avatarUtils.js';
 
 // Almacenamiento dinámico
 const storage = multer.memoryStorage(); // Guardamos en memoria para procesar con Sharp
@@ -44,37 +45,10 @@ export const processAvatar = async (req, res, next) => {
                 'Debes enviar un avatar'
             );
         }
+
         const userId = req.user.id;
-        const isAvatar = req.originalUrl.includes('/users/avatar');
+        req.file.filename = await saveAvatarUtil(userId, req.file.buffer); // Guardar el avatar
 
-        if (isAvatar) {
-            const avatarPath = path.join(
-                process.cwd(),
-                'uploads',
-                'avatars',
-                `${userId}.png`
-            );
-
-            // Convertir y optimizar la imagen con sharp
-            await sharp(req.file.buffer)
-                .resize(200, 200)
-                .toFormat('png')
-                .toFile(avatarPath);
-
-            req.file.filename = `${userId}.png`;
-        } else {
-            // Processar archivos normales (guardar en el sistema de archivos)
-            const userPath = path.join(process.cwd(), 'uploads', userId);
-            await createUserPath(userId);
-
-            const filePath = path.join(
-                userPath,
-                `${Date.now()}-${req.file.originalname}`
-            );
-            await fs.promises.writeFile(filePath, req.file.buffer);
-
-            req.file.filename = path.basename(filePath);
-        }
         next();
     } catch (error) {
         next(error);
