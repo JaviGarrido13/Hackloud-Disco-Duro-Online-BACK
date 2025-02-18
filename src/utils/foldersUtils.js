@@ -28,25 +28,41 @@ export const createPathUtil = async (userId, nameFolder) => {
 
 export const deleteFolderUtil = async (userId, nameFolder) => {
     try {
+        if (!nameFolder) {
+            throw generateErrorUtils(
+                400,
+                'INVALID_FOLDER',
+                'El nombre de la carpeta no es válido.'
+            );
+        }
+
         const folderPath = path.join(
             process.cwd(),
             'uploads',
             userId,
             nameFolder
         );
-        await fs.rm(folderPath, { recursive: true, force: true });
-    } catch (error) {
-        if (error.code === 'ENOENT') {
+
+        // Verificar si la carpeta existe antes de eliminarla
+        try {
+            await fs.access(folderPath); // Si no existe, lanza un error
+        } catch (error) {
             throw generateErrorUtils(
                 404,
                 'FOLDER_NOT_FOUND',
-                'Carpeta no encontrada'
+                `No se encontró la carpeta en ${folderPath}`
             );
         }
+
+        // Eliminar la carpeta y todo su contenido
+        await fs.rm(folderPath, { recursive: true });
+
+        console.log(`✅ Carpeta eliminada: ${folderPath}`);
+    } catch (error) {
         throw generateErrorUtils(
-            409,
-            'CONFLICT',
-            'Hubo un error al intentar eliminar la carpeta'
+            500,
+            'DELETE_FOLDER_FAILED',
+            `Error al eliminar la carpeta: ${error.message}`
         );
     }
 };
