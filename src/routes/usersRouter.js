@@ -14,6 +14,8 @@ import { statusUserController } from '../controllers/users/statusUserController.
 import { editUserController } from '../controllers/users/editUserController.js';
 import { editPasswordByRecoveryController } from '../controllers/users/editPasswordByRecoveryController.js';
 import { sendRecoveryPassController } from '../controllers/users/sendRecoveryPassController.js';
+import { editAvatarUserController } from '../controllers/users/editAvatarUserController.js';
+import { upload } from '../utils/multerConfigUtils.js';
 
 export const usersRouter = express.Router();
 
@@ -63,3 +65,11 @@ usersRouter.post('/users/password/recover', sendRecoveryPassController);
 
 // Ruta para cambiar la contraseña de un usuario recuperada
 usersRouter.put('/users/password/recover', editPasswordByRecoveryController);
+
+// Ruta para actualizar el avatar de un usuario
+usersRouter.put(
+    '/users/avatar',
+    authUserMiddleware,
+    upload.single('avatar'),
+    editAvatarUserController
+);
