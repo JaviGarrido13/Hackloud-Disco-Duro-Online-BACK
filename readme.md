@@ -12,6 +12,8 @@ Hackloud es una app de almacenamiento de archivos en una nube que permite a múl
 
 ### 1️⃣ Clonar el repositorio
 
+git clone https://github.com/MohammedChlag/Proyecto-Disco-Duro.git
+
 ### 2️⃣ Configurar Variables de Entorno
 
 Crea un archivo ".env" en la raíz del proyecto y define las siguientes variables:
@@ -48,6 +50,6 @@ Estas son las personas que han contribuido en el proyecto y donde puedes localiz
 
 Mohammed Chikri Laghzaoui ---- mohammedchikrilag@icloud.com
 Francisco Javier Garrido Valderas ---- fjgarridovalderas@hotmail.com
-Alexmary Rangel Jimenez  
-Bridinia Agüero  
-Sebastián Osuna Hidalgo
+Alexmary Rangel Jimenez ---- alexmaryrangel@gmail.com
+Bridinia Agüero Madera ---- bridiniaaguero@gmail.com
+Sebastián Osuna Hidalgo ----
