@@ -6,7 +6,7 @@ import generateErrorUtils from '../../utils/helpersUtils.js';
 
 export const getAllAssessmentsController = async (req, res, next) => {
     try {
-        const pool = await getPool;
+        const pool = await getPool();
         //Realizamos una consulta a la base de datos para obtener las valoraciones y ordenamos
         const [rows] = await pool.query(
             'SELECT * FROM assessments ORDER BY createdAt DESC'
