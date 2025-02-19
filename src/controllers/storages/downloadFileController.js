@@ -1,45 +1,37 @@
 import path from 'path';
-import fs from 'fs';
 
+// Importamos el Model de busqueda de Archivo por id
 import { selectFileByIdModel } from '../../models/storages/selectFileByIdModel.js';
-import generateErrorUtils from '../../utils/helpersUtils.js';
+
+// Importamos el Model de busqueda de Carpeta por id
+import { selectFolderByIdModel } from '../../models/storages/selectFolderByIdModel.js';
 
 export const downloadFileController = async (req, res, next) => {
     try {
-        // Obtiene fileId desde la URL
-        const { fileId } = req.params;
-
-        // Obtiene userId desde el token o sesión
+        // Obtenemos el id del archivo de los params
+        const { id } = req.params;
+        // Obtenemos el id del user
         const userId = req.user.id;
-
         // Busca el archivo en la DDBB
-        const fileData = await selectFileByIdModel(fileId);
-        if (!fileData) {
-            throw generateErrorUtils(
-                400,
-                'NOT_FILE_FOUNDED',
-                'No se ha encontrado ningun  archivo'
-            );
+        const file = await selectFileByIdModel(id);
+
+        let folderName = null;
+        if (file.folderId !== null) {
+            const { name } = await selectFolderByIdModel(file.folderId);
+            folderName = name;
         }
 
-        // Ruta del archivo
+        const fileName = file.name;
+
         const filePath = path.join(
+            process.cwd(),
             'uploads',
-            userId.toString(),
-            fileData.fileName
+            userId,
+            folderName || '',
+            fileName
         );
-
-        // Verifica si el archivo existe
-        if (!fs.access(filePath)) {
-            throw generateErrorUtils(
-                404,
-                'FILE_NOT_FOUND',
-                'El archivo no se ha encontrado en el servidor'
-            );
-        }
-
-        // Descarga el archivo
-        res.download(filePath);
+        res.status(200).download(filePath, fileName);
+        console.log(process.cwd());
     } catch (error) {
         next(error);
     }

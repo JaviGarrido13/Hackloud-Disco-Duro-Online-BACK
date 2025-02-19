@@ -68,7 +68,7 @@ storageRouter.get('/storage/search', authUserMiddleware, searchFilesController);
 
 // Ruta para descargar un archivo
 storageRouter.get(
-    '/download/:fileId',
+    '/uploads/files/:id',
     authUserMiddleware,
     downloadFileController
 );
