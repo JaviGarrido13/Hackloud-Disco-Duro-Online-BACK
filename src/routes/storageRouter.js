@@ -1,27 +1,35 @@
 //Importamos dependencias
 import express from 'express';
 
-//Importamos el controller
-
-import { processFileUpload, upload } from '../utils/multerConfigUtils.js';
-import { uploadFileController } from '../controllers/storages/uploadFileController.js';
 import { authUserMiddleware } from '../middlewares/authUserMiddleware.js';
-import { listFilesAndFoldersControllers } from '../controllers/storages/fileAndFolderController.js';
-import { updateFileOrFolderController } from '../controllers/storages/updateFileOrFolderController.js';
-import { deleteFileController } from '../controllers/storages/deleteFileController.js';
 import { canDoItMiddleware } from '../middlewares/canDoItMiddleware.js';
+import { processFileUpload, upload } from '../utils/multerConfigUtils.js';
+
+//Importamos el controller
 import { createFolderController } from '../controllers/storages/createFolderController.js';
-import { searchFilesController } from '../controllers/storages/searchFilesController.js';
 import { deleteFolderController } from '../controllers/storages/deleteFolderController.js';
+import { uploadFileController } from '../controllers/storages/uploadFileController.js';
+import { deleteFileController } from '../controllers/storages/deleteFileController.js';
+import { updateFileOrFolderController } from '../controllers/storages/updateFileOrFolderController.js';
+import { listFilesAndFoldersControllers } from '../controllers/storages/fileAndFolderController.js';
+import { searchFilesController } from '../controllers/storages/searchFilesController.js';
 import { downloadFileController } from '../controllers/storages/downloadFileController.js';
 
 export const storageRouter = express.Router();
 
-//Ruta para listar archivos y carpetas
-storageRouter.get(
-    '/files-folders',
+// Ruta para crear carpetas
+storageRouter.post(
+    '/storage/folder',
     authUserMiddleware,
-    listFilesAndFoldersControllers
+    createFolderController
+);
+
+// Ruta para eliminar carpeta
+storageRouter.delete(
+    '/storage/folder/:id',
+    authUserMiddleware,
+    canDoItMiddleware,
+    deleteFolderController
 );
 
 // Ruta para subir archivos
@@ -48,19 +56,11 @@ storageRouter.put(
     updateFileOrFolderController
 );
 
-// Ruta para crear carpetas
-storageRouter.post(
-    '/storage/folder',
+//Ruta para listar archivos y carpetas
+storageRouter.get(
+    '/files-folders',
     authUserMiddleware,
-    createFolderController
-);
-
-// Ruta para eliminar carpeta
-storageRouter.delete(
-    '/storage/folder/:id',
-    authUserMiddleware,
-    canDoItMiddleware,
-    deleteFolderController
+    listFilesAndFoldersControllers
 );
 
 // Ruta para busqueda, filtros y ordenación
