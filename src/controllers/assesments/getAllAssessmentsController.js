@@ -5,12 +5,12 @@ import generateErrorUtils from '../../utils/helpersUtils.js';
 
 export const getAllAssessmentsController = async (req, res) => {
     try {
-        //Reañizamos una consulta a la base de datos para obtener las valoraciones y ordenamos
+        //Realizamos una consulta a la base de datos para obtener las valoraciones y ordenamos
         const [row] = await pool.query(
             'SELECT * FROM assessments ORDER BY createdAt DESC'
         );
         //Si no hay valoraciones, lanzamos un error
-        if (rows.length === 0) {
+        if (row.length === 0) {
             return next(
                 generateErrorUtils(
                     404,

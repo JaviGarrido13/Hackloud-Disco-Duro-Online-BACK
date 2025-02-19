@@ -15,14 +15,11 @@ export const deleteUserService = async (id) => {
         throw generateErrorUtils(404, 'USER_NOT_FOUND', 'El usuario no exite');
     }
 
-    //Eliminar los archivos asociados al usuario
-    await deleteUserFilesModel(id);
-
     //Eliminar el usuario de la base de datos
-    const result = await deleteUserModel;
-    if (result.affectedRows === 0) {
+    const result = await deleteUserModel();
+    if (result.affectedRow === 0) {
         throw generateErrorUtils(
-            500,
+            409,
             'CONFLICT',
             'No se pudo eliminar el usuario'
         );
