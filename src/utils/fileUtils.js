@@ -7,36 +7,39 @@ export const saveFileUtil = async (
     userId,
     folderName = null,
     fileName,
-    fileData
+    file
 ) => {
     try {
-        // Construir la ruta del usuario usando path.join
-        const userPath = path.join(
-            process.cwd(),
-            'uploads',
-            userId,
-            folderName || ''
-        );
+        // Construir la ruta donde se guardará el archivo
+        const uploadPath = folderName
+            ? path.join(process.cwd(), 'uploads', userId, folderName)
+            : path.join(process.cwd(), 'uploads', userId);
 
         // Asegurar que el directorio existe
-        await fs.mkdir(userPath, { recursive: true });
+        await fs.mkdir(uploadPath, { recursive: true });
 
-        // Guardar los metadatos del archivo
-        const fileMetadata = {
-            name: fileData.name,
-            path: fileData.path,
-            size: fileData.size,
-            userId: fileData.userId,
-            createdAt: new Date().toISOString(),
-        };
-        console.log('Metadatos del archivo:', fileMetadata);
-        // Devolver fileMetaData
-        return fileMetadata;
+        // Definir el path del archivo
+        const filePath = path.join(uploadPath, fileName);
+
+        // Verificar si el buffer es válido
+        if (!file || !file.buffer || !Buffer.isBuffer(file.buffer)) {
+            throw generateErrorUtils(
+                400,
+                'INVALID_FILE_BUFFER',
+                'El archivo no tiene datos válidos.'
+            );
+        }
+
+        // Guardar el archivo en el sistema
+        await fs.writeFile(filePath, file.buffer);
+
+        return fileName;
     } catch (error) {
+        console.log(error);
         throw generateErrorUtils(
-            409,
-            'CONFLICT',
-            'No se pudo guardar el archivo'
+            500,
+            'FILE_SAVE_FAILED',
+            'Error al guardar el archivo.'
         );
     }
 };

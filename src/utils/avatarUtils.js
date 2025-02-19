@@ -19,36 +19,27 @@ export const getAvatarPath = async (userId) => {
 // Guardar el avatar procesado
 export const saveAvatarUtil = async (userId, fileBuffer) => {
     try {
-        if (!fileBuffer || !Buffer.isBuffer(fileBuffer)) {
-            throw generateErrorUtils(
-                400,
-                'INVALID_FILE_BUFFER',
-                'El archivo no tiene un buffer válido.'
-            );
-        }
-
         const avatarDir = path.join(
             process.cwd(),
             'uploads',
             userId,
             'avatars'
         );
-        console.log('AvatarDir', avatarDir);
 
         await fs.mkdir(avatarDir, { recursive: true });
 
-        const avatarPath = path.join(avatarDir, `${userId}.png`);
+        const avatarFileName = `avatar_${Date.now()}.png`;
 
-        console.log('Guardando avatar en:', avatarPath);
+        const avatarPath = path.join(avatarDir, avatarFileName);
 
         await sharp(fileBuffer)
             .resize(250, 250)
             .toFormat('png')
             .toFile(avatarPath);
 
-        return `${userId}.png`;
+        return avatarFileName;
     } catch (error) {
-        console.error('Error en saveAvatarUtil:', error);
+        console.log('Error al guardar el avatar', error);
         throw generateErrorUtils(
             500,
             'AVATAR_SAVE_FAILED',
@@ -58,23 +49,29 @@ export const saveAvatarUtil = async (userId, fileBuffer) => {
 };
 
 // Eliminar el avatar anterior
-export const deleteAvatarUtil = async (userId, avatarFileName) => {
+export const deleteAvatarUtil = async (userId, currentAvatar) => {
     try {
-        if (!avatarFileName) return;
-        const avatarPath = path.join(
+        if (!currentAvatar) return;
+
+        const avatarDir = path.join(
             process.cwd(),
             'uploads',
             userId,
-            'avatars',
-            avatarFileName
+            'avatars'
         );
-        await fs.unlink(avatarPath);
-        console.log('Avatar eliminado correctamente');
+
+        // Eliminar todas las versiones del avatar
+        const files = await fs.readdir(avatarDir);
+        await Promise.all(
+            files
+                .filter((file) => file.startsWith('avatar_'))
+                .map((file) => fs.unlink(path.join(avatarDir, file)))
+        );
+
+        console.log(`♻️ Eliminados ${files.length} avatares antiguos`);
     } catch (error) {
-        throw generateErrorUtils(
-            500,
-            'DELETE_LAST_AVATAR_FAILED',
-            'Error al eliminar el avatar anterior'
-        );
+        console.error(`❌ Error eliminando avatar: ${error.message}`);
+        console.error('Stack trace:', error.stack);
+        throw error;
     }
 };

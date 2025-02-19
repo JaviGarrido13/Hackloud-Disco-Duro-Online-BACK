@@ -15,7 +15,7 @@ import { editUserController } from '../controllers/users/editUserController.js';
 import { editPasswordByRecoveryController } from '../controllers/users/editPasswordByRecoveryController.js';
 import { sendRecoveryPassController } from '../controllers/users/sendRecoveryPassController.js';
 import { editAvatarUserController } from '../controllers/users/editAvatarUserController.js';
-import { processAvatar, upload } from '../utils/multerConfigUtils.js';
+import { processFileUpload, upload } from '../utils/multerConfigUtils.js';
 
 export const usersRouter = express.Router();
 
@@ -71,6 +71,6 @@ usersRouter.put(
     '/users/avatar',
     authUserMiddleware,
     upload.single('avatar'),
-    processAvatar,
+    processFileUpload,
     editAvatarUserController
 );

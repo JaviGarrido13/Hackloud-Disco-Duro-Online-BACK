@@ -13,9 +13,14 @@ export const editAvatarUserController = async (req, res, next) => {
 
         const userId = req.user.id;
         const avatarFileName = req.file.filename;
+        const fileBuffer = req.file.buffer;
 
         // Llamamos al service para actualizar el avatar
-        const updatedUser = await editAvatarService(userId, avatarFileName);
+        const updatedUser = await editAvatarService(
+            userId,
+            avatarFileName,
+            fileBuffer
+        );
 
         res.status(201).send({
             status: 'ok',

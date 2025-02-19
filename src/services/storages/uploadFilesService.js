@@ -13,16 +13,12 @@ import { createFolderService } from './createFolderService.js';
 
 // Service que se encarga de guardar el archivo
 export const uploadFilesService = async (userId, file, folderName) => {
+    console.log('userId', userId, 'file', file, 'folderName', folderName);
     // Destructuring de file
     const { originalname, filename, size } = file;
 
     // Path del archivo
-    const filePath = path.join(
-        'uploads',
-        userId,
-        folderName ? folderName : '',
-        filename
-    );
+    const filePath = path.join('uploads', userId, folderName || '', filename);
 
     // Creamos el objeto fileData
     const fileData = {
@@ -45,8 +41,7 @@ export const uploadFilesService = async (userId, file, folderName) => {
         }
     }
 
-    // Llamamos al util que guarda el archivo
-    await saveFileUtil(userId, folderName, filename, fileData);
+    // El archivo lo guardamos desde el middleware de multer
 
     // Generamos id unica
     const fileId = crypto.randomUUID();

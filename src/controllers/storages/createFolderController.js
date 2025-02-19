@@ -9,7 +9,7 @@ export const createFolderController = async (req, res, next) => {
             throw generateErrorUtils(
                 401,
                 'NAME_IS_REQUIRED',
-                'El campo "name" es obligatorio'
+                'El campo "FolderName" es obligatorio'
             );
         }
         const folder = await createFolderService(folderName, userId);

@@ -3,7 +3,7 @@ import express from 'express';
 
 //Importamos el controller
 
-import { upload } from '../utils/multerConfigUtils.js';
+import { processFileUpload, upload } from '../utils/multerConfigUtils.js';
 import { uploadFileController } from '../controllers/storages/uploadFileController.js';
 import { authUserMiddleware } from '../middlewares/authUserMiddleware.js';
 import { listFilesAndFoldersControllers } from '../controllers/storages/fileAndFolderController.js';
@@ -28,6 +28,7 @@ storageRouter.post(
     '/uploads/files',
     authUserMiddleware,
     upload.single('file'),
+    processFileUpload,
     uploadFileController
 );
 
