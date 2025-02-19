@@ -7,21 +7,21 @@ export const deleteUserModel = async (id) => {
 
     //Query para eliminar al usuario, archivos asociados y carpetas asociadas
     try {
-        const [files] = await pool.query('DELETE FROM files WHERE userId = ?', [
-            userId,
-        ]);
-        const [folders] = await pool.query(
-            'DELETE FROM folders WHERE userId = ?',
-            [userId]
-        );
-        const [users] = await pool.query('DELETE FROM users WHERE id = ?', [
+        await pool.beginTransaction();
+        await pool.query('DELETE FROM files WHERE userId = ?', [userId]);
+        await pool.query('DELETE FROM folders WHERE userId = ?', [userId]);
+        const [result] = await pool.query('DELETE FROM users WHERE id = ?', [
             id,
         ]);
+        await pool.commit();
 
-        const result = { files, folders, users };
-
-        return result;
+        return result.affectedRows > 0;
     } catch (error) {
-        throw error;
+        await pool.rollback();
+        throw generateErrorUtils(
+            409,
+            'CONFLICT',
+            'No se pudo eliminar el usuario'
+        );
     }
 };

@@ -54,7 +54,7 @@ usersRouter.put(
 
 //Ruta para eliminar usuarios
 usersRouter.delete(
-    '/user/:id',
+    '/admin/user/:id',
     authUserMiddleware,
     checkRole('admin'),
     deleteUserController
