@@ -1,11 +1,15 @@
 import crypto from 'crypto';
 
-import { insertVoteModel } from '../../models/usersAssesments/insertVoteModel.js';
 import generateErrorUtils from '../../utils/helpersUtils.js';
+import { insertVoteModel } from '../../models/assesments/insertVoteModel.js';
+import { votesSchema } from '../../schemas/asessments/votesSchema.js';
 
 
 export const votesController = async (req, res, next) => {
     try {
+        // Validar tipos de datos
+        await votesSchema.validateAsync(req.body);
+
         // Obtener datos
         const { vote, comment } = req.body;
         const userId = req.user.id;

@@ -8,7 +8,7 @@ export const votesSchema = Joi.object({
         'number.max': 'El voto debe de ser como máximo 5',
         'any.required': 'El voto es obligatorio'
     }),
-    Comment: Joi.string().required().messages({
+    comment: Joi.string().required().messages({
         'string.base': 'El cometario debe de ser un texto',
         'any.required': 'El comentario es obligatorio',
     }),
