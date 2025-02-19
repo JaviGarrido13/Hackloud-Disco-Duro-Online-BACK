@@ -1,7 +1,7 @@
 //Importamos los models
 import { selectUserByIdModel } from '../../models/users/selectUserByIdModel.js';
 import { deleteUserModel } from '../../models/users/deleteUserModel.js';
-import { deleteUserFilesModel } from '../../models/users/deleteUserFilesModel';
+import { deleteFolderUtil } from '../../utils/foldersUtils.js';
 
 //Importamos los errores
 import generateErrorUtils from '../../utils/helpersUtils.js';
@@ -14,9 +14,11 @@ export const deleteUserService = async (id) => {
     if (!user) {
         throw generateErrorUtils(404, 'USER_NOT_FOUND', 'El usuario no exite');
     }
+    //Eliminar la carpeta de usuario
+    await deleteFolderUtil(id);
 
     //Eliminar el usuario de la base de datos
-    const result = await deleteUserModel();
+    const result = await deleteUserModel(id);
     if (result.affectedRow === 0) {
         throw generateErrorUtils(
             409,
