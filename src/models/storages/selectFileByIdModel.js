@@ -1,9 +1,6 @@
 // Importamos función que devuelve pool con la ddbb
 import { getPool } from '../../db/getpool.js';
 
-// Importamos el errors
-import generateErrorUtils from '../../utils/helpersUtils.js';
-
 // Model que devuelve un items por su id
 export const selectFileByIdModel = async (id) => {
     const pool = await getPool();

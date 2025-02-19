@@ -13,6 +13,7 @@ import { canDoItMiddleware } from '../middlewares/canDoItMiddleware.js';
 import { createFolderController } from '../controllers/storages/createFolderController.js';
 import { searchFilesController } from '../controllers/storages/searchFilesController.js';
 import { deleteFolderController } from '../controllers/storages/deleteFolderController.js';
+import { downloadFileController } from '../controllers/storages/downloadFileController.js';
 
 export const storageRouter = express.Router();
 
@@ -64,3 +65,10 @@ storageRouter.delete(
 
 // Ruta para busqueda, filtros y ordenación
 storageRouter.get('/storage/search', authUserMiddleware, searchFilesController);
+
+// Ruta para descargar un archivo
+storageRouter.get(
+    '/download/:fileId',
+    authUserMiddleware,
+    downloadFileController
+);
