@@ -16,7 +16,12 @@ import { editPasswordByRecoveryController } from '../controllers/users/editPassw
 import { sendRecoveryPassController } from '../controllers/users/sendRecoveryPassController.js';
 import { editAvatarUserController } from '../controllers/users/editAvatarUserController.js';
 import { processFileUpload, upload } from '../utils/multerConfigUtils.js';
+<<<<<<< HEAD
+import { deleteAvatarUserController } from '../controllers/users/deleteAvatarUserController.js';
 import { deleteUserController } from '../controllers/users/deleteUserController.js';
+=======
+import { deleteUserController } from '../controllers/users/deleteUserController.js';
+>>>>>>> 49fe1ed872c211f78561e8ca1e911d0585c1870b
 
 export const usersRouter = express.Router();
 
@@ -75,6 +80,11 @@ usersRouter.put(
     processFileUpload,
     editAvatarUserController
 );
+
+usersRouter.delete(
+    '/users/avatar',
+    authUserMiddleware,
+    deleteAvatarUserController)
 
 //Ruta para eliminar usuarios
 usersRouter.delete(
