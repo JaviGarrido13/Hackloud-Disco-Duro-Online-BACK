@@ -16,6 +16,7 @@ import { editPasswordByRecoveryController } from '../controllers/users/editPassw
 import { sendRecoveryPassController } from '../controllers/users/sendRecoveryPassController.js';
 import { editAvatarUserController } from '../controllers/users/editAvatarUserController.js';
 import { processFileUpload, upload } from '../utils/multerConfigUtils.js';
+import { deleteAvatarUserController } from '../controllers/users/deleteAvatarUserController.js';
 
 export const usersRouter = express.Router();
 
@@ -73,4 +74,10 @@ usersRouter.put(
     upload.single('avatar'),
     processFileUpload,
     editAvatarUserController
+);
+
+usersRouter.delete(
+    '/users/avatar',
+    authUserMiddleware,
+    deleteAvatarUserController
 );
