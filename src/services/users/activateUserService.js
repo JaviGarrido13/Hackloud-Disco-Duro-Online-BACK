@@ -1,6 +1,7 @@
 //Importamos los models
 import { SelectUserByRegCode } from '../../models/users/SelectUserByRegCode.js';
 import { updateActiveUserModel } from '../../models/users/updateActiveUserModel.js';
+import { createUserPath } from '../../utils/foldersUtils.js';
 
 // Importamos el errors
 import generateErrorUtils from '../../utils/helpersUtils.js';
@@ -22,6 +23,9 @@ export const activateUserServices = async (registrationCode) => {
     }
     // Actualizar el estado del usuario a activo
     const result = await updateActiveUserModel(registrationCode);
+
+    // Crear carpeta raiz del usuario
+    await createUserPath(user.id);
     if (result.affectedRows === 0) {
         throw generateErrorUtils(
             500,

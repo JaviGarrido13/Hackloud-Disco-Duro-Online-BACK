@@ -26,16 +26,8 @@ export const createPathUtil = async (userId, nameFolder) => {
     return folderPath;
 };
 
-export const deleteFolderUtil = async (userId, nameFolder) => {
+export const deleteFolderUtil = async (userId, nameFolder = '') => {
     try {
-        if (!nameFolder) {
-            throw generateErrorUtils(
-                400,
-                'INVALID_FOLDER',
-                'El nombre de la carpeta no es válido.'
-            );
-        }
-
         const folderPath = path.join(
             process.cwd(),
             'uploads',
