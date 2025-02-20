@@ -1,4 +1,6 @@
 import generateErrorUtils from '../../utils/helpersUtils.js';
+
+// Importamos el Service
 import { editAvatarService } from '../../services/users/editAvatarService.js';
 
 export const editAvatarUserController = async (req, res, next) => {
@@ -15,7 +17,7 @@ export const editAvatarUserController = async (req, res, next) => {
         const avatarFileName = req.file.filename;
         const fileBuffer = req.file.buffer;
 
-        // Llamamos al service para actualizar el avatar
+        // Llama al service para actualizar el avatar
         const updatedUser = await editAvatarService(
             userId,
             avatarFileName,

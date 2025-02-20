@@ -1,6 +1,8 @@
-import recoveryPassSchema from '../../schemas/users/recoveryPassSchema.js';
-import { editPasswordByRecoveryService } from '../../services/users/editPasswordByRecoveryService.js';
 import validateSchemaUtil from '../../utils/validateSchemaUtil.js';
+import recoveryPassSchema from '../../schemas/users/recoveryPassSchema.js';
+
+// Importamos el Service
+import { editPasswordByRecoveryService } from '../../services/users/editPasswordByRecoveryService.js';
 
 export const editPasswordByRecoveryController = async (req, res, next) => {
     try {

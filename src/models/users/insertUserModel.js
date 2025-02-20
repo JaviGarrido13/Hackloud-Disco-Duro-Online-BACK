@@ -1,5 +1,4 @@
 // Importamos funcion que devuelve la conexión con la base de datos
-
 import { getPool } from '../../db/getpool.js';
 
 // Model para insertar un nuevo ususario

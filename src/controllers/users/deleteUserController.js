@@ -1,6 +1,7 @@
+import generateErrorUtils from '../../utils/helpersUtils.js';
+
 //Importamos el servicio
 import { deleteUserService } from '../../services/users/deleteUserService.js';
-import generateErrorUtils from '../../utils/helpersUtils.js';
 
 //Funcion controladora que se encarga de eliminar el usuario
 export const deleteUserController = async (req, res, next) => {

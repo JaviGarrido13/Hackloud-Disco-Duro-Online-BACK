@@ -1,11 +1,8 @@
+import validateSchemaUtil from '../../utils/validateSchemaUtil.js';
+import newUserSchema from '../../schemas/users/newUserSchema.js';
+
 // Importamos el service
 import { registerUserService } from '../../services/users/registerUserService.js';
-
-// Importamos el util validateSchema
-import validateSchemaUtil from '../../utils/validateSchemaUtil.js';
-
-// Importamos el schema
-import newUserSchema from '../../schemas/users/newUserSchema.js';
 
 // Función controladora que se encarga de registrar un usuario
 export const registerUserController = async (req, res, next) => {
