@@ -1,12 +1,9 @@
+// Importamos los models
+import { selectFileByIdModel } from '../../models/storages/selectFileByIdModel.js';
+import { selectFolderByIdModel } from '../../models/storages/selectFolderByIdModel.js';
+
 // Importamos el service
 import { deleteFileService } from '../../services/storages/deleteFileService.js';
-
-// Importamos el model
-import { selectFileByIdModel } from '../../models/storages/selectFileByIdModel.js';
-
-// Importamos el errors
-import generateErrorUtils from '../../utils/helpersUtils.js';
-import { selectFolderByIdModel } from '../../models/storages/selectFolderByIdModel.js';
 
 // Función controladora que se encarga de eliminar un archivo
 export const deleteFileController = async (req, res, next) => {

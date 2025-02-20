@@ -1,5 +1,6 @@
-import { editRecoveryPassCodeService } from '../../services/users/editRecoveryPassCodeService.js';
+// Importamos los Service
 import { getUserByEmailService } from '../../services/users/getUserByEmailService.js';
+import { editRecoveryPassCodeService } from '../../services/users/editRecoveryPassCodeService.js';
 
 export const sendRecoveryPassController = async (req, res, next) => {
     try {

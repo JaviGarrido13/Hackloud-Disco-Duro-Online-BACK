@@ -1,6 +1,7 @@
 //Importamos dependencias
 import express from 'express';
 
+// Importamos Middlewares
 import { authUserMiddleware } from '../middlewares/authUserMiddleware.js';
 import { checkRole } from '../middlewares/checkRole.js';
 

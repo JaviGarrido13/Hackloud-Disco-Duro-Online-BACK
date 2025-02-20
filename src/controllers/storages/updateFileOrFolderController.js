@@ -1,13 +1,12 @@
-// Importamos los services
 import { renameSchema } from '../../schemas/storage/renameSchema.js';
+import validateSchemaUtil from '../../utils/validateSchemaUtil.js';
+import generateErrorUtils from '../../utils/helpersUtils.js';
+
+// Importamos los services
 import {
     updateFileNameService,
     updateFolderNameService,
 } from '../../services/storages/updateFileOrFolderService.js';
-
-// Importamos el errors
-import generateErrorUtils from '../../utils/helpersUtils.js';
-import validateSchemaUtil from '../../utils/validateSchemaUtil.js';
 
 //Función controladora que se encarga de actualicar un producto
 export const updateFileOrFolderController = async (req, res, next) => {

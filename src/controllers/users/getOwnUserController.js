@@ -1,5 +1,5 @@
+// Importamos el Service
 import { ownUserService } from '../../services/users/ownUserService.js';
-import generateErrorUtils from '../../utils/helpersUtils.js';
 
 export const getOwnUserController = async (req, res, next) => {
     try {

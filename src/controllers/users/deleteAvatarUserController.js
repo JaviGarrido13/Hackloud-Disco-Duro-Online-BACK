@@ -1,5 +1,5 @@
+// Importamos el Service
 import { deleteAvatarUserService } from '../../services/users/deleteAvatarUserService.js';
-import generateErrorUtils from '../../utils/helpersUtils.js';
 
 export const deleteAvatarUserController = async (req, res, next) => {
     try {

@@ -1,7 +1,9 @@
-import editPasswordSchema from '../../schemas/users/editPasswordSchema.js';
-import { editPasswordUserService } from '../../services/users/editPasswordUserService.js';
-import generateErrorUtils from '../../utils/helpersUtils.js';
 import validateSchemaUtil from '../../utils/validateSchemaUtil.js';
+import editPasswordSchema from '../../schemas/users/editPasswordSchema.js';
+import generateErrorUtils from '../../utils/helpersUtils.js';
+
+// Importamos el Service
+import { editPasswordUserService } from '../../services/users/editPasswordUserService.js';
 
 export const editPasswordUserController = async (req, res, next) => {
     try {

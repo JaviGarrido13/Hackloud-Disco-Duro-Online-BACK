@@ -1,4 +1,7 @@
+// Importamos función que devuelve pool con la DDBB
 import { getPool } from '../../db/getpool.js';
+
+// Importamos función para generar errores
 import generateErrorUtils from '../../utils/helpersUtils.js';
 
 export const deleteFolderModel = async (folderId, userId) => {

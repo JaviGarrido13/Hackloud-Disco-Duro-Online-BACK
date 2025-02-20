@@ -1,7 +1,11 @@
-import { getPool } from "../../db/getpool.js"
+// Importamos función que devuelve pool con la DDBB
+import { getPool } from '../../db/getpool.js';
 
-export const createNewFolderModel = async (foldersId, foldersName, foldersUserId) => {
-
+export const createNewFolderModel = async (
+    foldersId,
+    foldersName,
+    foldersUserId
+) => {
     const pool = await getPool();
 
     const [result] = await pool.query(
