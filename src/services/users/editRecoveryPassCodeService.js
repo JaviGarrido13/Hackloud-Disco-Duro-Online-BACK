@@ -1,8 +1,13 @@
 import randomstring from 'randomstring';
+
+// Importamos los Utils
 import generateErrorUtils from '../../utils/helpersUtils.js';
 import sendMailBrevoUtils from '../../utils/sendMailUtils.js';
+
+// Importamos el Model
 import { updateRecoveryPassCodeModel } from '../../models/users/updateRecoveryPassCodeModel.js';
 
+// Importamos el Service de RecoveryPass
 export const editRecoveryPassCodeService = async (id, email) => {
     // Crea un código de recuperación
     const recoveryPassCode = randomstring.generate(15);

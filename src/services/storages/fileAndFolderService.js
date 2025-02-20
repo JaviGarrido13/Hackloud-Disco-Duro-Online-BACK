@@ -1,11 +1,13 @@
-//Importamos funciones necesarias
+//Importamos la conexión a la base de datos
 import { getPool } from '../../db/getpool.js';
-import { listFilesAndFoldersModel } from '../../models/storages/listFilesAndFoldersModel.js';
 
 //Importamos el errors
 import generateErrorUtils from '../../utils/helpersUtils.js';
 
-//Services que se encarga de listar los archivos y carpetas.
+//Importa el modelo que se encarga de listar los archivos y carpetas.
+import { listFilesAndFoldersModel } from '../../models/storages/listFilesAndFoldersModel.js';
+
+//Service que se encarga de listar los archivos y carpetas.
 export const listFilesAndFoldersService = async (userId, folderId = null) => {
     try {
         const pool = await getPool();

@@ -3,16 +3,16 @@ import bcrypt from 'bcrypt';
 import crypto from 'crypto';
 import randomstring from 'randomstring';
 
-// Importamos los models
-import { selectUserByUsernameModel } from '../../models/users/selectUserByUsernameModel.js';
-import { selectUserByEmailModel } from '../../models/users/selectUserByEmailModel.js';
-import { insertUserModel } from '../../models/users/insertUserModel.js';
-
 // Importamos util
 import sendMailBrevoUtils from '../../utils/sendMailUtils.js';
 
 // Importamos el errores
 import generateErrorUtils from '../../utils/helpersUtils.js';
+
+// Importamos los models
+import { selectUserByUsernameModel } from '../../models/users/selectUserByUsernameModel.js';
+import { selectUserByEmailModel } from '../../models/users/selectUserByEmailModel.js';
+import { insertUserModel } from '../../models/users/insertUserModel.js';
 
 // Service que se encarga de registrar al usuario
 export const registerUserService = async (username, email, password) => {

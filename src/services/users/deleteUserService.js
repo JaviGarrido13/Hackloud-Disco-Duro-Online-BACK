@@ -1,10 +1,11 @@
-//Importamos los models
-import { deleteUserModel } from '../../models/users/deleteUserModel.js';
+// Importamos los Utils
 import { deleteFolderUtil } from '../../utils/foldersUtils.js';
 import generateErrorUtils from '../../utils/helpersUtils.js';
 
-//Servicio para elimnar el usuario y sus datos asociados
+//Importamos los models
+import { deleteUserModel } from '../../models/users/deleteUserModel.js';
 
+//Servicio para elimnar el usuario y sus datos asociados
 export const deleteUserService = async (id) => {
     //Eliminar el usuario de la base de datos
     const deleted = await deleteUserModel(id);

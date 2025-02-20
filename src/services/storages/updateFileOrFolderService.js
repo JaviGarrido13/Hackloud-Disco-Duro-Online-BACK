@@ -1,3 +1,10 @@
+// Importamos los utils
+import { renameFileUtil } from '../../utils/fileUtils.js';
+import { renameFolderUtil } from '../../utils/foldersUtils.js';
+
+// Importamos el errors
+import generateErrorUtils from '../../utils/helpersUtils.js';
+
 // Importamos los models
 import { selectFileByIdModel } from '../../models/storages/selectFileByIdModel.js';
 import { selectFolderByIdModel } from '../../models/storages/selectFolderByIdModel.js';
@@ -5,13 +12,6 @@ import {
     updateFileModel,
     updateFolderModel,
 } from '../../models/storages/updateFileOrFolderModel.js';
-
-// Importamos los utils
-import { renameFileUtil } from '../../utils/fileUtils.js';
-import { renameFolderUtil } from '../../utils/foldersUtils.js';
-
-// Importamos el errors
-import generateErrorUtils from '../../utils/helpersUtils.js';
 
 // Service que se encarga de actualizar el nombre de un archivo
 export const updateFileNameService = async (id, newName) => {

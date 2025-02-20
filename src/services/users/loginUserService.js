@@ -2,14 +2,14 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
-// Importamos el model
-import { selectUserByEmailModel } from '../../models/users/selectUserByEmailModel.js';
+// Importamos variables de entorno
+import { SECRET } from '../../../env.js';
 
 // Import el errors
 import generateErrorUtils from '../../utils/helpersUtils.js';
 
-// Importamos variables de entorno
-import { SECRET } from '../../../env.js';
+// Importamos el model
+import { selectUserByEmailModel } from '../../models/users/selectUserByEmailModel.js';
 
 // Service que se encarga de logger un usuario
 export const loginUserService = async (email, password) => {

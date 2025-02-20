@@ -1,6 +1,10 @@
-import { selectUserByIdModel } from '../../models/users/selectUserByIdModel.js';
+// Importamos el Utils de Errores
 import generateErrorUtils from '../../utils/helpersUtils.js';
 
+// Importamos el Model para seleccionar usuario por su id
+import { selectUserByIdModel } from '../../models/users/selectUserByIdModel.js';
+
+// Importamos el Service para conseguir la informacion propia de usuario
 export const ownUserService = async (id) => {
     //Comprobar si existe usuario
     const user = await selectUserByIdModel(id);

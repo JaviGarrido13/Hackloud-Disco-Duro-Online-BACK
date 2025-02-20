@@ -1,6 +1,5 @@
 // Importamos dependencias
 import crypto from 'crypto';
-import path from 'path';
 
 // Importamos el model
 import { selectFolderByName } from '../../models/storages/selectFolderByName.js';

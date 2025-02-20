@@ -1,9 +1,9 @@
+// Importamos el errors
+import generateErrorUtils from '../../utils/helpersUtils.js';
+
 // Importamos los models
 import { selectUserByIdModel } from '../../models/users/selectUserByIdModel.js';
 import { updateStatusModel } from '../../models/users/updateStatusModel.js';
-
-// Importamos el errors
-import generateErrorUtils from '../../utils/helpersUtils.js';
 
 // Service que se encarga de des/activar usuarios
 export const updateUserStatuService = async (id, active) => {

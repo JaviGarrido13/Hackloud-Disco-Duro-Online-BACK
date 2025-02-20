@@ -2,10 +2,10 @@ import { deleteFolderByIdModel } from '../../models/folders/deleteFolderByIdMode
 import { deleteFolderUtil } from '../../utils/foldersUtils.js';
 
 export const deleteFolderService = async (folderId, userId) => {
-    // Llamar al model
+    // Llama al model
     const folderData = await deleteFolderByIdModel(folderId, userId);
 
-    // Llamar al util
+    // Llama al util
     await deleteFolderUtil(userId, folderData.name);
 
     return { message: 'Carpeta eliminada correctamente' };

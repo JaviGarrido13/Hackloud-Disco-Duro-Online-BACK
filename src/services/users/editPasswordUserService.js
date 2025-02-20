@@ -1,9 +1,13 @@
 import bcrypt from 'bcrypt';
 
-import { selectUserByIdModel } from '../../models/users/selectUserByIdModel.js';
-import { updatePasswordUserModel } from '../../models/users/updatePasswordUserModel.js';
+// Importamos los Utils
 import generateErrorUtils from '../../utils/helpersUtils.js';
 
+// Importamos los Models
+import { selectUserByIdModel } from '../../models/users/selectUserByIdModel.js';
+import { updatePasswordUserModel } from '../../models/users/updatePasswordUserModel.js';
+
+// Importamos el Service de edición de contraseña
 export const editPasswordUserService = async (
     id,
     oldPassword,

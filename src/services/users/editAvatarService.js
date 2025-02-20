@@ -1,7 +1,11 @@
+// Importamos los Utils
+import { deleteAvatarUtil } from '../../utils/avatarUtils.js';
+
+// Importamos los Models
 import { selectUserByIdModel } from '../../models/users/selectUserByIdModel.js';
 import { updateAvatarModel } from '../../models/users/updateAvatarModel.js';
-import { deleteAvatarUtil, saveAvatarUtil } from '../../utils/avatarUtils.js';
 
+// Importamos el Service para Editar el Avatar
 export const editAvatarService = async (userId, newAvatar, fileBuffer) => {
     // Obtenemos el usuario actual
     const user = await selectUserByIdModel(userId);

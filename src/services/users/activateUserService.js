@@ -1,10 +1,10 @@
+// Importamos el errors
+import generateErrorUtils from '../../utils/helpersUtils.js';
+
 //Importamos los models
 import { SelectUserByRegCode } from '../../models/users/SelectUserByRegCode.js';
 import { updateActiveUserModel } from '../../models/users/updateActiveUserModel.js';
 import { createUserPath } from '../../utils/foldersUtils.js';
-
-// Importamos el errors
-import generateErrorUtils from '../../utils/helpersUtils.js';
 
 // Service que se encarga de activar un user
 export const activateUserServices = async (registrationCode) => {

@@ -1,9 +1,10 @@
 import crypto from 'crypto';
 
-import generateErrorUtils from '../../utils/helpersUtils.js';
-import { insertVoteModel } from '../../models/assesments/insertVoteModel.js';
 import { votesSchema } from '../../schemas/asessments/votesSchema.js';
+import generateErrorUtils from '../../utils/helpersUtils.js';
 
+// LLamamos al model
+import { insertVoteModel } from '../../models/assesments/insertVoteModel.js';
 
 export const votesController = async (req, res, next) => {
     try {
@@ -23,19 +24,18 @@ export const votesController = async (req, res, next) => {
             );
         }
 
-        const voteId = crypto.randomUUID();    
+        const voteId = crypto.randomUUID();
         // Insertar una valoracion
-        const result = await insertVoteModel( voteId, userId, vote, comment);
+        const result = await insertVoteModel(voteId, userId, vote, comment);
 
         res.status(201).json({
             status: 'Ok',
             messages: 'Valoración realizada con éxito',
             data: {
                 voto: vote,
-                comentario: comment
-            }
+                comentario: comment,
+            },
         });
-
     } catch (error) {
         next(error);
     }

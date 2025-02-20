@@ -1,8 +1,12 @@
+// Importamos el Utils de Errores
+import generateErrorUtils from '../../utils/helpersUtils.js';
+
+// Importamos los Models
 import { selectUserByEmailModel } from '../../models/users/selectUserByEmailModel.js';
 import { selectUserByUsernameModel } from '../../models/users/selectUserByUsernameModel.js';
 import { updateUserModel } from '../../models/users/updateUserModel.js';
-import generateErrorUtils from '../../utils/helpersUtils.js';
 
+// Importamos el Service de edición de usuario
 export const editUserService = async (id, newUserData) => {
     // Nos aseguramos de evitar valores undefined
     const cleanUserData = {
