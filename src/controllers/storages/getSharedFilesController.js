@@ -1,45 +1,25 @@
-import { getSharedResourceByToken } from '../../services/storages/shareFileOrFolderService.js';
-import { getFilePath } from '../../utils/fileUtils.js';
+import { getFilesInFolderModel } from '../../models/storages/getFilesInFolderModel.js';
+import { getResourceByShareToken } from '../../models/storages/shareFileOrFolderModel.js';
+import generateErrorUtils from '../../utils/helpersUtils.js';
 
 export const getSharedFilesController = async (req, res, next) => {
     try {
         const { shareToken } = req.params;
-        const { resource, files, permission } = await getSharedResourceByToken(
-            shareToken
-        );
-        if (resource.type === 'file') {
-            return res
-                .status(200)
-                .json({ resource, canDownload: permission === 'write' });
+        const resource = await getResourceByShareToken(shareToken);
+        if (!resource) {
+            throw generateErrorUtils(
+                404,
+                'NOT_FOUND',
+                'El archivo/carpeta al que intenta acceder ya no está disponible'
+            );
         }
 
-        res.status(200).send({
-            resource,
-            files,
-            canDownload: permission === 'write',
-        });
-    } catch (error) {
-        next(error);
-    }
-};
-
-export const downloadSharedFileController = async (req, res, next) => {
-    try {
-        const { shareToken } = req.params;
-        const { resource, permission } = await getSharedResourceByToken(
-            shareToken
-        );
-        console.log(resource, permission);
-
-        if (resource.resourceType !== 'file' || permission !== 'write') {
-            return res.status(403).json({
-                error: 'FORBIDDEN',
-                message: 'No tienes permisos para descargar carpetas.',
-            });
+        if (resource.type === 'folder') {
+            const files = await getFilesInFolderModel(resource.id);
+            return res.status(200).send({ resource, files });
         }
 
-        const { filePath, fileName } = await getFilePath(resource.id);
-        res.download(filePath, fileName);
+        res.status(200).send({ resource });
     } catch (error) {
         next(error);
     }

@@ -1,6 +1,5 @@
 import { selectFileByIdModel } from '../models/storages/selectFileByIdModel.js';
 import { selectFolderByIdModel } from '../models/storages/selectFolderByIdModel.js';
-import { isResourceSharedWithUser } from '../models/storages/shareFileOrFolderModel.js';
 import generateErrorUtils from '../utils/helpersUtils.js';
 
 export const canShareMiddleware = async (req, res, next) => {
@@ -17,7 +16,7 @@ export const canShareMiddleware = async (req, res, next) => {
             throw generateErrorUtils(
                 400,
                 'INVALID_TYPE',
-                'Type debe ser "file","folder"'
+                'Type debe ser "file" o "folder"'
             );
         }
 
@@ -32,31 +31,22 @@ export const canShareMiddleware = async (req, res, next) => {
             throw generateErrorUtils(
                 404,
                 'NOT_FOUND',
-                'El archivo o carpeta no existe.'
+                'El archivo o carpeta no existe, comprueba el tipo'
             );
         }
 
         // Verificar si el usuario es el dueño del recurso
-        if (resource.userId === userId) {
-            req.resource = { ...resource, type: resourceType };
-            return next(); // Si es dueño, puede compartirlo
-        }
-
-        // Si no es dueño, verificar si tiene permisos de escritura
-        const permission = await isResourceSharedWithUser(resourceId, userId);
-        if (permission !== 'write') {
-            console.log('canShareMiddleware - No tiene permisos de escritura');
+        if (resource.userId !== userId) {
             throw generateErrorUtils(
                 403,
-                'INSUFFICIENT_PERMISSIONS',
-                'No tienes permisos para compartir este recurso.'
+                'NOT_ALLOWED',
+                'No eres dueno del archivo/carpeta que intentas compartir'
             );
         }
 
         req.resource = { ...resource, type: resourceType };
         next(); // El usuario tiene permisos, continuar
     } catch (error) {
-        console.log('canShareMiddleware - Error:', error);
         next(error);
     }
 };

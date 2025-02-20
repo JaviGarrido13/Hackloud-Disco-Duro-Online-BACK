@@ -1,31 +1,17 @@
-import { shareFileOrFolderService } from '../../services/storages/shareFileOrFolderService.js';
-import generateErrorUtils from '../../utils/helpersUtils.js';
+import crypto from 'crypto';
+import { assignShareToken } from '../../models/storages/shareFileOrFolderModel.js';
 
 export const shareFileOrFolderController = async (req, res, next) => {
     try {
-        // Recogemos datos del usuario
-        const ownerId = req.user.id;
-
-        const { permission } = req.body;
         const resource = req.resource;
 
-        if (!permission) {
-            throw generateErrorUtils(
-                400,
-                'PERMISSIONS_MISSING',
-                'El campo "permission" es requerido'
-            );
-        }
+        const shareToken = crypto.randomUUID();
 
-        const shareUrl = await shareFileOrFolderService(
-            ownerId,
-            resource,
-            permission
-        );
+        await assignShareToken(resource.id, resource.type, shareToken);
 
         res.status(200).send({
             status: 'ok',
-            url: shareUrl,
+            url: `http://localhost:3001/storage/share/link/${shareToken}`,
         });
     } catch (error) {
         next(error);
