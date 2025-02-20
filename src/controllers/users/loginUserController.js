@@ -1,9 +1,8 @@
-// Importamos Services
-import loginUserSchema from '../../schemas/users/loginUserSchema.js';
-import { loginUserService } from '../../services/users/loginUserService.js';
-
-// Import el errors
 import validateSchemaUtil from '../../utils/validateSchemaUtil.js';
+import loginUserSchema from '../../schemas/users/loginUserSchema.js';
+
+// Importamos el Service
+import { loginUserService } from '../../services/users/loginUserService.js';
 
 // función controladora que se encarga de loggear un user
 export const loginUserController = async (req, res, next) => {

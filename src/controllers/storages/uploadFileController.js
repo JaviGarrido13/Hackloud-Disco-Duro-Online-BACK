@@ -1,8 +1,7 @@
-// Importamos el servbice
-import { uploadFilesService } from '../../services/storages/uploadFilesService.js';
-
-// Importamos el errors
 import generateErrorUtils from '../../utils/helpersUtils.js';
+
+// Importamos el Service
+import { uploadFilesService } from '../../services/storages/uploadFilesService.js';
 
 // función controladora que se encarga de la subida de archivos
 export const uploadFileController = async (req, res, next) => {

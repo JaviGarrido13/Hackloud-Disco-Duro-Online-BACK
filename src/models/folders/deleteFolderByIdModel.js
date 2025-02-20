@@ -1,5 +1,7 @@
-import { getPool } from "../../db/getpool.js"
-import generateErrorUtils from "../../utils/helpersUtils.js";
+// Importamos función que devuelve pool con la DDBB
+import { getPool } from '../../db/getpool.js';
+
+import generateErrorUtils from '../../utils/helpersUtils.js';
 
 export const deleteFolderByIdModel = async (folderId, userId) => {
     const pool = await getPool();
@@ -8,16 +10,20 @@ export const deleteFolderByIdModel = async (folderId, userId) => {
         `
         SELECT*FROM folders
         WHERE id = ? AND userId = ?
-        `, 
+        `,
         [folderId, userId]
-    ) 
+    );
     if (folder.length === 0) {
-        throw generateErrorUtils(404, 'FOLDER_NOT_FOUND', 'La carpeta no existe')
+        throw generateErrorUtils(
+            404,
+            'FOLDER_NOT_FOUND',
+            'La carpeta no existe'
+        );
     }
-    const folderName = folder[0].name  
+    const folderName = folder[0].name;
 
     // Borrar archivos del folder
-    await pool.query('DELETE FROM files WHERE folderId = ?', [folderId])
+    await pool.query('DELETE FROM files WHERE folderId = ?', [folderId]);
 
     const [result] = await pool.query(
         `
@@ -27,9 +33,13 @@ export const deleteFolderByIdModel = async (folderId, userId) => {
         [folderId]
     );
 
-    if (result.affectedRows === 0){
-        throw generateErrorUtils(500, 'DELETE_FOLDER_FAILED', 'No se pudo eliminar la carpeta')
+    if (result.affectedRows === 0) {
+        throw generateErrorUtils(
+            500,
+            'DELETE_FOLDER_FAILED',
+            'No se pudo eliminar la carpeta'
+        );
     }
 
-    return {name: folderName};
-}
+    return { name: folderName };
+};

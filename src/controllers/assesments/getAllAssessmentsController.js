@@ -13,10 +13,12 @@ export const getAllAssessmentsController = async (req, res, next) => {
         );
         //Si no hay valoraciones, lanzamos un error
         if (rows.length === 0) {
-            throw generateErrorUtils(
-                404,
-                'ASSESSMENTS_NOT_AVAILABLE',
-                'Valoraciones no diponibles'
+            return next(
+                generateErrorUtils(
+                    404,
+                    'ASSESSMENTS_NOT_AVAILABLE',
+                    'Valoraciones no diponibles'
+                )
             );
         }
         res.json(rows);

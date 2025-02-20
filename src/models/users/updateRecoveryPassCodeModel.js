@@ -1,3 +1,4 @@
+// Importamos función que devuelve pool con la DDBB
 import { getPool } from '../../db/getpool.js';
 
 export const updateRecoveryPassCodeModel = async (id, recoveryPassCode) => {

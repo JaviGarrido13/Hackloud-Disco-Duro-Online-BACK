@@ -8,11 +8,11 @@ import { selectUserByUsernameModel } from '../../models/users/selectUserByUserna
 import { selectUserByEmailModel } from '../../models/users/selectUserByEmailModel.js';
 import { insertUserModel } from '../../models/users/insertUserModel.js';
 
+// Importamos util
+import sendMailBrevoUtils from '../../utils/sendMailUtils.js';
+
 // Importamos el errores
 import generateErrorUtils from '../../utils/helpersUtils.js';
-import sendMailUtils from '../../utils/sendMailUtils.js';
-
-// Importamos util
 
 // Service que se encarga de registrar al usuario
 export const registerUserService = async (username, email, password) => {
@@ -61,7 +61,7 @@ export const registerUserService = async (username, email, password) => {
 	\nGracias por registrarte en nuestra aplicación. Para activar tu cuenta, haz click en el siguiente enlace:
 	\n<a href="http://localhost:3000/activate/${registrationCode}">Activa tu cuenta</a>
 	`;
-    await sendMailUtils(email, emailSubjet, emailText);
+    await sendMailBrevoUtils(email, emailSubjet, emailText);
 
     return { id, username, email, registrationCode };
 };

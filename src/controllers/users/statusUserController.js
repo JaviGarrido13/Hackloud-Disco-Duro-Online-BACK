@@ -1,8 +1,7 @@
+import generateErrorUtils from '../../utils/helpersUtils.js';
+
 // Importamos el service
 import { updateUserStatuService } from '../../services/users/updateUserStatuService.js';
-
-// Importamos el errores
-import generateErrorUtils from '../../utils/helpersUtils.js';
 
 // Función controladora que se encarga de activar/desactivar usuarios
 export const statusUserController = async (req, res, next) => {

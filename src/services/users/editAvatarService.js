@@ -9,8 +9,5 @@ export const editAvatarService = async (userId, newAvatar, fileBuffer) => {
     // Eliminar el avatar anterior
     await deleteAvatarUtil(userId, user?.avatar);
 
-    // Guardar el nuevo avatar
-    await saveAvatarUtil(userId, fileBuffer);
-
     return await updateAvatarModel(userId, newAvatar);
 };

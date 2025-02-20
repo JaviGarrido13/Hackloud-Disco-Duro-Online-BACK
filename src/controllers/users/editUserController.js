@@ -1,5 +1,7 @@
-import { editUserService } from '../../services/users/editUserService.js';
 import generateErrorUtils from '../../utils/helpersUtils.js';
+
+// Importamos el Service
+import { editUserService } from '../../services/users/editUserService.js';
 
 export const editUserController = async (req, res, next) => {
     try {

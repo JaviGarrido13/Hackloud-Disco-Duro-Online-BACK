@@ -1,4 +1,3 @@
-// Importamos el errores
 import generateErrorUtils from '../utils/helpersUtils.js';
 
 // Importamos utils

@@ -1,16 +1,14 @@
 // Importamos función que devuelve pool con la DDBB
 import { getPool } from '../../db/getpool.js';
 
-export const updatePasswordByRecoveryModel = async (id, password) => {
+export const deleteAvatarUserModel = async (userId) => {
     // Obtiene la conexión con la DDBB
     const pool = await getPool();
 
-    // Realiza la consulta con la query
     const [result] = await pool.query(
-        `UPDATE users SET password = ?, recoveryPassCode = NULL WHERE id = ?`,
-        [password, id]
+        `UPDATE users SET avatar = NULL WHERE id = ?;`,
+        [userId]
     );
 
-    // Devuelve el resultado
     return result;
 };

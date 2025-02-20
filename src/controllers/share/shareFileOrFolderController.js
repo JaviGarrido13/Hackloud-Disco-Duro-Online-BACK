@@ -16,7 +16,7 @@ export const shareFileOrFolderController = async (req, res, next) => {
         res.status(200).send({
             status: 'ok',
             url: `http://localhost:3001/storage/share/link/${shareToken}`,
-            downloadUrl: downloadUrl,
+            download: downloadUrl,
         });
     } catch (error) {
         next(error);

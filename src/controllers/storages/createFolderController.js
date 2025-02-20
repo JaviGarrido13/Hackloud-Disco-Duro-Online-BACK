@@ -12,6 +12,7 @@ export const createFolderController = async (req, res, next) => {
                 'El campo "FolderName" es obligatorio'
             );
         }
+        // Llamamos al Service
         const folder = await createFolderService(folderName, userId);
 
         res.status(200).send({

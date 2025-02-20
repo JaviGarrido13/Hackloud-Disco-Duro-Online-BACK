@@ -1,8 +1,7 @@
+import generateErrorUtils from '../../utils/helpersUtils.js';
+
 // Importamos el service
 import { activateUserServices } from '../../services/users/activateUserService.js';
-
-// Importamos el errores
-import generateErrorUtils from '../../utils/helpersUtils.js';
 
 // Función controladora que se encarga de activar el usuario
 export const activateUsersController = async (req, res, next) => {
