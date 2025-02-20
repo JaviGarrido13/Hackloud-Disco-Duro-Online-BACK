@@ -1,5 +1,7 @@
-import { getFilesInFolderModel } from '../../models/storages/getFilesInFolderModel.js';
-import { getResourceByShareToken } from '../../models/storages/shareFileOrFolderModel.js';
+import {
+    getResourceByShareToken,
+    getFilesInFolderModel,
+} from '../../models/storages/shareFileOrFolderModel.js';
 import generateErrorUtils from '../../utils/helpersUtils.js';
 
 export const getSharedFilesController = async (req, res, next) => {

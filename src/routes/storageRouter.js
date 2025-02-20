@@ -14,8 +14,9 @@ import { createFolderController } from '../controllers/storages/createFolderCont
 import { searchFilesController } from '../controllers/storages/searchFilesController.js';
 import { deleteFolderController } from '../controllers/storages/deleteFolderController.js';
 import { canShareMiddleware } from '../middlewares/canShareMiddleware.js';
-import { shareFileOrFolderController } from '../controllers/storages/shareFileOrFolderController.js';
-import { getSharedFilesController } from '../controllers/storages/getSharedFilesController.js';
+import { shareFileOrFolderController } from '../controllers/share/shareFileOrFolderController.js';
+import { getSharedFilesController } from '../controllers/share/getSharedFilesController.js';
+import { downloadSharedFileController } from '../controllers/share/downloadSharedFileController.js';
 
 export const storageRouter = express.Router();
 
@@ -78,3 +79,9 @@ storageRouter.post(
 
 // Ruta para obtener tus archivos compartidos
 storageRouter.get('/storage/share/link/:shareToken', getSharedFilesController);
+
+// Ruta para descargar archivos compartidos
+storageRouter.get(
+    '/storage/share/download/:shareToken',
+    downloadSharedFileController
+);

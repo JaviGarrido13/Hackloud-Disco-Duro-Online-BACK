@@ -17,19 +17,26 @@ export const assignShareToken = async (
 export const getResourceByShareToken = async (shareToken) => {
     const pool = await getPool();
 
-    // Buscar en archivos
-    const [fileRows] = await pool.query(
-        `SELECT id, name, size, uploadedAt, userId, 'file' AS type FROM files WHERE shareToken = ?`,
-        [shareToken]
+    // Consulta optimizada con `UNION` para obtener archivos y carpetas en una sola consulta
+    const [rows] = await pool.query(
+        `
+        SELECT id, name, size, uploadedAt AS createdAt, userId, 'file' AS type
+        FROM files WHERE shareToken = ?
+        UNION
+        SELECT id, name, NULL AS size, createdAt, userId, 'folder' AS type
+        FROM folders WHERE shareToken = ?;
+    `,
+        [shareToken, shareToken]
     );
 
-    if (fileRows.length > 0) return fileRows[0];
+    return rows.length > 0 ? rows[0] : null;
+};
 
-    // Buscar en carpetas
-    const [folderRows] = await pool.query(
-        `SELECT id, name, createdAt, userId, 'folder' AS type FROM folders WHERE shareToken = ?`,
-        [shareToken]
+export const getFilesInFolderModel = async (folderId) => {
+    const pool = await getPool();
+    const [files] = await pool.query(
+        `SELECT id, name, size, uploadedAt FROM files WHERE folderId = ?`,
+        [folderId]
     );
-
-    return folderRows.length > 0 ? folderRows[0] : null;
+    return files;
 };

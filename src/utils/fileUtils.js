@@ -118,8 +118,7 @@ export const renameFileUtil = async (
     }
 };
 
-export const getFilePath = async (fileId) => {
-    const file = await selectFileByIdModel(fileId);
+export const getFilePath = async (file, folderName) => {
     if (!file) {
         throw generateErrorUtils(
             404,
@@ -131,10 +130,10 @@ export const getFilePath = async (fileId) => {
         process.cwd(),
         'uploads',
         file.userId,
-        file.folderId || '',
+        folderName || '',
         file.name
     );
-    if (!fs.existsSync(filePath))
+    if (!fs.access(filePath))
         throw generateErrorUtils(
             404,
             'RESOURCE_NOT_FOUND',
