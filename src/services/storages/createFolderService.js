@@ -1,11 +1,18 @@
+// Importamos dependencias
 import crypto from 'crypto';
-import { createNewFolderModel } from '../../models/storages/createNewFolderModel.js';
-import { createPathUtil } from '../../utils/foldersUtils.js';
-import generateErrorUtils from '../../utils/helpersUtils.js';
-import { selectFolderByName } from '../../models/storages/selectFolderByName.js';
 
+// Importamos models
+import { selectFolderByName } from '../../models/storages/selectFolderByName.js';
+import { createNewFolderModel } from '../../models/storages/createNewFolderModel.js';
+
+// Importamos util
+import { createPathUtil } from '../../utils/foldersUtils.js';
+
+// importamos el errors
+import generateErrorUtils from '../../utils/helpersUtils.js';
+
+// Service que se encarga de crear carpetas
 export const createFolderService = async (folderName, userId) => {
-    console.log('folderName: ', folderName, 'userId: ', userId);
     const folder = await selectFolderByName(folderName);
     if (folder) {
         throw generateErrorUtils(

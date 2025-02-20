@@ -117,3 +117,29 @@ export const renameFileUtil = async (
         );
     }
 };
+
+export const getFilePath = async (fileId) => {
+    const file = await selectFileByIdModel(fileId);
+    if (!file) {
+        throw generateErrorUtils(
+            404,
+            'FILE_NOT_FOUND',
+            'No se encontró el recurso'
+        );
+    }
+    const filePath = path.join(
+        process.cwd(),
+        'uploads',
+        file.userId,
+        file.folderId || '',
+        file.name
+    );
+    if (!fs.existsSync(filePath))
+        throw generateErrorUtils(
+            404,
+            'RESOURCE_NOT_FOUND',
+            'El recurso no se encuentra'
+        );
+
+    return { filePath, fileName: file.name };
+};

@@ -25,7 +25,7 @@ export const initDb = async () => {
         //Borrar las tablas si existen
         console.log('Borrando tablas existentes 🗑 📑');
         await pool.query(
-            'DROP TABLE IF EXISTS  assessments, files, folders, users;'
+            'DROP TABLE IF EXISTS shared_resources, assessments, files, folders, users;'
         );
         console.log('Tablas borradas ✅ 📑');
 
@@ -83,6 +83,19 @@ export const initDb = async () => {
                 createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                 updatedAt TIMESTAMP DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
                 FOREIGN KEY (userId) REFERENCES users(id) ON DELETE CASCADE
+                );
+            `);
+        // Crear tabla de recursos compartidos
+        await pool.query(`
+            CREATE TABLE shared_resources (
+                id CHAR(36) PRIMARY KEY NOT NULL,
+                resourceId CHAR(36) NOT NULL,
+                resourceType ENUM('file', 'folder') NOT NULL,
+                ownerId CHAR(36) NOT NULL,
+                shareToken CHAR(36) UNIQUE,
+                permission ENUM('read', 'write') DEFAULT 'read' NOT NULL,
+                sharedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                FOREIGN KEY (ownerId) REFERENCES users(id) ON DELETE CASCADE
                 );
             `);
 

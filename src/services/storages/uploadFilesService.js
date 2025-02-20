@@ -3,30 +3,16 @@ import crypto from 'crypto';
 import path from 'path';
 
 // Importamos el model
+import { selectFolderByName } from '../../models/storages/selectFolderByName.js';
 import { uploadFileModel } from '../../models/storages/uploadFileModel.js';
 
-// Importamos el util
-import { saveFileUtil } from '../../utils/fileUtils.js';
-import { selectFolderByIdModel } from '../../models/storages/selectFolderByIdModel.js';
-import { selectFolderByName } from '../../models/storages/selectFolderByName.js';
+// Importamos service
 import { createFolderService } from './createFolderService.js';
 
 // Service que se encarga de guardar el archivo
 export const uploadFilesService = async (userId, file, folderName) => {
-    console.log('userId', userId, 'file', file, 'folderName', folderName);
     // Destructuring de file
-    const { originalname, filename, size } = file;
-
-    // Path del archivo
-    const filePath = path.join('uploads', userId, folderName || '', filename);
-
-    // Creamos el objeto fileData
-    const fileData = {
-        name: originalname,
-        path: filePath,
-        size,
-        userId,
-    };
+    const { filename, size } = file;
 
     // Si llega con folderName, buscamos en la ddbb
     let folderId;
@@ -40,8 +26,6 @@ export const uploadFilesService = async (userId, file, folderName) => {
             folderId = newFolder;
         }
     }
-
-    // El archivo lo guardamos desde el middleware de multer
 
     // Generamos id unica
     const fileId = crypto.randomUUID();

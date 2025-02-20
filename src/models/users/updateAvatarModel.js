@@ -1,5 +1,4 @@
 import { getPool } from '../../db/getpool.js';
-import generateErrorUtils from '../../utils/helpersUtils.js';
 
 export const updateAvatarModel = async (id, avatarFilePath) => {
     // Obtener el pool de conexiones
