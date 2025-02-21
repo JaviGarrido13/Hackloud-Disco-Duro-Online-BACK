@@ -11,10 +11,18 @@ export const registerUserController = async (req, res, next) => {
         await validateSchemaUtil(newUserSchema, req.body);
 
         // Recogemos datos de la solicitud
-        const { username, email, password } = req.body;
+        const { firstName, lastName, birthday, username, email, password } =
+            req.body;
 
         // Llamar al service que registre al user
-        const user = await registerUserService(username, email, password);
+        const user = await registerUserService(
+            firstName,
+            lastName,
+            birthday,
+            username,
+            email,
+            password
+        );
 
         // Respondemos con el usuario creado
         res.status(201).send({

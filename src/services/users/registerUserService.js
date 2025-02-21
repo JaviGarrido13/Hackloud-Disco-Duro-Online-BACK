@@ -5,6 +5,7 @@ import randomstring from 'randomstring';
 
 // Importamos util
 import sendMailBrevoUtils from '../../utils/sendMailUtils.js';
+import { calculateAge } from '../../utils/calculateAge.js';
 
 // Importamos el errores
 import generateErrorUtils from '../../utils/helpersUtils.js';
@@ -15,13 +16,20 @@ import { selectUserByEmailModel } from '../../models/users/selectUserByEmailMode
 import { insertUserModel } from '../../models/users/insertUserModel.js';
 
 // Service que se encarga de registrar al usuario
-export const registerUserService = async (username, email, password) => {
+export const registerUserService = async (
+    firstName,
+    lastName,
+    birthday,
+    username,
+    email,
+    password
+) => {
     // Verificamos que el usuario no exista
     const user = await selectUserByUsernameModel(username);
     if (user) {
         throw generateErrorUtils(
             409,
-            'USER_NAME_ALREADY_EXISTS',
+            'USERNAME_ALREADY_EXISTS',
             'El nombre de usuario ya existe'
         );
     }
@@ -34,6 +42,17 @@ export const registerUserService = async (username, email, password) => {
             'El email ya existe'
         );
     }
+    // Verificamos que sea mayor de edad
+    if (birthday) {
+        const edad = calculateAge(birthday);
+        if (edad < 18) {
+            throw generateErrorUtils(
+                403,
+                'UNDERAGE',
+                'Debes ser mayor de 18 para registrarte'
+            );
+        }
+    }
     // Creamos id del usuario
     const id = crypto.randomUUID();
     // Hash del password
@@ -43,6 +62,9 @@ export const registerUserService = async (username, email, password) => {
     // Llamar al modelo que crea el usuario
     const result = await insertUserModel({
         id,
+        firstName,
+        lastName,
+        birthday,
         username,
         email,
         password: hashedPassword,

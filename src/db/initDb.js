@@ -38,6 +38,7 @@ export const initDb = async () => {
                 username VARCHAR(50) UNIQUE NOT NULL,
                 firstName VARCHAR(50),
                 lastName VARCHAR(50),
+                birthday DATE NOT NULL,
                 email VARCHAR(100) UNIQUE NOT NULL,
                 password CHAR(60) NOT NULL,
                 avatar CHAR(40) DEFAULT NULL,
@@ -94,12 +95,13 @@ export const initDb = async () => {
         const id = crypto.randomUUID();
         const hashedPassword = await bcrypt.hash(ADMIN_PASSWORD, 10);
         await pool.query(
-            `INSERT INTO users (id, username, firstName, lastName, email, password, active, role) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+            `INSERT INTO users (id, username, firstName, lastName, birthday, email, password, active, role) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
             [
                 id,
                 'admin',
                 'Super',
                 'Admin',
+                '1990-01-01',
                 ADMIN_EMAIL,
                 hashedPassword,
                 1,
