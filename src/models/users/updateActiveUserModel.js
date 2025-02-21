@@ -7,7 +7,7 @@ export const updateActiveUserModel = async (registrationCode) => {
 
     // Query para actualizar en la BD
     const result = await pool.query(
-        'UPDATE users SET active = 1 WHERE registrationCode =?',
+        'UPDATE users SET active = 1 WHERE registrationCode = ?',
         [registrationCode]
     );
 

@@ -17,7 +17,7 @@ export const activateUsersController = async (req, res, next) => {
         }
 
         // Llamar al service que activa el usuario con el codigo de registro
-        const user = await activateUserServices(registrationCode);
+        await activateUserServices(registrationCode);
 
         // Enviar la respuesta
         res.status(200).send({

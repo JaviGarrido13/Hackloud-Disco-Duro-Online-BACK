@@ -3,7 +3,6 @@ import { saveAvatarUtil } from './avatarUtils.js';
 import { saveFileUtil } from './fileUtils.js';
 import { createUserPath, createPathUtil } from './foldersUtils.js';
 import generateErrorUtils from './helpersUtils.js';
-import { buffer } from 'stream/consumers';
 
 // Configurar almacenamiento en memoria para procesamiento con Sharp
 const storage = multer.memoryStorage();

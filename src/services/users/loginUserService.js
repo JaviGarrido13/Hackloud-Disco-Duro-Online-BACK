@@ -33,7 +33,11 @@ export const loginUserService = async (email, password) => {
 
     // Lanza un error si el usuario no está activado
     if (!user.active) {
-        throw generateErrorUtils(401, 'LOGIN_FAILED', 'Usuario no activo');
+        throw generateErrorUtils(
+            401,
+            'LOGIN_FAILED',
+            'Usuario no activado o fuiste inhabilitado por el administrador'
+        );
     }
 
     // Genera el token

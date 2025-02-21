@@ -4,6 +4,8 @@ import generateErrorUtils from '../../utils/helpersUtils.js';
 //Importamos los models
 import { SelectUserByRegCode } from '../../models/users/SelectUserByRegCode.js';
 import { updateActiveUserModel } from '../../models/users/updateActiveUserModel.js';
+
+// Importamos util
 import { createUserPath } from '../../utils/foldersUtils.js';
 
 // Service que se encarga de activar un user
@@ -23,9 +25,6 @@ export const activateUserServices = async (registrationCode) => {
     }
     // Actualizar el estado del usuario a activo
     const result = await updateActiveUserModel(registrationCode);
-
-    // Crear carpeta raiz del usuario
-    await createUserPath(user.id);
     if (result.affectedRows === 0) {
         throw generateErrorUtils(
             500,
@@ -33,6 +32,10 @@ export const activateUserServices = async (registrationCode) => {
             'No se pudo activar el usuario'
         );
     }
+
+    // Crear la carpeta raiz del usuario
+    await createUserPath(user.id);
+
     // Devolver el usuario actualizado
     return { ...user, active: 1 };
 };
