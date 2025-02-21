@@ -4,18 +4,16 @@ import bcrypt from 'bcrypt';
 import generateErrorUtils from '../../utils/helpersUtils.js';
 
 // Importamos los Models
-import { selectUserByEmailModel } from '../../models/users/selectUserByEmailModel.js';
 import { updatePasswordByRecoveryModel } from '../../models/users/updatePasswordByRecoveryModel.js';
+import { selectUserByRecoveryPassModel } from '../../models/users/selectUserByRecoveryPassModel.js';
 
 // Importamos el Service de recuperación de contraseña
 export const editPasswordByRecoveryService = async (
-    email,
     recoveryPassCode,
-    newPassword,
-    newPasswordConfirm
+    newPassword
 ) => {
     // Busca el usuario por email
-    const user = await selectUserByEmailModel(email);
+    const user = await selectUserByRecoveryPassModel(recoveryPassCode);
 
     // Comprueba que el recoveryPassCode del usuario encontrado sea igual al recoveryPassCode del body
     if (!user || user.recoveryPassCode !== recoveryPassCode) {
@@ -23,15 +21,6 @@ export const editPasswordByRecoveryService = async (
             409,
             'INCORRECT_DATA',
             'Email o código de recuperación incorrectos'
-        );
-    }
-
-    // Comprueba que newPassword y newPasswordConfirm son iguales
-    if (newPassword !== newPasswordConfirm) {
-        throw generateErrorUtils(
-            409,
-            'INCORRECT_PASSWORD',
-            'Las contraseñas no coinciden'
         );
     }
 
