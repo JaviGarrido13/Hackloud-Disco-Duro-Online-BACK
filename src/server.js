@@ -34,9 +34,13 @@ server.use(router);
 /*ERRORES*/
 //Ruta no encontrada
 server.use((req, res, next) => {
-    let resource = req.path;
-    const error = new Error(`No se encontró la ruta: ${resource}`);
-    next(error);
+    next(
+        generateErrorUtils(
+            404,
+            'ROUTE_NOT_FOUND',
+            `No se encontró la ruta: ${req.originalUrl}`
+        )
+    );
 });
 
 //Gestor de errores
@@ -44,7 +48,6 @@ server.use((error, req, res, next) => {
     console.error(error);
     res.status(error.httpStatus || 500).send({
         httpStatus: error.httpStatus || 500,
-        status: 'ERROR!',
         code: error.code || 'INTERNAL_SERVER_ERROR',
         message: error.message,
     });
