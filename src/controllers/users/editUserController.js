@@ -1,7 +1,9 @@
-import generateErrorUtils from '../../utils/helpersUtils.js';
-
 // Importamos el Service
 import { editUserService } from '../../services/users/editUserService.js';
+// Importamos el util
+import validateSchemaUtil from '../../utils/validateSchemaUtil.js';
+// Importamos el schema
+import editUserInfoSchema from '../../schemas/users/editUserInfoSchema.js';
 
 export const editUserController = async (req, res, next) => {
     try {
@@ -10,22 +12,9 @@ export const editUserController = async (req, res, next) => {
 
         // Obtenemos los datos enviados en el body
         const newUserData = req.body;
-        // Verificar si se envio la info
-        if (!newUserData) {
-            throw generateErrorUtils(
-                400,
-                'INFO_MISSING',
-                'No se enviaron datos para actualizar'
-            );
-        }
 
-        if (!newUserData.username || !newUserData.email) {
-            throw generateErrorUtils(
-                400,
-                'INFO_MISSING',
-                'Faltan datos para actualizar'
-            );
-        }
+        // Validar los datos que llegan
+        await validateSchemaUtil(editUserInfoSchema, req.body);
 
         // Actualizar los datos llamando al service
         const updatedUser = await editUserService(id, newUserData);

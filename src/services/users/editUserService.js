@@ -10,10 +10,10 @@ import { updateUserModel } from '../../models/users/updateUserModel.js';
 export const editUserService = async (id, newUserData) => {
     // Nos aseguramos de evitar valores undefined
     const cleanUserData = {
-        username: newUserData.username ? newUserData.username : null,
+        username: newUserData.username,
         firstName: newUserData.firstName ? newUserData.firstName : null,
         lastName: newUserData.lastName ? newUserData.lastName : null,
-        email: newUserData.email ? newUserData.email : null,
+        email: newUserData.email,
     };
 
     // Verificar si el username ya esta en uso por otro usuario
