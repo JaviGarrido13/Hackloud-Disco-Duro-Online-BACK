@@ -7,18 +7,16 @@ import { editPasswordByRecoveryService } from '../../services/users/editPassword
 export const editPasswordByRecoveryController = async (req, res, next) => {
     try {
         // Recupera el email, el recoveryPassCode, la nueva contraseña y la confirmación de la nueva contraseña del body
-        const { email, recoveryPassCode, newPassword, newPasswordConfirm } =
-            req.body;
+        const { recoveryPassCode, newPassword } = req.body;
 
         await validateSchemaUtil(recoveryPassSchema, req.body);
 
         // Busca el usuario por email
         const user = await editPasswordByRecoveryService(
-            email,
             recoveryPassCode,
-            newPassword,
-            newPasswordConfirm
+            newPassword
         );
+        console.log(user);
 
         res.status(200).send({
             status: 'ok',
