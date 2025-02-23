@@ -8,31 +8,19 @@ import { selectUserByIdModel } from '../../models/users/selectUserByIdModel.js';
 import { updatePasswordUserModel } from '../../models/users/updatePasswordUserModel.js';
 
 // Importamos el Service de edición de contraseña
-export const editPasswordUserService = async (
-    id,
-    oldPassword,
-    newPassword,
-    confirmNewPassword
-) => {
+export const editPasswordUserService = async (id, newPass) => {
     // Busca el usuario en la DDBB
     const user = await selectUserByIdModel(id);
+
+    const { oldPassword, newPassword } = newPass;
 
     // Verifica si la contraseña actual es correcta
     const isMatch = await bcrypt.compare(oldPassword, user.password);
     if (!isMatch) {
         throw generateErrorUtils(
             400,
-            'INVALID_PASSWORD',
-            'Contraseña incorrecta'
-        );
-    }
-
-    // Verifica que la contraseña nueva y la confirmación sean iguales
-    if (newPassword !== confirmNewPassword) {
-        throw generateErrorUtils(
-            400,
-            'PASSWORDS_DO_NOT_MATCH',
-            'Las contraseñas no coinciden'
+            'INVALID_OLD_PASSWORD',
+            'Contraseña antigua no coincide'
         );
     }
 

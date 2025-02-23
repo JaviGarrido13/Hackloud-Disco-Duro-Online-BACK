@@ -1,39 +1,26 @@
-import validateSchemaUtil from '../../utils/validateSchemaUtil.js';
-import editPasswordSchema from '../../schemas/users/editPasswordSchema.js';
-import generateErrorUtils from '../../utils/helpersUtils.js';
-
 // Importamos el Service
 import { editPasswordUserService } from '../../services/users/editPasswordUserService.js';
+// Importamos el util
+import validateSchemaUtil from '../../utils/validateSchemaUtil.js';
+// Importamos el schema
+import editPasswordSchema from '../../schemas/users/editPasswordSchema.js';
 
 export const editPasswordUserController = async (req, res, next) => {
     try {
         //  Obtiene id del usuario desde req.user
         const { id } = req.user;
 
+        // Obtiene la info del req.body, y validamos los datos
+        const newPass = req.body;
+
         await validateSchemaUtil(editPasswordSchema, req.body);
 
-        // Obtiene la info del req.body, si no hay info devuelve un error.
-        const { oldPassword, newPassword, confirmNewPassword } = req.body;
-        if (!oldPassword || !newPassword || !confirmNewPassword) {
-            throw generateErrorUtils(
-                400,
-                'DATA_MISSING',
-                'Faltan datos de contraseña'
-            );
-        }
-
-        const user = await editPasswordUserService(
-            id,
-            oldPassword,
-            newPassword,
-            confirmNewPassword
-        );
+        await editPasswordUserService(id, newPass);
 
         // Responde con el usuario actualizado
         res.status(200).send({
             status: 'ok',
             message: 'Contraseña actualizada',
-            data: { user },
         });
     } catch (error) {
         next(error);

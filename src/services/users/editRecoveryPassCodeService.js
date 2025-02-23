@@ -15,7 +15,11 @@ export const editRecoveryPassCodeService = async (id, email) => {
     // Actualizar el recoveryPassCode en el usuario
     const result = await updateRecoveryPassCodeModel(id, recoveryPassCode);
     if (result.affectedRows !== 1) {
-        throw generateErrorUtils();
+        throw generateErrorUtils(
+            500,
+            'ERROR_SETING_RECOVERY_PASSCODE',
+            'Error al actualizar el recovery code en la DDBB'
+        );
     }
 
     // Envia el mail de confirmación

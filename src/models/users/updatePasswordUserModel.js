@@ -7,7 +7,7 @@ export const updatePasswordUserModel = async (id, password) => {
 
     // Realiza la consulta
     const [result] = await pool.query(
-        `UPDATE users SET password = ? WHERE id = ?;`,
+        `UPDATE users SET password = ?, recoveryPassCode = NULL WHERE id = ?;`,
         [password, id]
     );
 

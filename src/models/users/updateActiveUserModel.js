@@ -2,13 +2,13 @@
 import { getPool } from '../../db/getpool.js';
 
 // Model para activar un user
-export const updateActiveUserModel = async (registrationCode) => {
+export const updateActiveUserModel = async (id) => {
     const pool = await getPool();
 
     // Query para actualizar en la BD
     const result = await pool.query(
-        'UPDATE users SET active = 1 WHERE registrationCode = ?',
-        [registrationCode]
+        'UPDATE users SET active = 1 WHERE id = ?',
+        [id]
     );
 
     return result;

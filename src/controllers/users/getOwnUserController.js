@@ -1,5 +1,5 @@
-// Importamos el Service
-import { ownUserService } from '../../services/users/ownUserService.js';
+// Importamos el Model
+import { selectUserByIdModel } from '../../models/users/selectUserByIdModel.js';
 
 export const getOwnUserController = async (req, res, next) => {
     try {
@@ -7,7 +7,23 @@ export const getOwnUserController = async (req, res, next) => {
         const { id } = req.user;
 
         //Buscar el usuario en la BBDD
-        const user = await ownUserService(id);
+        const user = await selectUserByIdModel(id);
+
+        // Eliminamos información sensible
+        if (user) {
+            delete user.id;
+            delete user.password;
+            delete user.role;
+            delete user.active;
+            delete user.registrationCode;
+            delete user.recoveryPassCode;
+        } else {
+            throw generateErrorUtils(
+                404,
+                'USER_NOT_FOUND',
+                'El usuario no existe'
+            );
+        }
 
         //Devolver el usuario
         res.status(200).json({

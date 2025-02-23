@@ -1,5 +1,4 @@
 import multer from 'multer';
-import { saveAvatarUtil } from './avatarUtils.js';
 import { saveFileUtil } from './fileUtils.js';
 import { createUserPath, createPathUtil } from './foldersUtils.js';
 import generateErrorUtils from './helpersUtils.js';
@@ -9,30 +8,49 @@ const storage = multer.memoryStorage();
 
 export const upload = multer({
     storage,
-    limits: { fileSize: 5 * 1024 * 1024 }, // Límite de 5MB
+    limits: { fileSize: 20 * 1024 * 1024 }, // Límite de 20MB
     fileFilter: async (req, file, cb) => {
         try {
             const allowedMimes = [
                 'image/jpeg',
                 'image/png',
                 'image/jpg',
+                'image/gif',
+                'image/svg+xml',
+                'image/webp',
                 'application/pdf',
+                'application/msword',
+                'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+                'application/vnd.ms-excel',
+                'application/vnd.ms-powerpoint',
                 'text/plain',
+                'application/zip',
+                'application/x-rar-compressed',
+                'application/x-tar',
             ];
+
+            // Verificamos si es la ruta del avatar
             const isAvatar = req.originalUrl.includes('/users/avatar');
 
+            // Si es avatar y su mimetype no es el permitido , devolvemos un error
             if (
                 isAvatar &&
-                !['image/jpeg', 'image/png'].includes(file.mimetype)
+                ![
+                    'image/jpeg',
+                    'image/png',
+                    'image/jpg',
+                    'image/webp',
+                ].includes(file.mimetype)
             ) {
                 return cb(
                     new Error(
-                        'Solo se permiten imágenes JPG y PNG para avatares'
+                        'Solo se permiten imágenes JPG, PNG, WEBP para avatares'
                     ),
                     false
                 );
             }
 
+            // Si no es avatar y su mimetype no es el permitido , devolvemos un error
             if (!isAvatar && !allowedMimes.includes(file.mimetype)) {
                 return cb(new Error('Tipo de archivo no permitido'), false);
             }
@@ -57,6 +75,7 @@ export const upload = multer({
 // Middleware para procesar y guardar archivos correctamente.
 export const processFileUpload = async (req, res, next) => {
     try {
+        // Verificamos que llegan req.file
         if (!req.file) {
             throw generateErrorUtils(
                 400,
@@ -66,30 +85,31 @@ export const processFileUpload = async (req, res, next) => {
         }
 
         const userId = req.user.id;
+        // Verificamos si es avatar, devuelve true/false
         const isAvatar = req.originalUrl.includes('/users/avatar');
         const folderName = req.body.folderName || null;
 
-        console.log('Subiendo archivos', {
-            isAvatar,
-            folderName,
-            userId,
-            filename: req.file.originalname,
-            bufferSize: req.file.buffer.length,
-        });
-
+        // Si es avatar
         if (isAvatar) {
-            req.file.filename = await saveAvatarUtil(userId, req.file.buffer);
+            // Creamos el objeto avatar y se manda en la req al siguiente controlador
+            const avatar = {
+                userId: userId,
+                originalname: req.file.originalname,
+                mimetype: req.file.mimetype,
+                buffer: req.file.buffer,
+            };
+            req.avatar = avatar;
+            next();
         } else {
+            // Si no es avatar pasamos al controlador de subida de archivos normales
             req.file.filename = await saveFileUtil(
                 userId,
                 folderName,
                 req.file.originalname,
                 req.file
             );
+            next();
         }
-        console.log('Archivo guardado correctamente', req.file.filename);
-
-        next();
     } catch (error) {
         next(error);
     }

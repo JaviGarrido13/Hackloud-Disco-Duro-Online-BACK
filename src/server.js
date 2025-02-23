@@ -8,6 +8,7 @@ import { router } from './routes/indexRouter.js';
 
 // Importamos variable de entorno
 import { UPLOADS_DIR } from '../env.js';
+import generateErrorUtils from './utils/helpersUtils.js';
 
 // Creamos el servidor
 export const server = express();

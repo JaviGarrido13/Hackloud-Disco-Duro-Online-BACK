@@ -1,33 +1,32 @@
-import generateErrorUtils from '../../utils/helpersUtils.js';
-
 // Importamos el Service
-import { editAvatarService } from '../../services/users/editAvatarService.js';
+import { selectUserByIdModel } from '../../models/users/selectUserByIdModel.js';
+import { updateAvatarModel } from '../../models/users/updateAvatarModel.js';
+import { deleteAvatarUtil, saveAvatarUtil } from '../../utils/avatarUtils.js';
 
 export const editAvatarUserController = async (req, res, next) => {
     try {
-        if (!req.file) {
-            throw generateErrorUtils(
-                400,
-                'AVATAR_MISSING',
-                'Debes enviar un avatar'
-            );
+        // Recogemos el avatar
+        const avatar = req.avatar;
+
+        // Verificar si el user tiene avatar
+        const user = await selectUserByIdModel(avatar.userId);
+
+        let updatedAvatar;
+        if (user.avatar === 'null') {
+            // Si no tiene avatar, lo guardamos
+            const avatarFileName = await saveAvatarUtil(user.id, avatar.buffer);
+            updatedAvatar = await updateAvatarModel(user.id, avatarFileName);
+        } else {
+            // Si tiene avatar, lo eliminamos
+            await deleteAvatarUtil(user.id);
+            // Y lo guardamos
+            const avatarFileName = await saveAvatarUtil(user.id, avatar.buffer);
+            updatedAvatar = await updateAvatarModel(user.id, avatarFileName);
         }
-
-        const userId = req.user.id;
-        const avatarFileName = req.file.filename;
-        const fileBuffer = req.file.buffer;
-
-        // Llama al service para actualizar el avatar
-        const updatedUser = await editAvatarService(
-            userId,
-            avatarFileName,
-            fileBuffer
-        );
 
         res.status(201).send({
             status: 'ok',
-            message: 'Avatar actualizado correctamente',
-            data: updatedUser,
+            updatedAvatar,
         });
     } catch (error) {
         next(error);

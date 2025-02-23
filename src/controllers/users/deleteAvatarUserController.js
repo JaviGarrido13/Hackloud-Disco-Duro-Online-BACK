@@ -7,7 +7,7 @@ export const deleteAvatarUserController = async (req, res, next) => {
         const userId = req.user.id;
 
         // Llama al service para eliminar el avatar
-        const updateUser = await deleteAvatarUserService(userId);
+        await deleteAvatarUserService(userId);
 
         // Devolver respuesta con los datos del usuario actualizado y el mensaje de éxito 201
         res.status(201).send({

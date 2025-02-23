@@ -7,7 +7,7 @@ export const SelectUserByRegCode = async (registrationCode) => {
 
     // Query a la BD para buscar por RegistrationCode
     const [user] = await pool.query(
-        'SELECT * FROM users WHERE registrationCode =?',
+        'SELECT id, active FROM users WHERE registrationCode =?',
         [registrationCode]
     );
 

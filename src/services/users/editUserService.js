@@ -48,5 +48,5 @@ export const editUserService = async (id, newUserData) => {
         );
     }
 
-    return { id, ...cleanUserData };
+    return { ...cleanUserData };
 };

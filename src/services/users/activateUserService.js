@@ -16,7 +16,7 @@ export const activateUserServices = async (registrationCode) => {
         throw generateErrorUtils(400, 'USER_NOT_FOUND', 'El usuario no existe');
     }
     // Comprobar si el usuario ya está activado
-    if (user.active === 1) {
+    if (user.active === 1 || user.active === true) {
         throw generateErrorUtils(
             400,
             'USER_ACTIVE',
@@ -24,7 +24,7 @@ export const activateUserServices = async (registrationCode) => {
         );
     }
     // Actualizar el estado del usuario a activo
-    const result = await updateActiveUserModel(registrationCode);
+    const result = await updateActiveUserModel(user.id);
     if (result.affectedRows === 0) {
         throw generateErrorUtils(
             500,
@@ -36,6 +36,5 @@ export const activateUserServices = async (registrationCode) => {
     // Crear la carpeta raiz del usuario
     await createUserPath(user.id);
 
-    // Devolver el usuario actualizado
-    return { ...user, active: 1 };
+    return;
 };

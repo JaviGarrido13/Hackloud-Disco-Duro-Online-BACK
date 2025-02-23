@@ -11,12 +11,7 @@ export const deleteAvatarUserService = async (userId) => {
     // Busca  al usuario y su avatar actual
     const user = await selectUserByIdModel(userId);
 
-    // verificar si el usuario existe
-    if (!user) {
-        throw generateErrorUtils(404, 'USER_NOT_FOUND', 'El usuario no existe');
-    }
-
-    // lanza un error si el usuario no tiene avatar
+    // Lanza un error si el usuario no tiene avatar
     if (!user.avatar) {
         throw generateErrorUtils(
             400,
@@ -26,7 +21,7 @@ export const deleteAvatarUserService = async (userId) => {
     }
 
     // Elimina el avatar del sistema de archivos
-    await deleteAvatarUtil(userId, user.avatar);
+    await deleteAvatarUtil(userId);
 
     // Borra el avatar de la DDBB
     const result = await deleteAvatarUserModel(userId);

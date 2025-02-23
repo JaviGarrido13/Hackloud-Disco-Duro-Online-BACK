@@ -24,7 +24,7 @@ export const registerUserService = async (
     email,
     password
 ) => {
-    // Verificamos que el usuario no exista
+    // Verificamos que el username no exista
     const user = await selectUserByUsernameModel(username);
     if (user) {
         throw generateErrorUtils(

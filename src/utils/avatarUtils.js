@@ -1,20 +1,7 @@
 import path from 'path';
 import fs from 'fs/promises';
 import sharp from 'sharp';
-import { createPathUtil } from './foldersUtils.js';
 import generateErrorUtils from './helpersUtils.js';
-
-// crear carpeta para almacenar avatares si no existe
-export const getAvatarPath = async (userId) => {
-    const avatarFolderPath = path.join(
-        process.cwd(),
-        'uploads',
-        userId,
-        'avatars'
-    );
-    await createPathUtil(userId, 'avatars');
-    return avatarFolderPath;
-};
 
 // Guardar el avatar procesado
 export const saveAvatarUtil = async (userId, fileBuffer) => {
@@ -49,18 +36,15 @@ export const saveAvatarUtil = async (userId, fileBuffer) => {
 };
 
 // Eliminar el avatar anterior
-export const deleteAvatarUtil = async (userId, currentAvatar) => {
+export const deleteAvatarUtil = async (userId) => {
     try {
-        if (!currentAvatar) return;
-
         const avatarDir = path.join(
             process.cwd(),
             'uploads',
             userId,
             'avatars'
         );
-
-        // Eliminar todas las versiones del avatar
+        await fs.mkdir(avatarDir, { recursive: true });
         const files = await fs.readdir(avatarDir);
         await Promise.all(
             files
@@ -70,8 +54,10 @@ export const deleteAvatarUtil = async (userId, currentAvatar) => {
 
         console.log(`♻️ Eliminados ${files.length} avatares antiguos`);
     } catch (error) {
-        console.error(`❌ Error eliminando avatar: ${error.message}`);
-        console.error('Stack trace:', error.stack);
-        throw error;
+        throw generateErrorUtils(
+            400,
+            'ERROR_DELETINF_OLD_AVATAR',
+            'Error al eliminar el avatar antiguo'
+        );
     }
 };
