@@ -7,11 +7,8 @@ export const listFilesAndFoldersControllers = async (req, res, next) => {
         // Recuperamos el id del usuario
         const userId = req.user.id;
 
-        // Recuperamos folderId por si queremos listar dentro de una carpeta
-        const folderId = req.body.folderId;
-
-        //LLamamos al servicio que obtiene la lista de archivos y carpetas.
-        const data = await listFilesAndFoldersService(userId, folderId || null);
+        //LLamamos al servicio que obtiene la lista de archivos y carpetas del usuario.
+        const data = await listFilesAndFoldersService(userId);
 
         res.status(200).send({
             status: 'ok',

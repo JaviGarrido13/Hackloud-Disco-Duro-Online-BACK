@@ -18,10 +18,10 @@ export const getSharedFilesController = async (req, res, next) => {
 
         if (resource.type === 'folder') {
             const files = await getFilesInFolderModel(resource.id);
-            return res.status(200).send({ resource, files });
+            return res.status(200).send({ data: resource, files });
         }
 
-        res.status(200).send({ resource });
+        res.status(200).send({ status: 'ok', resource });
     } catch (error) {
         next(error);
     }

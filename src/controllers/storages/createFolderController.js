@@ -17,8 +17,7 @@ export const createFolderController = async (req, res, next) => {
 
         res.status(200).send({
             satus: 'ok',
-            message: 'Carpeta creada correctamente.',
-            data: folder,
+            message: `Carpeta ${folderName} creada correctamente con id: "${folder}"`,
         });
     } catch (error) {
         next(error);

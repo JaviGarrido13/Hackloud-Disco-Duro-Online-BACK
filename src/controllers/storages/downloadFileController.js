@@ -31,7 +31,6 @@ export const downloadFileController = async (req, res, next) => {
             fileName
         );
         res.status(200).download(filePath, fileName);
-        console.log(process.cwd());
     } catch (error) {
         next(error);
     }

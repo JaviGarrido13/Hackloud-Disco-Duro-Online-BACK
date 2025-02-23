@@ -10,14 +10,13 @@ export const deleteUserController = async (req, res, next) => {
         if (!id) {
             throw generateErrorUtils(
                 404,
-                'USER_NOT_FOUND',
-                'Usuario no encontrado'
+                'ID_MISSING',
+                'No hay "id" en los params'
             );
         }
         const result = await deleteUserService(id);
         res.status(200).send({
             status: 'ok',
-            message: 'Usuario eliminado correctamente',
             data: result,
         });
     } catch (error) {

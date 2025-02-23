@@ -1,17 +1,25 @@
 import crypto from 'crypto';
 import { assignShareToken } from '../../models/storages/shareFileOrFolderModel.js';
+import generateErrorUtils from '../../utils/helpersUtils.js';
 
 export const shareFileOrFolderController = async (req, res, next) => {
     try {
-        const resource = req.resource;
+        const { id, type } = req.resource;
         let downloadUrl;
 
         const shareToken = crypto.randomUUID();
-        if (resource.type === 'file') {
+        if (type === 'file') {
             downloadUrl = `https://disco-duro-online.up.railway.app/storage/share/download/${shareToken}`;
         }
 
-        await assignShareToken(resource.id, resource.type, shareToken);
+        const result = await assignShareToken(id, type, shareToken);
+        if (result === false) {
+            throw generateErrorUtils(
+                500,
+                'ERROR_SHARE_TOKEN',
+                'Error al actualizar el shareToken'
+            );
+        }
 
         res.status(200).send({
             status: 'ok',

@@ -7,9 +7,10 @@ export const deleteUserModel = async (id) => {
 
     //Query para eliminar al usuario, archivos asociados y carpetas asociadas
 
+    await pool.query(`DELETE FROM assessments WHERE userId = ?`, [id]);
     await pool.query('DELETE FROM files WHERE userId = ?', [id]);
     await pool.query('DELETE FROM folders WHERE userId = ?', [id]);
     const [result] = await pool.query('DELETE FROM users WHERE id = ?', [id]);
 
-    return result.affectedRows > 0;
+    return result.affectedRows > 0 ? true : false;
 };

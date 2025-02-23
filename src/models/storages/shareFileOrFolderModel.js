@@ -8,10 +8,11 @@ export const assignShareToken = async (
     const pool = await getPool();
     const table = resourceType === 'file' ? 'files' : 'folders';
 
-    await pool.query(`UPDATE ${table} SET shareToken = ? WHERE id = ?`, [
-        shareToken,
-        resourceId,
-    ]);
+    const [result] = await pool.query(
+        `UPDATE ${table} SET shareToken = ? WHERE id = ?`,
+        [shareToken, resourceId]
+    );
+    return result.affectedRows === 1 ? true : false;
 };
 
 export const getResourceByShareToken = async (shareToken) => {
@@ -20,10 +21,10 @@ export const getResourceByShareToken = async (shareToken) => {
     // Consulta optimizada con `UNION` para obtener archivos y carpetas en una sola consulta
     const [rows] = await pool.query(
         `
-        SELECT id, name, size, uploadedAt AS createdAt, userId, 'file' AS type
+        SELECT id, name, size, folderId, 'createdAt' AS uploadedAt, userId, 'file' AS type
         FROM files WHERE shareToken = ?
         UNION
-        SELECT id, name, NULL AS size, createdAt, userId, 'folder' AS type
+        SELECT id, name, NULL AS size, NULL AS folderId, createdAt, userId, 'folder' AS type
         FROM folders WHERE shareToken = ?;
     `,
         [shareToken, shareToken]

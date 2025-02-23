@@ -1,11 +1,11 @@
 // Importamos el model
-import { getAllUsersModel } from '../../models/users/getAllUsersModel.js';
+import { selectAllUsersModel } from '../../models/users/selectAllUsersModel.js';
 
 // Función controlladora que se encarga de listar todos los usuarios
 export const getAllUsersController = async (req, res, next) => {
     try {
         // LLmamaos al service
-        const users = await getAllUsersModel();
+        const users = await selectAllUsersModel();
 
         res.status(200).send({
             status: 'Ok',

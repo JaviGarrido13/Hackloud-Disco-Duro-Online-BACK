@@ -7,11 +7,12 @@ import { uploadFileModel } from '../../models/storages/uploadFileModel.js';
 
 // Importamos service
 import { createFolderService } from './createFolderService.js';
+import { saveFileUtil } from '../../utils/fileUtils.js';
 
 // Service que se encarga de guardar el archivo
-export const uploadFilesService = async (userId, file, folderName) => {
-    // Destructuring de file
-    const { filename, size } = file;
+export const uploadFilesService = async (resource) => {
+    // Destructuring del resource
+    const { userId, originalname, size, folderName, buffer } = resource;
 
     // Si llega con folderName, buscamos en la ddbb
     let folderId;
@@ -26,13 +27,21 @@ export const uploadFilesService = async (userId, file, folderName) => {
         }
     }
 
+    // Guardamos el recurso en local
+    const fileName = await saveFileUtil(
+        userId,
+        folderName,
+        originalname,
+        buffer
+    );
+
     // Generamos id unica
     const fileId = crypto.randomUUID();
 
     // Llamamos al model para subir el archivo a la base de datos
     const uploadedFile = await uploadFileModel({
         fileId,
-        filename,
+        fileName,
         size,
         userId,
         folderId,

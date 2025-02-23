@@ -32,7 +32,10 @@ export const canDoItMiddleware = async (req, res, next) => {
                 'Permisos insuficientes'
             );
         }
+        const resource = file || folder;
+        resource.type = file ? 'file' : 'folder';
 
+        req.resource = resource;
         next();
     } catch (error) {
         next(error);

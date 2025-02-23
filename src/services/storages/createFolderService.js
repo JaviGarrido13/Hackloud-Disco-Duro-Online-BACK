@@ -27,6 +27,13 @@ export const createFolderService = async (folderName, userId) => {
     const folderId = crypto.randomUUID();
 
     const result = await createNewFolderModel(folderId, folderName, userId);
+    if (result.affectedRows === 0) {
+        throw generateErrorUtils(
+            500,
+            'INSERT_FAILD',
+            'No se pudo crear la carpeta'
+        );
+    }
 
     return folderId;
 };

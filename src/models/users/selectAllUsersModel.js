@@ -5,7 +5,7 @@ import { getPool } from '../../db/getpool.js';
 import generateErrorUtils from '../../utils/helpersUtils.js';
 
 // Model para listar usuarios
-export const getAllUsersModel = async () => {
+export const selectAllUsersModel = async () => {
     const pool = await getPool();
 
     // 2. Realizar la consulta para obtener todos los usuarios

@@ -1,30 +1,27 @@
-import { renameSchema } from '../../schemas/storage/renameSchema.js';
-import validateSchemaUtil from '../../utils/validateSchemaUtil.js';
-import generateErrorUtils from '../../utils/helpersUtils.js';
-
 // Importamos los services
 import {
     updateFileNameService,
     updateFolderNameService,
 } from '../../services/storages/updateFileOrFolderService.js';
+// Importamos el errors
+import generateErrorUtils from '../../utils/helpersUtils.js';
 
 //Función controladora que se encarga de actualicar un producto
 export const updateFileOrFolderController = async (req, res, next) => {
     try {
-        // Obetenemos el id del item por params
-        const { id } = req.params;
-        // Obetenemos el nuevo nombre y el tipo de archivo del body
-        const { name, type } = req.body;
-        // Validamos los datos recibidos
-        await validateSchemaUtil(renameSchema, req.body);
+        // Recuperamos el recurso
+        const resource = req.resource;
+        console.log('Resource: ', resource);
+        // Obetenemos el nuevo nombre del body
+        const { name } = req.body;
         // Llamamos a la función que actualiza el archivo o carpeta
         let updatedItem;
-        switch (type) {
+        switch (resource.type) {
             case 'file':
-                updatedItem = await updateFileNameService(id, name);
+                updatedItem = await updateFileNameService(resource, name);
                 break;
             case 'folder':
-                updatedItem = await updateFolderNameService(id, name);
+                updatedItem = await updateFolderNameService(resource, name);
                 break;
             default:
                 throw generateErrorUtils(
@@ -36,8 +33,8 @@ export const updateFileOrFolderController = async (req, res, next) => {
 
         res.status(200).send({
             message: `El ${
-                type === 'file' ? 'archivo' : 'carpeta'
-            } fue renombrado correctamente.`,
+                resource.type === 'file' ? 'archivo' : 'carpeta'
+            } fue renombrado correctamente a ${name}.`,
             data: updatedItem,
         });
     } catch (error) {

@@ -5,7 +5,7 @@ import generateErrorUtils from '../../utils/helpersUtils.js';
 // Model para manejar la subida de archivos
 export const uploadFileModel = async ({
     fileId,
-    filename,
+    fileName,
     size,
     userId,
     folderId,
@@ -16,12 +16,12 @@ export const uploadFileModel = async ({
     // Query a la ddbb
     const [result] = await pool.query(
         'INSERT INTO files (id, name, size, userId, folderId) VALUES (?,?,?,?,?)',
-        [fileId, filename, size, userId, folderId]
+        [fileId, fileName, size, userId, folderId]
     );
     if (result.affectedRows > 0) {
         return {
             id: fileId,
-            name: filename,
+            name: fileName,
         };
     } else {
         throw generateErrorUtils(

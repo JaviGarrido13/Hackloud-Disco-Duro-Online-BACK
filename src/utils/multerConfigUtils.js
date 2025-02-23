@@ -1,6 +1,4 @@
 import multer from 'multer';
-import { saveFileUtil } from './fileUtils.js';
-import { createUserPath, createPathUtil } from './foldersUtils.js';
 import generateErrorUtils from './helpersUtils.js';
 
 // Configurar almacenamiento en memoria para procesamiento con Sharp
@@ -55,16 +53,6 @@ export const upload = multer({
                 return cb(new Error('Tipo de archivo no permitido'), false);
             }
 
-            // Si no es un avatar, asegurar que la carpeta del usuario y la subcarpeta existen
-            if (!isAvatar) {
-                const userId = req.user.id;
-                const folderName = req.body.folderName || null;
-                await createUserPath(userId);
-                if (folderName) {
-                    await createPathUtil(userId, folderName);
-                }
-            }
-
             cb(null, true);
         } catch (error) {
             cb(error);
@@ -101,13 +89,15 @@ export const processFileUpload = async (req, res, next) => {
             req.avatar = avatar;
             next();
         } else {
-            // Si no es avatar pasamos al controlador de subida de archivos normales
-            req.file.filename = await saveFileUtil(
-                userId,
-                folderName,
-                req.file.originalname,
-                req.file
-            );
+            // Si no es avatar mandamos el recurso al controlador de subida de archivos normales
+            const resource = {
+                userId: userId,
+                originalname: req.file.originalname,
+                size: req.file.size,
+                folderName: folderName || null,
+                buffer: req.file.buffer,
+            };
+            req.resource = resource;
             next();
         }
     } catch (error) {

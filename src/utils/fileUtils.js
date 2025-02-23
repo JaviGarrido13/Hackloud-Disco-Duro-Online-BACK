@@ -7,7 +7,7 @@ export const saveFileUtil = async (
     userId,
     folderName = null,
     fileName,
-    file
+    buffer
 ) => {
     try {
         // Construir la ruta donde se guardará el archivo
@@ -22,7 +22,7 @@ export const saveFileUtil = async (
         const filePath = path.join(uploadPath, fileName);
 
         // Verificar si el buffer es válido
-        if (!file || !file.buffer || !Buffer.isBuffer(file.buffer)) {
+        if (!buffer || !Buffer.isBuffer(buffer)) {
             throw generateErrorUtils(
                 400,
                 'INVALID_FILE_BUFFER',
@@ -31,7 +31,7 @@ export const saveFileUtil = async (
         }
 
         // Guardar el archivo en el sistema
-        await fs.writeFile(filePath, file.buffer);
+        await fs.writeFile(filePath, buffer);
 
         return fileName;
     } catch (error) {
