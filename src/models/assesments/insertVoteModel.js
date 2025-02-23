@@ -11,5 +11,5 @@ export const insertVoteModel = async (id, userId, vote, comment) => {
         [id, userId, vote, comment]
     );
 
-    return result;
+    return result.affectedRows > 0 ? true : false;
 };

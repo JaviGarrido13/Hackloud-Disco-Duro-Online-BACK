@@ -1,32 +1,33 @@
+// Importamos dependencias
 import crypto from 'crypto';
-
-import { votesSchema } from '../../schemas/asessments/votesSchema.js';
-import generateErrorUtils from '../../utils/helpersUtils.js';
 
 // LLamamos al model
 import { insertVoteModel } from '../../models/assesments/insertVoteModel.js';
 
+// Importamos utils y schema
+import generateErrorUtils from '../../utils/helpersUtils.js';
+import validateSchemaUtil from '../../utils/validateSchemaUtil.js';
+import { votesSchema } from '../../schemas/asessments/votesSchema.js';
+
 export const votesController = async (req, res, next) => {
     try {
         // Validar tipos de datos
-        await votesSchema.validateAsync(req.body);
+        await validateSchemaUtil(votesSchema, req.body);
 
         // Obtener datos
         const { vote, comment } = req.body;
         const userId = req.user.id;
 
-        // Validar datos
-        if (!vote || !comment) {
-            throw generateErrorUtils(
-                400,
-                'ASSEMENTS_FAILED',
-                'Faltan datos para realizar la valoración'
-            );
-        }
-
         const voteId = crypto.randomUUID();
         // Insertar una valoracion
         const result = await insertVoteModel(voteId, userId, vote, comment);
+        if (!result) {
+            throw generateErrorUtils(
+                500,
+                'ERROR_INSERT_ASSESSTMENT',
+                'No se pudo publicar la valoración'
+            );
+        }
 
         res.status(201).json({
             status: 'Ok',

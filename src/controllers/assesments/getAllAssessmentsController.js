@@ -1,27 +1,25 @@
-//Importamos la conexión a la base de datos
-import { getPool } from '../../db/getpool.js';
-
 //Importamos el error
+import { getAllAssessmentsModel } from '../../models/assesments/getAllAssessmentsModel.js';
 import generateErrorUtils from '../../utils/helpersUtils.js';
 
 export const getAllAssessmentsController = async (req, res, next) => {
     try {
-        const pool = await getPool();
-        //Realizamos una consulta a la base de datos para obtener las valoraciones y ordenamos
-        const [rows] = await pool.query(
-            'SELECT * FROM assessments ORDER BY createdAt DESC'
-        );
+        // Llamamos al model que nos devuelve todos los assessments
+        const result = await getAllAssessmentsModel();
         //Si no hay valoraciones, lanzamos un error
-        if (rows.length === 0) {
-            return next(
-                generateErrorUtils(
-                    404,
-                    'ASSESSMENTS_NOT_AVAILABLE',
-                    'Valoraciones no diponibles'
-                )
+        if (result.length === 0) {
+            generateErrorUtils(
+                404,
+                'ASSESSMENTS_NOT_AVAILABLE',
+                'Valoraciones no diponibles'
             );
         }
-        res.json(rows);
+        res.status(200).send({
+            status: 'ok',
+            message: 'Valoraciones obtenidas correctamente',
+            count: result.length,
+            data: result,
+        });
     } catch (error) {
         next(error);
     }

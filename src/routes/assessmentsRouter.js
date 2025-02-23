@@ -8,6 +8,8 @@ import { checkRole } from '../middlewares/checkRole.js';
 //Importamos los controllers
 import { votesController } from '../controllers/assesments/votesController.js';
 import { getAllAssessmentsController } from '../controllers/assesments/getAllAssessmentsController.js';
+import { assessmentsMediaController } from '../controllers/assesments/assessmentsMediaController.js';
+import { deleteAssessmentsController } from '../controllers/assesments/deleteAssessmentsController.js';
 
 export const assessmentsRouter = express.Router();
 
@@ -15,9 +17,15 @@ export const assessmentsRouter = express.Router();
 assessmentsRouter.post('/assessments', authUserMiddleware, votesController);
 
 //Ruta para listar valoraciones
-assessmentsRouter.get(
-    '/assessments',
+assessmentsRouter.get('/assessments', getAllAssessmentsController);
+
+// Ruta para obtener media valoraciones
+assessmentsRouter.get('/assessments/media', assessmentsMediaController);
+
+// Ruta para eliminar una valoración
+assessmentsRouter.delete(
+    '/assessments/:id',
     authUserMiddleware,
     checkRole('admin'),
-    getAllAssessmentsController
+    deleteAssessmentsController
 );
