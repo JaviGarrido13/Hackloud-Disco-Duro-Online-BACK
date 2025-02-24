@@ -20,7 +20,7 @@ assessmentsRouter.post('/assessments', authUserMiddleware, votesController);
 assessmentsRouter.get('/assessments', getAllAssessmentsController);
 
 // Ruta para obtener media valoraciones
-assessmentsRouter.get('/assessments/media', assessmentsMediaController);
+assessmentsRouter.get('/assessments/average', assessmentsMediaController);
 
 // Ruta para eliminar una valoración
 assessmentsRouter.delete(
