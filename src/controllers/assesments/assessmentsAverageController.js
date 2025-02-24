@@ -1,9 +1,9 @@
-import { assessmentsMediaModel } from '../../models/assesments/assessmentsMediaModel.js';
+import { assessmentsAverageModel } from '../../models/assesments/assessmentsAverageModel.js';
 
-export const assessmentsMediaController = async (req, res, next) => {
+export const assessmentsAverageController = async (req, res, next) => {
     try {
         // Llamar al model
-        const result = await assessmentsMediaModel();
+        const result = await assessmentsAverageModel();
         if (result === 0) {
             res.status(404).json({ message: 'No hay valoración media' });
         }

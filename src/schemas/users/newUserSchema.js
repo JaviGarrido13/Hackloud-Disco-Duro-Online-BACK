@@ -8,11 +8,16 @@ import joiErrorMessages from '../joiErrorMessages.js';
 const newUserSchema = joi.object({
     firstName: joi
         .string()
-        .optional()
         .min(3)
         .max(50)
+        .allow(null, '')
         .messages(joiErrorMessages),
-    lastName: joi.string().optional().min(3).max(50).messages(joiErrorMessages),
+    lastName: joi
+        .string()
+        .min(3)
+        .max(50)
+        .allow(null, '')
+        .messages(joiErrorMessages),
     birthday: joi.date().iso().required().messages(joiErrorMessages),
     username: joi.string().min(4).max(25).required().messages(joiErrorMessages),
     password: joi

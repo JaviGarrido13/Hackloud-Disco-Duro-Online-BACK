@@ -1,6 +1,6 @@
 import { getPool } from '../../db/getpool.js';
 
-export const assessmentsMediaModel = async () => {
+export const assessmentsAverageModel = async () => {
     const pool = await getPool();
 
     const [[{ media }]] = await pool.query(
