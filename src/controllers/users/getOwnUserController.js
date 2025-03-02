@@ -11,9 +11,7 @@ export const getOwnUserController = async (req, res, next) => {
 
         // Eliminamos información sensible
         if (user) {
-            delete user.id;
             delete user.password;
-            delete user.role;
             delete user.active;
             delete user.registrationCode;
             delete user.recoveryPassCode;

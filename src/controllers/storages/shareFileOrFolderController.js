@@ -9,7 +9,7 @@ export const shareFileOrFolderController = async (req, res, next) => {
 
         const shareToken = crypto.randomUUID();
         if (type === 'file') {
-            downloadUrl = `https://disco-duro-online.up.railway.app/storage/share/download/${shareToken}`;
+            downloadUrl = `http://localhost:5173/storage/share/download/${shareToken}`;
         }
 
         const result = await assignShareToken(id, type, shareToken);
@@ -23,7 +23,7 @@ export const shareFileOrFolderController = async (req, res, next) => {
 
         res.status(200).send({
             status: 'ok',
-            url: `https://disco-duro-online.up.railway.app/storage/share/link/${shareToken}`,
+            url: `http://localhost:5173/storage/share/link/${shareToken}`,
 
             download: downloadUrl,
         });
