@@ -20,6 +20,7 @@ import { getOwnUserController } from '../controllers/users/getOwnUserController.
 import { getAllUsersController } from '../controllers/users/getAllUsersController.js';
 import { statusUserController } from '../controllers/users/statusUserController.js';
 import { deleteUserController } from '../controllers/users/deleteUserController.js';
+import { getUserByIdController } from '../controllers/users/getUserByIdController.js';
 
 export const usersRouter = express.Router();
 
@@ -90,3 +91,5 @@ usersRouter.delete(
     checkRole('admin'),
     deleteUserController
 );
+
+usersRouter.get('/users/:id', getUserByIdController);

@@ -9,9 +9,14 @@ const editUserInfoSchema = joi.object({
         .string()
         .min(3)
         .max(40)
-        .optional()
+        .allow('', null)
         .messages(joiErrorMessages),
-    lastName: joi.string().min(3).max(40).optional().messages(joiErrorMessages),
+    lastName: joi
+        .string()
+        .min(3)
+        .max(40)
+        .allow('', null)
+        .messages(joiErrorMessages),
 });
 
 export default editUserInfoSchema;

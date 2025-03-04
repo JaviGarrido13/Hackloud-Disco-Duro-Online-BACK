@@ -10,21 +10,77 @@ export const upload = multer({
     fileFilter: async (req, file, cb) => {
         try {
             const allowedMimes = [
+                // Imágenes
                 'image/jpeg',
                 'image/png',
                 'image/jpg',
                 'image/gif',
                 'image/svg+xml',
                 'image/webp',
+                'image/bmp',
+                'image/tiff',
+
+                // Documentos
                 'application/pdf',
                 'application/msword',
-                'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-                'application/vnd.ms-excel',
-                'application/vnd.ms-powerpoint',
+                'application/vnd.openxmlformats-officedocument.wordprocessingml.document', // .docx
+                'application/vnd.oasis.opendocument.text', // .odt
                 'text/plain',
+                'text/csv',
+                'text/html',
+                'text/markdown',
+                'text/rtf',
+
+                // Hojas de cálculo
+                'application/vnd.ms-excel',
+                'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', // .xlsx
+                'application/vnd.oasis.opendocument.spreadsheet', // .ods
+
+                // Presentaciones
+                'application/vnd.ms-powerpoint',
+                'application/vnd.openxmlformats-officedocument.presentationml.presentation', // .pptx
+                'application/vnd.oasis.opendocument.presentation', // .odp
+
+                // Audio
+                'audio/mpeg', // .mp3
+                'audio/ogg',
+                'audio/wav',
+                'audio/webm',
+                'audio/aac',
+                'audio/flac',
+
+                // Video
+                'video/mp4',
+                'video/mpeg',
+                'video/ogg',
+                'video/webm',
+                'video/quicktime', // .mov
+                'video/x-msvideo', // .avi
+                'video/x-matroska', // .mkv
+
+                // Archivos comprimidos
                 'application/zip',
                 'application/x-rar-compressed',
                 'application/x-tar',
+                'application/gzip',
+                'application/x-7z-compressed',
+
+                // Código y programación
+                'application/json',
+                'application/javascript',
+                'application/xml',
+                'text/css',
+                'text/javascript',
+                'application/x-httpd-php',
+                'application/x-python-code',
+                'application/java-archive', // .jar
+
+                // Otros formatos comunes
+                'application/octet-stream',
+                'application/x-binary',
+                'application/vnd.android.package-archive', // .apk
+                'application/epub+zip', // .epub
+                'application/x-font-ttf', // .ttf
             ];
 
             // Verificamos si es la ruta del avatar

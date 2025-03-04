@@ -21,10 +21,10 @@ export const getResourceByShareToken = async (shareToken) => {
     // Consulta optimizada con `UNION` para obtener archivos y carpetas en una sola consulta
     const [rows] = await pool.query(
         `
-        SELECT id, name, size, folderId, 'createdAt' AS uploadedAt, userId, 'file' AS type
+        SELECT id, name, size, shareToken, folderId, 'createdAt' AS uploadedAt, userId, 'file' AS type
         FROM files WHERE shareToken = ?
         UNION
-        SELECT id, name, NULL AS size, NULL AS folderId, createdAt, userId, 'folder' AS type
+        SELECT id, name, NULL AS size, shareToken, NULL AS folderId, createdAt, userId, 'folder' AS type
         FROM folders WHERE shareToken = ?;
     `,
         [shareToken, shareToken]
@@ -36,7 +36,7 @@ export const getResourceByShareToken = async (shareToken) => {
 export const getFilesInFolderModel = async (folderId) => {
     const pool = await getPool();
     const [files] = await pool.query(
-        `SELECT id, name, size, uploadedAt FROM files WHERE folderId = ?`,
+        `SELECT id, name, size, shareToken, uploadedAt FROM files WHERE folderId = ?`,
         [folderId]
     );
     return files;
