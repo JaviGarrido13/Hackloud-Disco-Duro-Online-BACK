@@ -8,6 +8,7 @@ export const editPasswordByRecoveryController = async (req, res, next) => {
     try {
         // Recupera el recoveryPassCode y la nueva contraseña
         const { recoveryPassCode, newPassword } = req.body;
+        console.log('datos recibidos:', req.body);
 
         // Validamos con joi
         await validateSchemaUtil(recoveryPassSchema, req.body);
