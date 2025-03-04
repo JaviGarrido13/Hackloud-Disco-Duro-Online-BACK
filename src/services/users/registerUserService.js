@@ -79,7 +79,7 @@ export const registerUserService = async (
     }
     // Enviamos el correo de registro
     const emailSubjet = 'Activa tu cuenta!';
-    const emailText = `¡Bienvenid @${username} a Hackloud!
+    const emailText = `¡Bienvenid@ ${username} a Hackloud!
 	\nGracias por registrarte en nuestra aplicación. Para activar tu cuenta, haz click en el siguiente enlace:
 	\n<a href="http://localhost:5173/users/validation/${registrationCode}">Activa tu cuenta</a>
 	`;
