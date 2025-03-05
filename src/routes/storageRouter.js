@@ -19,6 +19,8 @@ import { listFilesAndFoldersControllers } from '../controllers/storages/fileAndF
 import { searchFilesController } from '../controllers/storages/searchFilesController.js';
 import { downloadFileController } from '../controllers/storages/downloadFileController.js';
 import { listFilesInFolderController } from '../controllers/storages/listFilesInFolderController.js';
+import { previewFileController } from '../controllers/storages/previewFileController.js';
+import { previewSharedFileController } from '../controllers/storages/previewSharedFileController.js';
 
 export const storageRouter = express.Router();
 
@@ -101,4 +103,18 @@ storageRouter.get(
     '/download/files/:id',
     authUserMiddleware,
     downloadFileController
+);
+
+// Ruta para previsualizar un archivo
+storageRouter.get(
+    '/files/:id/preview',
+    authUserMiddleware,
+    canDoItMiddleware,
+    previewFileController
+);
+
+// Ruta para previsualizar archivos compartidos
+storageRouter.get(
+    '/storage/share/preview/:shareToken',
+    previewSharedFileController
 );

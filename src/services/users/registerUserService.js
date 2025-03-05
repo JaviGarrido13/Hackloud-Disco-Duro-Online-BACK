@@ -14,6 +14,7 @@ import generateErrorUtils from '../../utils/helpersUtils.js';
 import { selectUserByUsernameModel } from '../../models/users/selectUserByUsernameModel.js';
 import { selectUserByEmailModel } from '../../models/users/selectUserByEmailModel.js';
 import { insertUserModel } from '../../models/users/insertUserModel.js';
+import { FRONTEND_HOST } from '../../../env.js';
 
 // Service que se encarga de registrar al usuario
 export const registerUserService = async (
@@ -78,12 +79,33 @@ export const registerUserService = async (
         );
     }
     // Enviamos el correo de registro
-    const emailSubjet = 'Activa tu cuenta!';
-    const emailText = `¡Bienvenid@ ${username} a Hackloud!
-	\nGracias por registrarte en nuestra aplicación. Para activar tu cuenta, haz click en el siguiente enlace:
-	\n<a href="${FRONTEND_HOST}/users/validation/${registrationCode}">Activa tu cuenta</a>
-	`;
-    await sendMailBrevoUtils(email, emailSubjet, emailText);
+    const emailSubject = 'Activa tu cuenta en Hackloud!';
+    const emailText = `
+    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; text-align: center;">
+      <h2 style="color: #009EB5; margin-top: 20px; font-size: 20px;">¡Bienvenid@ ${username} a Hackloud!</h2>
+      
+      <p style="color: #333; font-size: 14px;">Gracias por registrarte en nuestra aplicación. Para comenzar a utilizar todos nuestros servicios, necesitas activar tu cuenta.</p>
+      
+      <p style="color: #333; font-size: 14px;">Haz clic en el siguiente enlace para activar tu cuenta:</p> 
+      
+      <p style="margin: 15px 0;">
+        <a href="${FRONTEND_HOST}/users/validation/${registrationCode}" style="color: #009EB5; font-weight: bold; text-decoration: underline; font-size: 14px;">
+          Activar mi cuenta
+        </a>
+      </p>
+      
+      <p style="color: #333; font-size: 14px;">Si el enlace no funciona, copia y pega esta URL en tu navegador:</p>
+      
+      <div style="background-color: #f0f0f0; padding: 10px; border-radius: 4px; margin: 10px auto; word-break: break-all; font-size: 13px; color: #333;">
+        ${FRONTEND_HOST}/users/validation/${registrationCode}
+      </div>
+      
+      <p style="margin-top: 20px; font-size: 12px; color: #666;">
+        © Hackloud. Este es un correo automático, por favor no respondas a este mensaje.
+      </p>
+    </div>`;
+
+    await sendMailBrevoUtils(email, emailSubject, emailText);
 
     return { id, username, email, registrationCode };
 };
