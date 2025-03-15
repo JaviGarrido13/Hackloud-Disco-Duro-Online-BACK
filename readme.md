@@ -18,23 +18,23 @@ git clone https://github.com/MohammedChlag/Proyecto-Disco-Duro.git
 
 Crea un archivo ".env" en la raíz del proyecto y define las siguientes variables:
 
--   MYSQL_HOST=
--   MYSQL_USER=
--   MYSQL_PASSWORD=
--   MYSQL_DATABASE=
--   MYSQL_PORT=
+MYSQL_HOST=
+MYSQL_USER=
+MYSQL_PASSWORD=
+MYSQL_DATABASE=
+MYSQL_PORT=
 
--   PORT=
--   SECRET=
+PORT=
+SECRET=
 
--   SMTP_USER=
--   SMTP_API_KEY=
+SMTP_USER=
+SMTP_API_KEY=
 
--   UPLOADS_DIR=
--   FRONTEND_HOST=
+UPLOADS_DIR=
+FRONTEND_HOST=
 
--   ADMIN_EMAIL=
--   ADMIN_PASSWORD=
+ADMIN_EMAIL=
+ADMIN_PASSWORD=
 
 3️⃣ Instalar Dependencias
 
