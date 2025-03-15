@@ -18,23 +18,23 @@ git clone https://github.com/MohammedChlag/Proyecto-Disco-Duro.git
 
 Crea un archivo ".env" en la raíz del proyecto y define las siguientes variables:
 
-MYSQL_HOST=
-MYSQL_USER=
-MYSQL_PASSWORD=
-MYSQL_DATABASE=
-MYSQL_PORT=
+-   MYSQL_HOST=
+-   MYSQL_USER=
+-   MYSQL_PASSWORD=
+-   MYSQL_DATABASE=
+-   MYSQL_PORT=
 
-PORT=
-SECRET=
+-   PORT=
+-   SECRET=
 
-SMTP_USER=
-SMTP_API_KEY=
+-   SMTP_USER=
+-   SMTP_API_KEY=
 
-UPLOADS_DIR=
-FRONTEND_HOST=
+-   UPLOADS_DIR=
+-   FRONTEND_HOST=
 
-ADMIN_EMAIL=
-ADMIN_PASSWORD=
+-   ADMIN_EMAIL=
+-   ADMIN_PASSWORD=
 
 3️⃣ Instalar Dependencias
 
@@ -48,8 +48,8 @@ npm start
 
 Estas son las personas que han contribuido en el proyecto y donde puedes localizarlas para cualquier tipo de consulta o ayuda:
 
-Mohammed Chikri Laghzaoui ---- mohammedchikrilag@icloud.com
-Francisco Javier Garrido Valderas ---- fjgarridovalderas@hotmail.com
-Alexmary Rangel Jimenez ---- alexmaryrangel@gmail.com
-Bridinia Agüero Madera ---- bridiniaaguero@gmail.com
-Sebastián Osuna Hidalgo ---- sebasosunah@gmail.com
+-   Mohammed Chikri Laghzaoui ---- mohammedchikrilag@icloud.com
+-   Francisco Javier Garrido Valderas ---- fjgarridovalderas@hotmail.com
+-   Alexmary Rangel Jimenez ---- alexmaryrangel@gmail.com
+-   Bridinia Agüero Madera ---- bridiniaaguero@gmail.com
+-   Sebastián Osuna Hidalgo ---- sebasosunah@gmail.com
