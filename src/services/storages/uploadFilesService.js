@@ -20,7 +20,7 @@ export const uploadFilesService = async (resource) => {
     if (file) {
         throw generateErrorUtils(
             409,
-            'FOLDER_ALREADY_EXISTS',
+            'FILE_ALREADY_EXISTS',
             'Ya existe un archivo con ese nombre'
         );
     }
