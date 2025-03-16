@@ -16,14 +16,6 @@ export const uploadFilesService = async (resource) => {
     // Destructuring del resource
     const { userId, originalname, size, folderName, buffer } = resource;
     console.log(originalname);
-    const file = await selectFileByName(originalname);
-    if (file) {
-        throw generateErrorUtils(
-            409,
-            'FILE_ALREADY_EXISTS',
-            'Ya existe un archivo con ese nombre'
-        );
-    }
 
     // Si llega con folderName, buscamos en la ddbb
     let folderId;
