@@ -15,11 +15,13 @@ import generateErrorUtils from '../../utils/helpersUtils.js';
 export const createFolderService = async (folderName, userId) => {
     const folder = await selectFolderByName(folderName);
     if (folder) {
-        throw generateErrorUtils(
-            409,
-            'FOLDER_ALREADY_EXISTS',
-            'Ya existe una carpeta con ese nombre'
-        );
+        if (folder.userId === userId) {
+            throw generateErrorUtils(
+                409,
+                'FOLDER_ALREADY_EXISTS',
+                'Ya existe una carpeta con ese nombre'
+            );
+        }
     }
 
     await createPathUtil(userId, folderName);
@@ -30,7 +32,7 @@ export const createFolderService = async (folderName, userId) => {
     if (result.affectedRows === 0) {
         throw generateErrorUtils(
             500,
-            'INSERT_FAILD',
+            'INSERT_FAILED',
             'No se pudo crear la carpeta'
         );
     }

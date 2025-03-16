@@ -2,17 +2,28 @@
 import crypto from 'crypto';
 
 // Importamos el model
+import { selectFileByName } from '../../models/storages/selectFileByName.js';
 import { selectFolderByName } from '../../models/storages/selectFolderByName.js';
 import { uploadFileModel } from '../../models/storages/uploadFileModel.js';
 
 // Importamos service
 import { createFolderService } from './createFolderService.js';
 import { saveFileUtil } from '../../utils/fileUtils.js';
+import generateErrorUtils from '../../utils/helpersUtils.js';
 
 // Service que se encarga de guardar el archivo
 export const uploadFilesService = async (resource) => {
     // Destructuring del resource
     const { userId, originalname, size, folderName, buffer } = resource;
+    console.log(originalname);
+    const file = await selectFileByName(originalname);
+    if (file) {
+        throw generateErrorUtils(
+            409,
+            'FOLDER_ALREADY_EXISTS',
+            'Ya existe un archivo con ese nombre'
+        );
+    }
 
     // Si llega con folderName, buscamos en la ddbb
     let folderId;
