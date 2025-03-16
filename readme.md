@@ -16,11 +16,6 @@
 -   jsonwebtoken
 -   multer (para subida de archivos)
 
-### Frontend
-
--   React.js
--   Tailwind CSS
-
 ### Almacenamiento
 
 -   multer-cloud-storage (por confirmar)
