@@ -23,7 +23,7 @@ export const editRecoveryPassCodeService = async (id, email) => {
     }
 
     //Definir la base del frontend
-    const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:5173';
+    const frontendUrl = process.env.FRONTEND_HOST || 'http://localhost:5173';
 
     //Crear la URL
     const recoveryUrl = new URL('/users/recovery', frontendUrl);
