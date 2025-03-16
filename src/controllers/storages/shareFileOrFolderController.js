@@ -1,6 +1,7 @@
 import crypto from 'crypto';
 import { assignShareToken } from '../../models/storages/shareFileOrFolderModel.js';
 import generateErrorUtils from '../../utils/helpersUtils.js';
+import { FRONTEND_HOST } from '../../../env.js';
 
 export const shareFileOrFolderController = async (req, res, next) => {
     try {
