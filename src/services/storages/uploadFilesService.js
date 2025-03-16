@@ -9,18 +9,19 @@ import { uploadFileModel } from '../../models/storages/uploadFileModel.js';
 // Importamos service
 import { createFolderService } from './createFolderService.js';
 import { saveFileUtil } from '../../utils/fileUtils.js';
+import generateErrorUtils from '../../utils/helpersUtils.js';
 
 // Service que se encarga de guardar el archivo
 export const uploadFilesService = async (resource) => {
     // Destructuring del resource
     const { userId, originalname, size, folderName, buffer } = resource;
-
-    const file = await selectFileByName(fileName);
+    console.log(originalname);
+    const file = await selectFileByName(originalname);
     if (file) {
         throw generateErrorUtils(
             409,
             'FOLDER_ALREADY_EXISTS',
-            'Ya existe una carpeta con ese nombre'
+            'Ya existe un archivo con ese nombre'
         );
     }
 
