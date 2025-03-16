@@ -48,8 +48,8 @@ npm start
 
 Estas son las personas que han contribuido en el proyecto y donde puedes localizarlas para cualquier tipo de consulta o ayuda:
 
-Mohammed Chikri Laghzaoui ---- mohammedchikrilag@icloud.com
-Francisco Javier Garrido Valderas ---- fjgarridovalderas@hotmail.com
-Alexmary Rangel Jimenez ---- alexmaryrangel@gmail.com
-Bridinia Agüero Madera ---- bridiniaaguero@gmail.com
-Sebastián Osuna Hidalgo ---- sebasosunah@gmail.com
+-   Mohammed Chikri Laghzaoui ---- mohammedchikrilag@icloud.com
+-   Francisco Javier Garrido Valderas ---- fjgarridovalderas@hotmail.com
+-   Alexmary Rangel Jimenez ---- alexmaryrangel@gmail.com
+-   Bridinia Agüero Madera ---- bridiniaaguero@gmail.com
+-   Sebastián Osuna Hidalgo ---- sebasosunah@gmail.com
