@@ -18,11 +18,13 @@ export const uploadFilesService = async (resource) => {
     console.log(originalname);
     const file = await selectFileByName(originalname);
     if (file) {
-        throw generateErrorUtils(
-            409,
-            'FOLDER_ALREADY_EXISTS',
-            'Ya existe un archivo con ese nombre'
-        );
+        if (file.userId === userId) {
+            throw generateErrorUtils(
+                409,
+                'FOLDER_ALREADY_EXISTS',
+                'Ya existe un archivo con ese nombre'
+            );
+        }
     }
 
     // Si llega con folderName, buscamos en la ddbb
