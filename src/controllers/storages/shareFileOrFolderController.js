@@ -1,6 +1,7 @@
 import crypto from 'crypto';
 import { assignShareToken } from '../../models/storages/shareFileOrFolderModel.js';
 import generateErrorUtils from '../../utils/helpersUtils.js';
+import { FRONTEND_HOST } from '../../../env.js';
 
 export const shareFileOrFolderController = async (req, res, next) => {
     try {
@@ -9,7 +10,7 @@ export const shareFileOrFolderController = async (req, res, next) => {
 
         const shareToken = crypto.randomUUID();
         if (type === 'file') {
-            downloadUrl = `http://localhost:5173/storage/share/download/${shareToken}`;
+            downloadUrl = `${FRONTEND_HOST}/storage/share/download/${shareToken}`;
         }
 
         const result = await assignShareToken(id, type, shareToken);
@@ -23,7 +24,7 @@ export const shareFileOrFolderController = async (req, res, next) => {
 
         res.status(200).send({
             status: 'ok',
-            url: `http://localhost:5173/storage/share/link/${shareToken}`,
+            url: `${FRONTEND_HOST}/storage/share/link/${shareToken}`,
 
             download: downloadUrl,
         });

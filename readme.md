@@ -1,23 +1,38 @@
 # 📁 Hackloud - Disco Duro Online
 
-Hackloud es una app de almacenamiento de archivos en una nube que permite a múltiples usuarios subir y organizar archivos y carpetas.
+**Hackloud** es una aplicación web que proporciona almacenamiento de archivos en la nube, permitiendo a múltiples usuarios subir, organizar y gestionar archivos y carpetas de manera sencilla.
 
-## 🛠️ Tecnologías Utílizadas
+## 🛠️ Tecnologías Utilizadas
 
--   **Backend**: Node.js (Express), dotenv, mysql2, cors, joi, bcrypt, randomstring, jsonwebtoken, multer(para subida de archivos).
--   **Frontend**: React.js, Tailwind CSS.
--   **Almacenamiento**: multer-cloud-storage (?)
+### Backend
+
+-   Node.js (Express)
+-   dotenv
+-   mysql2
+-   cors
+-   joi
+-   bcrypt
+-   randomstring
+-   jsonwebtoken
+-   multer (para subida de archivos)
+
+### Almacenamiento
+
+-   multer-cloud-storage (por confirmar)
 
 ## 🚀 Instalación y Configuración
 
 ### 1️⃣ Clonar el repositorio
 
+```bash
 git clone https://github.com/MohammedChlag/Proyecto-Disco-Duro.git
+```
 
-### 2️⃣ Configurar Variables de Entorno
+### 2️⃣ Configurar variables de entorno
 
-Crea un archivo ".env" en la raíz del proyecto y define las siguientes variables:
+Crea un archivo `.env` en la raíz del proyecto y completa las siguientes variables:
 
+```env
 MYSQL_HOST=
 MYSQL_USER=
 MYSQL_PASSWORD=
@@ -35,21 +50,26 @@ FRONTEND_HOST=
 
 ADMIN_EMAIL=
 ADMIN_PASSWORD=
+```
 
-3️⃣ Instalar Dependencias
+### 3️⃣ Instalar dependencias
 
+```bash
 npm install
+```
 
-4️⃣ Iniciar el Servidor
+### 4️⃣ Iniciar el servidor
 
+```bash
 npm start
+```
 
-## Contributors
+## 📌 Colaboradores
 
-Estas son las personas que han contribuido en el proyecto y donde puedes localizarlas para cualquier tipo de consulta o ayuda:
+Personas que han colaborado en el proyecto, disponibles para consultas o ayuda:
 
--   Mohammed Chikri Laghzaoui ---- mohammedchikrilag@icloud.com
--   Francisco Javier Garrido Valderas ---- fjgarridovalderas@hotmail.com
--   Alexmary Rangel Jimenez ---- alexmaryrangel@gmail.com
--   Bridinia Agüero Madera ---- bridiniaaguero@gmail.com
--   Sebastián Osuna Hidalgo ---- sebasosunah@gmail.com
+-   **Mohammed Chikri Laghzaoui** - [mohammedchikrilag@icloud.com](mailto:mohammedchikrilag@icloud.com)
+-   **Francisco Javier Garrido Valderas** - [fjgarridovalderas@hotmail.com](mailto:fjgarridovalderas@hotmail.com)
+-   **Alexmary Rangel Jimenez** - [alexmaryrangel@gmail.com](mailto:alexmaryrangel@gmail.com)
+-   **Bridinia Agüero Madera** - [bridiniaaguero@gmail.com](mailto:bridiniaaguero@gmail.com)
+-   **Sebastián Osuna Hidalgo** - [sebasosunah@gmail.com](mailto:sebasosunah@gmail.com)
