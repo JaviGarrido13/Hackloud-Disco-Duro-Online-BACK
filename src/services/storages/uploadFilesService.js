@@ -18,7 +18,6 @@ export const uploadFilesService = async (resource) => {
     console.log(originalname);
     const file = await selectFileByName(originalname);
     if (file) {
-        if (file.userId === userId) {
             throw generateErrorUtils(
                 409,
                 'FOLDER_ALREADY_EXISTS',
