@@ -1,5 +1,6 @@
 // Importamos el Model
 import { selectUserByIdModel } from '../../models/users/selectUserByIdModel.js';
+import generateErrorUtils from '../../utils/helpersUtils.js';
 
 export const getOwnUserController = async (req, res, next) => {
     try {

@@ -8,12 +8,30 @@ import { uploadFileModel } from '../../models/storages/uploadFileModel.js';
 // Importamos service
 import { createFolderService } from './createFolderService.js';
 import { saveFileUtil } from '../../utils/fileUtils.js';
+import { selectFileByName } from '../../models/storages/selectFileByName.js';
+import generateErrorUtils from '../../utils/helpersUtils.js';
 
 // Service que se encarga de guardar el archivo
 export const uploadFilesService = async (resource) => {
     // Destructuring del resource
     const { userId, originalname, size, folderName, buffer } = resource;
     console.log(originalname);
+
+    // Recuperar archivo mediante nombre
+    const file = await selectFileByName(originalname);
+
+    if (file && file.userId === userId) {
+        if (
+            (folderName && file.folderId !== null) ||
+            (!folderName && file.folderId === null)
+        ) {
+            throw generateErrorUtils(
+                409,
+                'FILE_ALREADY_EXISTS',
+                'Ya existe un archivo con ese nombre en esta ubicación'
+            );
+        }
+    }
 
     // Si llega con folderName, buscamos en la ddbb
     let folderId;

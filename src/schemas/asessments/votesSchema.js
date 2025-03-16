@@ -10,6 +10,7 @@ export const votesSchema = Joi.object({
     }),
     comment: Joi.string().min(3).max(200).required().messages({
         'string.base': 'El cometario debe de ser un texto',
+        'string.min': 'El comentario debe tener como mínimo 3 caracteres',
         'any.required': 'El comentario es obligatorio',
     }),
 });
